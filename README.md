@@ -1,1 +1,0 @@
-# bouvet-asset-hub
