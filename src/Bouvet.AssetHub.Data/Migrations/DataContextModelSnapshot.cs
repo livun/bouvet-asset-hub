@@ -30,8 +30,9 @@ namespace Bouvet.AssetHub.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("Category")
-                        .HasColumnType("int");
+                    b.Property<string>("Category")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -42,28 +43,13 @@ namespace Bouvet.AssetHub.Data.Migrations
                     b.Property<int?>("SerialNumber")
                         .HasColumnType("int");
 
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Assets");
-                });
-
-            modelBuilder.Entity("Bouvet.AssetHub.Data.Models.Bsd", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("Reference")
+                    b.Property<string>("Status")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Bsd");
+                    b.ToTable("Assets");
                 });
 
             modelBuilder.Entity("Bouvet.AssetHub.Data.Models.EmployeeEntity", b =>
@@ -96,8 +82,8 @@ namespace Bouvet.AssetHub.Data.Migrations
                     b.Property<int>("AssignedToId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("BsdReferenceId")
-                        .HasColumnType("int");
+                    b.Property<string>("BsdReference")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("CheckIn")
                         .HasColumnType("datetime2");
@@ -110,8 +96,6 @@ namespace Bouvet.AssetHub.Data.Migrations
                     b.HasIndex("AssetId");
 
                     b.HasIndex("AssignedToId");
-
-                    b.HasIndex("BsdReferenceId");
 
                     b.ToTable("Loans");
                 });
@@ -130,15 +114,9 @@ namespace Bouvet.AssetHub.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Bouvet.AssetHub.Data.Models.Bsd", "BsdReference")
-                        .WithMany()
-                        .HasForeignKey("BsdReferenceId");
-
                     b.Navigation("Asset");
 
                     b.Navigation("AssignedTo");
-
-                    b.Navigation("BsdReference");
                 });
 #pragma warning restore 612, 618
         }

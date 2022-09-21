@@ -9,8 +9,8 @@ namespace Bouvet.AssetHub.Data.Models
     public class AssetEntity : Entity
     {
         public int? SerialNumber { get; set; }
-        public Guid QrIdentifier { get; set; } = Guid.NewGuid(); 
-        public DateTime CreatedAt { get; set; } // Date for when its added to system
+        public Guid QrIdentifier { get; set; } = Guid.NewGuid();
+        public DateTime CreatedAt { get; set; } = DateTime.Now; // Date for when its added to system
         public Status Status { get; set; }
         public Category Category { get; set; }
         //public Details Details { get; set; }
@@ -31,7 +31,8 @@ namespace Bouvet.AssetHub.Data.Models
     //    public string Description { get; set; } // If catgory is other, add description of asset category here or leave empty
 
     //}
-    public enum Category /// category entity
+    public enum Category /// category entity - egenb klasse
+    public enum Category /// category entity - egenb klasse
     {
         DeveloperPC,
         UserPC,

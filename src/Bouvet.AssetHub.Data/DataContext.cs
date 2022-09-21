@@ -11,6 +11,18 @@ namespace Bouvet.AssetHub.Data
         public DbSet<EmployeeEntity>? Employees { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<AssetEntity>()
+                .Property(s => s.Status)
+                .HasConversion(
+                    v => v.ToString(),
+                    v => (Status)Enum.Parse(typeof(Status), v));
+
+            modelBuilder.Entity<AssetEntity>()
+                .Property(S => S.Category)
+                .HasConversion(
+                    v => v.ToString(),
+                    v => (Category)Enum.Parse(typeof(Category), v));
+
             base.OnModelCreating(modelBuilder);
         }
 
