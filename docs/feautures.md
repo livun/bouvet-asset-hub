@@ -1,18 +1,16 @@
 # Feautures Suggestions
 ## Epic: Administration (CRUD operations)
-
-`test`
-*test*
-**test**
+Note: `Feutures are marked with this styling`
 
 ### Create
 `Tag new asset`
-- Ass a user, I want to scan the serial number of asset, do an OCR and identify the serial number, then generate a QR code, which I can stick on the asset.
+- Ass a admin user, I want to scan the serial number of asset, do an OCR and identify the serial number, then generate a QR code, which I can stick on the asset.
+- As as admin user, I want to add assets without serial number, with generetaing a unique id and qr code and stick to asset.
 - As a user, I want to mark my new asset with a QR, so that it is easy to identify-
 
 `Register required information`
-- As a user, I want to retrieve required information about asset from external assets, to make the creating process more automatic.
-- As a user, I want to manually enter nessecary information if the option to retrieve from external asset is not avaible. 
+- As a admin user, I want to retrieve required information about asset from external assets, to make the creating process more automatic.
+- As a admin user, I want to manually enter nessecary information if the option to retrieve from external asset is not avaible. 
 
 ### Overview/Dashboard (read)
 `View all assets in the system`
