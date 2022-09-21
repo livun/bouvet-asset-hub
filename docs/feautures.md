@@ -1,6 +1,6 @@
 # Feautures Suggestions
 ## Epic: Administration (CRUD operations)
-Note: `Feutures are marked with this styling`
+Note: `Features are marked with this styling`
 
 ### Create
 `Tag new asset`
