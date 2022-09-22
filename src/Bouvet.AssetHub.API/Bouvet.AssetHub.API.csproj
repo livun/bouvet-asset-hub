@@ -26,11 +26,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Bouvet.AssetHub.Data\Bouvet.AssetHub.Data.csproj" />
+    <Folder Include="AutoMapper\" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="AutoMapper\" />
+    <ProjectReference Include="..\Bouvet.AssetHub.Domain\Bouvet.AssetHub.Domain.csproj" />
   </ItemGroup>
 
 </Project>

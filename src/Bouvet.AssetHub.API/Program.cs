@@ -1,4 +1,4 @@
-using Bouvet.AssetHub.Data;
+using Bouvet.AssetHub.Domain.Data;
 using MediatR;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
