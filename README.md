@@ -1,5 +1,5 @@
 # Bouvet Asset Hub
-Bachelorproject
+Datbac project/thesis
 
 ## Repository directory
 ## /docs
