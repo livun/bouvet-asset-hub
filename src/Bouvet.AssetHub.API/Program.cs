@@ -1,6 +1,8 @@
 using Bouvet.AssetHub.Data;
+using MediatR;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,6 +26,8 @@ builder.Services.AddDbContext<DataContext>(options =>
     //var connectionString = builder.Configuration.GetConnectionString("DataContext");
     options.UseSqlServer(connection);
 });
+
+builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
 
 var app = builder.Build();
 

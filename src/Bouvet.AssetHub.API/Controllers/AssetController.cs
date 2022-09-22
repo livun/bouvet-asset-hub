@@ -1,5 +1,4 @@
-﻿using Bouvet.AssetHub.Data;
-using Bouvet.AssetHub.Domain.Models;
+﻿using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -8,24 +7,27 @@ namespace Bouvet.AssetHub.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AssetController : ControllerBase
+    public class AssetsController : ControllerBase
     {
         private readonly DataContext context;
+        private readonly IMediator mediator;
 
-        public AssetController(DataContext context)
+        public AssetsController(DataContext context, IMediator mediator)
         {
             this.context = context;
+            this.mediator = mediator;
         }
-        [Route("assets/")]
+        [Route("/")]
         [HttpGet]
         public async Task<IActionResult> GetAssets()
         {
+            var result = await mediator.Send
             var assets = await context.Assets.ToListAsync();
             if( assets is not null ) return Ok(assets);
             return BadRequest();
 
         }
-        [Route("asset/")]
+        [Route("/")]
         [HttpPost]
         public async Task<IActionResult> AddAsset(AssetDto dto)
         {
