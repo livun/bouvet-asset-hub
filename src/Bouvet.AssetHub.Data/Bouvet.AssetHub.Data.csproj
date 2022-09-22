@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Bouvet.AssetHub.Domain\Bouvet.AssetHub.Domain.csproj" />
+    <ProjectReference Include="..\Bouvet.AssetHub.Domain\Bouvet.AssetHub.Domain.csproj" />
   </ItemGroup>
 
 </Project>
