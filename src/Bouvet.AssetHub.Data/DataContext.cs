@@ -10,6 +10,7 @@ namespace Bouvet.AssetHub.Data
         public DbSet<AssetEntity>? Assets { get; set; }
         public DbSet<LoanEntity>? Loans { get; set; }
         public DbSet<EmployeeEntity>? Employees { get; set; }
+        public DbSet<CategoryEntity>? Categories { get; set }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<AssetEntity>()
@@ -18,24 +19,21 @@ namespace Bouvet.AssetHub.Data
                     v => v.ToString(),
                     v => (Status)Enum.Parse(typeof(Status), v));
 
-            modelBuilder.Entity<AssetEntity>()
-                .Property(S => S.Category)
-                .HasConversion(
-                    v => v.ToString(),
-                    v => (Category)Enum.Parse(typeof(Category), v));
 
+            modelBuilder.Entity<CategoryEntity>().HasData
+                (
+                    new CategoryEntity { Name = "Developer PC"},
+                    new CategoryEntity { Name = "Regular PC"},
+                    new CategoryEntity { Name = "Developer MAC"},
+                    new CategoryEntity { Name = "User MAC"},
+                    new CategoryEntity { Name = "Exam PC" },
+                    new CategoryEntity { Name = "Screen" },
+                    new CategoryEntity { Name = "Keyboard" },
+                    new CategoryEntity { Name = "Mouse" },
+                    new CategoryEntity { Name = "Headset" }
+                );
             base.OnModelCreating(modelBuilder);
         }
-
-        //protected override void OnModelCreating(ModelBuilder modelBuilder)
-        //{
-        //    modelBuilder.Entity<Asset>().HasData
-        //        (
-        //        new Asset(1, "Computer"),
-        //        new Asset(2, "Phone"),
-        //        new Asset(3, "Mac")
-        //        );
-        //}
-
+          
     }
 }
