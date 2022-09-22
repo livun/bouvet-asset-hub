@@ -5,12 +5,18 @@ VisualStudioVersion = 17.3.32825.248
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bouvet.AssetHub.API", "Bouvet.AssetHub.API\Bouvet.AssetHub.API.csproj", "{41957E4C-C21B-4AE4-B2C3-073FEC53CC3A}"
 	ProjectSection(ProjectDependencies) = postProject
+		{1586514B-18AC-4723-B7C0-213C2B34BB10} = {1586514B-18AC-4723-B7C0-213C2B34BB10}
 		{7B83DA15-2975-4363-B1D3-032FE300D559} = {7B83DA15-2975-4363-B1D3-032FE300D559}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bouvet.AssetHub.Data", "Bouvet.AssetHub.Data\Bouvet.AssetHub.Data.csproj", "{7B83DA15-2975-4363-B1D3-032FE300D559}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bouvet.AssetHub.Data", "Bouvet.AssetHub.Data\Bouvet.AssetHub.Data.csproj", "{7B83DA15-2975-4363-B1D3-032FE300D559}"
+	ProjectSection(ProjectDependencies) = postProject
+		{1586514B-18AC-4723-B7C0-213C2B34BB10} = {1586514B-18AC-4723-B7C0-213C2B34BB10}
+	EndProjectSection
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{0D48775C-FBBF-4BF6-88C5-EFC5DDCB9A96}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bouvet.AssetHub.Domain", "..\Bouvet.AssetHub.Domain\Bouvet.AssetHub.Domain.csproj", "{1586514B-18AC-4723-B7C0-213C2B34BB10}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -30,6 +36,10 @@ Global
 		{0D48775C-FBBF-4BF6-88C5-EFC5DDCB9A96}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0D48775C-FBBF-4BF6-88C5-EFC5DDCB9A96}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0D48775C-FBBF-4BF6-88C5-EFC5DDCB9A96}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1586514B-18AC-4723-B7C0-213C2B34BB10}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1586514B-18AC-4723-B7C0-213C2B34BB10}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1586514B-18AC-4723-B7C0-213C2B34BB10}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1586514B-18AC-4723-B7C0-213C2B34BB10}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
