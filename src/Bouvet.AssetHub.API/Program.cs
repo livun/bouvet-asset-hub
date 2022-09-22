@@ -1,4 +1,5 @@
 using Bouvet.AssetHub.Data;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,8 +14,15 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddDbContext<DataContext>(options =>
 {
-    var connectionString = builder.Configuration.GetConnectionString("DataContext");
-    options.UseSqlServer(connectionString);
+    var conStrBuilder = new SqlConnectionStringBuilder(
+        builder.Configuration.GetConnectionString("DataContext"));
+    conStrBuilder.Password = builder.Configuration["SqlPassword"];
+    conStrBuilder.UserID = builder.Configuration["SqlUser"];
+    var connection = conStrBuilder.ConnectionString;
+
+
+    //var connectionString = builder.Configuration.GetConnectionString("DataContext");
+    options.UseSqlServer(connection);
 });
 
 var app = builder.Build();
