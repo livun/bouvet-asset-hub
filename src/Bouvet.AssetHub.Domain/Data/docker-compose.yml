@@ -11,7 +11,7 @@ services:
             - sql-vol:/var/opt/mssql
         environment:
             - ACCEPT_EULA=Y
-            - SA_PASSWORD=@HUB2022
+            - SA_PASSWORD=${SA_PASSWORD}
         networks:
         - asset-network
 

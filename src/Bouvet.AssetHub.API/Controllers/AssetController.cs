@@ -1,48 +1,50 @@
-﻿using Bouvet.AssetHub.Data;
-using Bouvet.AssetHub.Domain.Models;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+﻿//using MediatR;
+//using Microsoft.AspNetCore.Http;
+//using Microsoft.AspNetCore.Mvc;
+//using Microsoft.EntityFrameworkCore;
 
-namespace Bouvet.AssetHub.API.Controllers
-{
-    [Route("api/[controller]")]
-    [ApiController]
-    public class AssetController : ControllerBase
-    {
-        private readonly DataContext context;
+//namespace Bouvet.AssetHub.API.Controllers
+//{
+//    [Route("api/[controller]")]
+//    [ApiController]
+//    public class AssetsController : ControllerBase
+//    {
+//        private readonly DataContext context;
+//        private readonly IMediator mediator;
 
-        public AssetController(DataContext context)
-        {
-            this.context = context;
-        }
-        [Route("assets/")]
-        [HttpGet]
-        public async Task<IActionResult> GetAssets()
-        {
-            var assets = await context.Assets.ToListAsync();
-            if( assets is not null ) return Ok(assets);
-            return BadRequest();
+//        public AssetsController(DataContext context, IMediator mediator)
+//        {
+//            this.context = context;
+//            this.mediator = mediator;
+//        }
+//        [Route("/")]
+//        [HttpGet]
+//        public async Task<IActionResult> GetAssets()
+//        {
+//            var result = await mediator.Send
+//            var assets = await context.Assets.ToListAsync();
+//            if( assets is not null ) return Ok(assets);
+//            return BadRequest();
 
-        }
-        [Route("asset/")]
-        [HttpPost]
-        public async Task<IActionResult> AddAsset(AssetDto dto)
-        {
+//        }
+//        [Route("/")]
+//        [HttpPost]
+//        public async Task<IActionResult> AddAsset(AssetDto dto)
+//        {
 
             
-            var asset = new AssetEntity
-            {
-                SerialNumber = dto.serialNumber,
-                Status = Status.Registered,
-                Category = Enum.Parse<Category>(dto.category)
-            };
-            await context.Assets.AddAsync(asset);
-            await context.SaveChangesAsync();
-            return Ok("Asset added");
+//            var asset = new AssetEntity
+//            {
+//                SerialNumber = dto.serialNumber,
+//                Status = Status.Registered,
+//                //Category = Enum.Parse<Category>(dto.category)
+//            };
+//            await context.Assets.AddAsync(asset);
+//            await context.SaveChangesAsync();
+//            return Ok("Asset added");
 
-        }
+//        }
 
-    }
-    public record AssetDto(int serialNumber, string category);
-}
+//    }
+//    public record AssetDto(int serialNumber, string category);
+//}

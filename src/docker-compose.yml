@@ -8,6 +8,7 @@ services:
             dockerfile: Bouvet.AssetHub.API/Dockerfile
         networks:
             - asset-network 
+        
 
 networks:
     asset-network:

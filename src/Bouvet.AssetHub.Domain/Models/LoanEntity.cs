@@ -10,19 +10,12 @@ namespace Bouvet.AssetHub.Domain.Models
 {
     public class LoanEntity : Entity
     {
-        //private LoanEntity(){}
-        //public LoanEntity(AssetEntity asset, EmployeeEntity assignedTo)
-        //{
-        //    Asset = asset;
-        //    AssignedTo = assignedTo;
-        //}
-        public DateTime CheckOut { get; set; } = DateTime.Now; // Date of hand-out - return by date
-        public DateTime? CheckIn { get; set; } // Date of hand-in - if null - its not a temporary loan
+        public Interval Interval { get; set; } = new Interval();
         [Required]
         public EmployeeEntity AssignedTo { get; set; } = new EmployeeEntity();
         [Required]
         public AssetEntity Asset { get; set; } = new AssetEntity();
-        public string? BsdReference { get; set; } // if a request has been made through BSD, add reference 
+        public Bsd? Bsd { get; set; }
     }
 
     
