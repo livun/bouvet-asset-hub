@@ -35,7 +35,7 @@ namespace Bouvet.AssetHub.API.Controllers
             {
                 SerialNumber = dto.serialNumber,
                 Status = Status.Registered,
-                Category = Enum.Parse<Category>(dto.category)
+                //Category = Enum.Parse<Category>(dto.category)
             };
             await context.Assets.AddAsync(asset);
             await context.SaveChangesAsync();
