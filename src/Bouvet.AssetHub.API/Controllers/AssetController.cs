@@ -1,5 +1,5 @@
 ﻿using Bouvet.AssetHub.Data;
-using Bouvet.AssetHub.Data.Models;
+using Bouvet.AssetHub.Domain.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;

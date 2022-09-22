@@ -7,7 +7,7 @@ services:
             context: .
             dockerfile: Bouvet.AssetHub.API/Dockerfile
         networks:
-            - asset-network
+            - asset-network 
 
 networks:
     asset-network:
