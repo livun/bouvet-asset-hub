@@ -1,5 +1,6 @@
-﻿using Bouvet.AssetHub.Data.Models;
+﻿using Bouvet.AssetHub.Domain.Models;
 using Microsoft.EntityFrameworkCore;
+
 
 namespace Bouvet.AssetHub.Data
 {
