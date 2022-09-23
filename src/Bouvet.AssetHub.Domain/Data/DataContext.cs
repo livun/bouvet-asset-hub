@@ -8,10 +8,10 @@ namespace Bouvet.AssetHub.Domain.Data
     public class DataContext : DbContext
     {
         public DataContext(DbContextOptions<DataContext> options) : base(options) { }
-        public DbSet<AssetEntity>? Assets { get; set; }
-        public DbSet<LoanEntity>? Loans { get; set; }
-        public DbSet<EmployeeEntity>? Employees { get; set; }
-        public DbSet<CategoryEntity>? Categories { get; set; }
+        public DbSet<AssetEntity> Assets { get; set; }
+        public DbSet<LoanEntity> Loans { get; set; }
+        public DbSet<EmployeeEntity> Employees { get; set; }
+        public DbSet<CategoryEntity> Categories { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<AssetEntity>()
