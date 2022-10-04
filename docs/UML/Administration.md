@@ -6,8 +6,8 @@ sequenceDiagram
     loop 
         UI->>UI: Do OCR and identify serialnumber
     end
-    UI ->> External API: Validate serial number
-    activate External API
+    UI ->> External: Validate serial number
+    activate External 
     External API --) UI: response
     UI ->> API Controller: Send validatet serial number
     
