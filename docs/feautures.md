@@ -53,6 +53,7 @@ Note: `Features are marked with this styling`
 `Scan asset and check in asset`
 - As an admin user, I want to scan the asset and check in the asset
 
+
 ### Notification 
 `Send notification`
 - As I user, I want there to be an automatic email sent out to the employee when it's time to return the asset
