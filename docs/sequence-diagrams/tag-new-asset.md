@@ -108,7 +108,8 @@ sequenceDiagram
 
            
 ```
-## Update asset information
+
+# Update asset information
 ```mermaid
 sequenceDiagram
     User ->> UI : Toggle update icon on asset from asset table
@@ -136,9 +137,10 @@ sequenceDiagram
         Deactivate Mediator Handler
     
             API Controller --) UI  : Asset sucessfully updated
-            UI -->> User : Table is updated with information
-
     Deactivate API Controller
+    UI -->> User : Table is updated with information
+
+    
 
            
 ```
