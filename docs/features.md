@@ -5,7 +5,7 @@ Note: `Features are marked with this styling`
 ### Create
 `Tag new asset`
 - Ass a admin user, I want to scan the serial number of asset, do an OCR and identify the serial number, then generate a QR code, which I can stick on the asset.
-- As as admin user, I want to add assets without serial number, with generetaing a unique id and qr code and stick to asset.
+- As as admin user, I want to add assets without serial number, with generating a unique id and qr code and stick to asset.
 - As a user, I want to mark my new asset with a QR, so that it is easy to identify-
 
 `Register required information`
