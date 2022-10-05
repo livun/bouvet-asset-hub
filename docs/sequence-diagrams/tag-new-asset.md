@@ -108,39 +108,3 @@ sequenceDiagram
 
            
 ```
-
-# Update asset information
-```mermaid
-sequenceDiagram
-    User ->> UI : Toggle update icon on asset from asset table
-    Activate UI
-        UI -->> User : Form with input fields
-        User ->> UI : Filled out form
-    Deactivate UI
-    
-    UI ->> API Controller: Post data
-
-    Activate API Controller
-        
-        API Controller -) Mediator Handler : Request to update asset
-        
-        Activate Mediator Handler
-                        
-            Mediator Handler -) Asset Repository : UpdateAsset(data)
-            
-            Activate Asset Repository
-                Asset Repository  --) Mediator Handler : Response(Asset)
-            Deactivate Asset Repository 
-            
-            Mediator Handler -->> API Controller : Response('Asset successfully updated')
-        
-        Deactivate Mediator Handler
-    
-            API Controller --) UI  : Asset sucessfully updated
-    Deactivate API Controller
-    UI -->> User : Table is updated with information
-
-    
-
-           
-```
