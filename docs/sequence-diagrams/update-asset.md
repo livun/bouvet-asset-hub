@@ -32,7 +32,7 @@ sequenceDiagram
         
         Activate UI
             UI -->> User : Form with dropdown field
-            User ->> UI : Filled out form
+            User ->> UI : Filled out form with chosen status
         Deactivate UI
     
     Deactivate User
@@ -45,12 +45,42 @@ sequenceDiagram
         Mediator Handler -)+ Asset Repository : UpdateAssetStatus(data) 
         Asset Repository  --)- Mediator Handler : Response(Asset) 
     else length of list is > one
-        Mediator Handler -)+ Asset Repository : UpdateAssetsStatus(data) 
+        Mediator Handler -)+ Asset Repository : UpdateAssetsStatuses(data) 
         Asset Repository  --)- Mediator Handler : Response(Asset) 
     end
         
     Mediator Handler -->>- API Controller : Response('Asset successfully updated')
             
+    API Controller --)- UI  : Asset sucessfully updated
+    
+    UI -->> User : Table is updated with information
+     
+```
+## Update asset from scanning the QR-label of asset
+```mermaid
+sequenceDiagram
+    User ->> UI : Scan asset
+    Activate User
+
+        Activate UI
+            UI -->> User : Choices
+            User ->> UI : Choose to update asset 
+            UI -->> User : Form with input fields
+            User ->> UI : Filled out form
+        Deactivate UI
+        
+    Deactivate User
+    
+    UI ->>+ API Controller: Post data
+    
+    API Controller -)+ Mediator Handler : Request to update asset
+        
+    Mediator Handler -)+ Asset Repository : UpdateAsset(data)
+            
+    Asset Repository  --)- Mediator Handler : Response(Asset)
+                    
+    Mediator Handler -->>- API Controller : Response('Asset successfully updated')
+    
     API Controller --)- UI  : Asset sucessfully updated
     
     UI -->> User : Table is updated with information
