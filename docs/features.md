@@ -49,7 +49,7 @@ Note: `Features are marked with this styling`
 `Scan asset and check out to employee`
 - As an admin user, I want to scan the asset, choose the time span, check out to employee
 - As an admin user, I want to scan the asset, choose *no time limit*, check out to employee
-
+- Extend time of loan
 ### Check in
 `Scan asset and check in asset`
 - As an admin user, I want to scan the asset and check in the asset

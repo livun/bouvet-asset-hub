@@ -56,45 +56,38 @@ sequenceDiagram
     UI -->> User : Table is updated with information
      
 ```
-## Update asset from scanning the QR-label of asset
+## Update asset information and status from scan
+### Used sequences in this diagram
+- [View one asset from scan](read-asset.md#view-one-asset-from-scan)
 ```mermaid
-sequenceDiagram
-    User ->> UI : Scan asset
-    Activate UI
-    Activate User
-
-        UI ->>+ API Controller: Get asset
-        API Controller ->>+ Mediator Handler : Query Asset by id
-        Mediator Handler ->>+ Asset Repository : Find asset by id
-        Asset Repository -->>- Mediator Handler : Response(Asset)
-        Mediator Handler -->>- API Controller : Response (Asset)
-        API Controller -->>- UI : Response (Asset)
-
-        Note over UI: Actions on Asset
-        Alt Update Asset
-            UI -->> User : Display asset
-            User ->> UI : Choose to update asset 
-            UI -->> User : Form with input fields
-            User ->> UI : Filled out form 
-
-        End
-    Deactivate User
-       
-    
-    UI ->>+ API Controller: Post data
-    
-    API Controller -)+ Mediator Handler : Request to update asset
-        
-    Mediator Handler -)+ Asset Repository : UpdateAsset(data)
+    sequenceDiagram
+        Note over User : View one asset from scan
+        Note over User: Actions on Asset
             
-    Asset Repository  --)- Mediator Handler : Response(Asset)
-                    
-    Mediator Handler -->>- API Controller : Response('Asset successfully updated')
-    
-    API Controller --)- UI  : Asset sucessfully updated
-    
-    UI -->> User : Table is updated with information
-    Deactivate UI
+            Alt Update Asset
+            
+                UI -->> User : Form with input fields
+                Activate UI
+                Activate User
+                User ->> UI : Filled out form 
+
+            End
+        Deactivate User
+        
+        UI ->>+ API Controller: Post data
+        
+        API Controller -)+ Mediator Handler : Request to update asset
+            
+        Mediator Handler -)+ Asset Repository : UpdateAsset(data)
+                
+        Asset Repository  --)- Mediator Handler : Response(Asset)
+                        
+        Mediator Handler -->>- API Controller : Response('Asset successfully updated')
+        
+        API Controller --)- UI  : Asset sucessfully updated
+        
+        UI -->> User : Table is updated with information
+        Deactivate UI
 
      
 ```
