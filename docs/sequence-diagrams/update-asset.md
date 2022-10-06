@@ -60,16 +60,26 @@ sequenceDiagram
 ```mermaid
 sequenceDiagram
     User ->> UI : Scan asset
+    Activate UI
     Activate User
 
-        Activate UI
-            UI -->> User : Choices
+        UI ->>+ API Controller: Get asset
+        API Controller ->>+ Mediator Handler : Query Asset by id
+        Mediator Handler ->>+ Asset Repository : Find asset by id
+        Asset Repository -->>- Mediator Handler : Response(Asset)
+        Mediator Handler -->>- API Controller : Response (Asset)
+        API Controller -->>- UI : Response (Asset)
+
+        Note over UI: Actions on Asset
+        Alt Update Asset
+            UI -->> User : Display asset
             User ->> UI : Choose to update asset 
             UI -->> User : Form with input fields
-            User ->> UI : Filled out form
-        Deactivate UI
-        
+            User ->> UI : Filled out form 
+
+        End
     Deactivate User
+       
     
     UI ->>+ API Controller: Post data
     
@@ -84,5 +94,7 @@ sequenceDiagram
     API Controller --)- UI  : Asset sucessfully updated
     
     UI -->> User : Table is updated with information
+    Deactivate UI
+
      
 ```
