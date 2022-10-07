@@ -12,15 +12,15 @@ sequenceDiagram
     
     Deactivate User
     
-    UI ->> API /assets/{id}: Delete Asset By Id
-    API /assets/{id} -) DeleteAssetCommandHandler : DeleteAssetCommand (id)
+    UI ->> API /assets/{id}: DELETE Asset By Id
+    API /assets/{id} -) DeleteAssetCommandHandler : DeleteAssetCommand (Id)
 
     Alt is valid delete
         
-        DeleteAssetCommandHandler -) Asset Repository : Delete(id)
+        DeleteAssetCommandHandler -) Asset Repository : Delete(Id)
         Asset Repository  --) DeleteAssetCommandHandler : Response(Asset)
         DeleteAssetCommandHandler -->> API /assets/{id} : Response('Asset successfully deleted')
-        API /assets/{id} --) UI  : Asset sucessfully removed
+        API /assets/{id} --) UI  : Response ()
         UI -->> User : Table is updated with information
 
     else is not valid delete

@@ -13,7 +13,6 @@ sequenceDiagram
    
         Note over User : Sequence: View one Asset from scan
       
-
         Note over User: Actions on Asset
 
         alt Asset Status is Registered
@@ -22,17 +21,18 @@ sequenceDiagram
             Note over User, UI: Sequence: Update Asset from scan
         Else Asset Status is Available
             User ->> UI: Alternatives
-                alt View Loan
-                    Note over User, UI : Sequence: View one Loan from scan
-                else Update Status
+                
+                alt Update Status
                     Note over User, UI : Sequence: Update Asset from scan
                 else New Loan
                     Note over User, UI : Sequence: New Loan
                 end
             
-        else Asset Status is Unvailable
+        else Asset Status is Unavailable
             User ->> UI : Alternatives
-            alt Estend Loand
+            alt View Loan
+                    Note over User, UI : Sequence: View one Loan from scan
+            else Extend Loan
                 Note over User, UI : Sequence: Extend Loan
             else Hand in Loan
                 Note over User, UI : Sequence: Hand in Loan

@@ -1,4 +1,8 @@
 # Update Asset
+- [Update Asset information](#update-asset-information)
+- [Update Asset Status on one or more Assets](#update-asset-status-on-one-or-more-assets)
+- [Update Asset information and status from scan](#update-asset-information-and-status-from-scan)
+
 ## Update Asset information
 ```mermaid
 sequenceDiagram
@@ -8,9 +12,9 @@ sequenceDiagram
         UI -->> User : Form with input fields
         User ->> UI : Filled out form
     Deactivate User
-            UI ->>+ API /assets/{id}: PUT Asset By Id (data)
-                API /assets/{id} -)+ UpdateAssetByIdCommandHandler : UpdateAssetByIdCommand (data)
-                    UpdateAssetByIdCommandHandler -)+ Asset Repository : Update (data)
+            UI ->>+ API /assets/{id}: PUT Asset By Id (DTO)
+                API /assets/{id} -)+ UpdateAssetByIdCommandHandler : UpdateAssetByIdCommand (DTO)
+                    UpdateAssetByIdCommandHandler -)+ Asset Repository : Update (Data)
                     Asset Repository  --)- UpdateAssetByIdCommandHandler : Response()
                 UpdateAssetByIdCommandHandler -->>- API /assets/{id} : Response ()
             API /assets/{id} --)- UI  : Response ()
@@ -28,14 +32,14 @@ sequenceDiagram
             UI -->> User : Form with dropdown field
             User ->> UI : Filled out form with chosen status
     Deactivate User
-                UI ->>+ API /assets/{assets}: PUT Asset By List of Id's (data)
-                    API /assets/{assets} -)+ UpdateAssetsByIdsCommandHandler : UpdateAssetsByIdsCommand (data)
+                UI ->>+ API /assets/{assets}: PUT Asset By List of Id's (DTO)
+                    API /assets/{assets} -)+ UpdateAssetsByIdsCommandHandler : UpdateAssetsByIdsCommand (DTO)
                     
                     alt length of list is one
-                        UpdateAssetsByIdsCommandHandler -)+ Asset Repository : UpdateAssetStatus(id, data) 
+                        UpdateAssetsByIdsCommandHandler -)+ Asset Repository : UpdateAssetStatus(Id, Data) 
                         Asset Repository  --)- UpdateAssetsByIdsCommandHandler : Response () 
                     else length of list is > one
-                        UpdateAssetsByIdsCommandHandler -)+ Asset Repository : UpdateAssetsStatuses(List<id>, data) 
+                        UpdateAssetsByIdsCommandHandler -)+ Asset Repository : UpdateAssetsStatuses(List<Id>, Data) 
                         Asset Repository  --)- UpdateAssetsByIdsCommandHandler : Response () 
                     end
                     
@@ -56,9 +60,9 @@ sequenceDiagram
     Activate User
         User ->> UI : Filled out form 
     Deactivate User
-            UI ->>+ API /assets/{id}: PUT Asset By Id (data)
-                API /assets/{id} -)+ UpdateAssetByIdCommandHandler : UpdateAssetByIdCommand (data)
-                    UpdateAssetByIdCommandHandler -)+ Asset Repository : Update (id, data)
+            UI ->>+ API /assets/{id}: PUT Asset By Id (DTO)
+                API /assets/{id} -)+ UpdateAssetByIdCommandHandler : UpdateAssetByIdCommand (DTO)
+                    UpdateAssetByIdCommandHandler -)+ Asset Repository : Update (Id, Data)
                     Asset Repository  --)- UpdateAssetByIdCommandHandler : Response ()
                 UpdateAssetByIdCommandHandler -->>- API /assets/{id} : Response ()
             API /assets/{id} --)- UI  : Response ()
