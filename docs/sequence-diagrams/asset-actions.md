@@ -2,9 +2,12 @@
 When scanning an Asset, the Status of it decides the possible Actions available
 ### Used sequences in this diagram
 - [Sequence: View one Asset from scan](read-Asset.md#view-one-Asset-from-scan)
-- [Sequence: Update Asset](update-Asset.md#update-Asset-information-and-status-from-scan)
-- [Sequence: New Loan](loan.md#new-loan)
-- [Sequence: Hand in Loan](loan.md#hand-in-loan)
+- [Sequence: Update Asset from scan](update-Asset.md#update-asset-information-and-status-from-scan)
+- [Sequence: View one Loan from scan](read-loan.md#view-one-loan-from-scan)
+- [Sequence: New Loan](loan-actions.md#new-loan)
+- [Sequence: Extend Loan](loan-actions.md#extend-loan)
+- [Sequence: Hand in Loan](loan-actions.md#hand-in-loan)
+
 ```mermaid
 sequenceDiagram
    
@@ -16,21 +19,29 @@ sequenceDiagram
         alt Asset Status is Registered
             User ->> UI: Update Status
                     
-            Note over User, UI: Sequence: Update Asset
+            Note over User, UI: Sequence: Update Asset from scan
         Else Asset Status is Available
-            User ->> UI: New Loan or Update Status
-                alt Update Status
-                    Note over User, UI : Sequence: Update Asset 
+            User ->> UI: Alternatives
+                alt View Loan
+                    Note over User, UI : Sequence: View one Loan from scan
+                else Update Status
+                    Note over User, UI : Sequence: Update Asset from scan
                 else New Loan
                     Note over User, UI : Sequence: New Loan
                 end
             
         else Asset Status is Unvailable
-            Note over User, UI : Sequence: Hand in Loan
+            User ->> UI : Alternatives
+            alt Estend Loand
+                Note over User, UI : Sequence: Extend Loan
+            else Hand in Loan
+                Note over User, UI : Sequence: Hand in Loan
+            end
+           
 
         Else Asset Status is Discontinued
             User ->> UI: Update Status
-            Note over User, UI: Sequence: Update Asset
+            Note over User, UI: Sequence: Update Asset from scan
 
         End
     

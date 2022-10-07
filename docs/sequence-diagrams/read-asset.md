@@ -1,11 +1,11 @@
 # Read Asset
-## View one asset from scan
+## View one Asset from scan
 ```mermaid
 sequenceDiagram
-User ->> UI : Scan asset
+User ->> UI : Scan Asset
     Activate UI
-        UI ->>+ API /assets/{id}: Get Asset
-        API /assets/{id} ->>+ GetAssetByIdQueryHandler : GetAssetByIdQuery
+        UI ->>+ API /assets/{id}: Get Asset by Id
+        API /assets/{id} ->>+ GetAssetByIdQueryHandler : GetAssetByIdQuery (id)
         GetAssetByIdQueryHandler ->>+ Asset Repository : Get(id)
         Asset Repository -->>- GetAssetByIdQueryHandler : Response(Asset)
         GetAssetByIdQueryHandler -->>- API /assets/{id} : Response (Asset)
@@ -14,13 +14,13 @@ User ->> UI : Scan asset
     Deactivate UI
 
 ```
-## View one asset from table
+## View one Asset from table
 ```mermaid
 sequenceDiagram
-User ->> UI : Select one asset
+User ->> UI : Select one Asset
    Activate UI
-        UI ->>+ API /assets/{id}: Get Asset
-        API /assets/{id} ->>+ GetAssetbyIdQueryHandler : GetAssetByIdQuery
+        UI ->>+ API /assets/{id}: Get Asset By Id
+        API /assets/{id} ->>+ GetAssetbyIdQueryHandler : GetAssetByIdQuery (id)
         GetAssetbyIdQueryHandler ->>+ Asset Repository : Get (id)
         Asset Repository -->>- GetAssetbyIdQueryHandler : Response(Asset)
         GetAssetbyIdQueryHandler -->>- API /assets/{id} : Response (Asset)
@@ -51,8 +51,8 @@ sequenceDiagram
 User ->> UI : Toggle category in Assets table
     Activate UI
         UI ->>+ API /assets/{category}: Get Assets by Category 
-        API /assets/{category} ->>+ GetAssetsByCategoryQueryHandler : GetAssetsByCategoryQuery
-        GetAssetsByCategoryQueryHandler ->>+ Asset Repository : GetByCategory()
+        API /assets/{category} ->>+ GetAssetsByCategoryQueryHandler : GetAssetsByCategoryQuery (Category)
+        GetAssetsByCategoryQueryHandler ->>+ Asset Repository : GetByCategory(Category)
         Asset Repository -->>- GetAssetsByCategoryQueryHandler : Response(List<Asset>)
         GetAssetsByCategoryQueryHandler -->>- API /assets/{category} : Response (List<Asset>)
         API /assets/{category} -->>- UI : Response (List<Asset>)

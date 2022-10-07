@@ -1,93 +1,67 @@
-# Update asset
-## Update asset information
+# Update Asset
+## Update Asset information
 ```mermaid
 sequenceDiagram
-    User ->> UI : Toggle update icon on asset from asset table
-    
+    User ->> UI : Toggle update icon on Asset from Asset table
     Activate UI
-        UI -->>+ User : Form with input fields
-        User ->>- UI : Filled out form
+    Activate User
+        UI -->> User : Form with input fields
+        User ->> UI : Filled out form
+    Deactivate User
+            UI ->>+ API /assets/{id}: PUT Asset By Id (data)
+                API /assets/{id} -)+ UpdateAssetByIdCommandHandler : UpdateAssetByIdCommand (data)
+                    UpdateAssetByIdCommandHandler -)+ Asset Repository : Update (data)
+                    Asset Repository  --)- UpdateAssetByIdCommandHandler : Response()
+                UpdateAssetByIdCommandHandler -->>- API /assets/{id} : Response ()
+            API /assets/{id} --)- UI  : Response ()
+        UI -->> User : If valid, table is updated with information
     Deactivate UI
-    
-    UI ->>+ API Controller: Post data
-    API Controller -)+ Mediator Handler : Request to update asset
-        
-    Mediator Handler -)+ Asset Repository : UpdateAsset(data)
-            
-    Asset Repository  --)- Mediator Handler : Response(Asset)
-                    
-    Mediator Handler -->>- API Controller : Response('Asset successfully updated')
-    
-    API Controller --)- UI  : Asset sucessfully updated
-    
-    UI -->> User : Table is updated with information
 ```
-## Update asset status on one or more assets
+
+## Update Asset Status on one or more Assets
 ```mermaid
 sequenceDiagram
-    User ->> UI : Toggle all assets that should be updated
-    
+    User ->> UI : Toggle all Assets that should be updated
     Activate User
         User ->> UI : Toggle update status button
-        
         Activate UI
             UI -->> User : Form with dropdown field
             User ->> UI : Filled out form with chosen status
-        Deactivate UI
-    
     Deactivate User
-    
-    UI ->>+ API Controller: Post data (list of assets)
-    
-    API Controller -)+ Mediator Handler : Request to update asset status
-
-    alt length of list is one
-        Mediator Handler -)+ Asset Repository : UpdateAssetStatus(data) 
-        Asset Repository  --)- Mediator Handler : Response(Asset) 
-    else length of list is > one
-        Mediator Handler -)+ Asset Repository : UpdateAssetsStatuses(data) 
-        Asset Repository  --)- Mediator Handler : Response(Asset) 
-    end
-        
-    Mediator Handler -->>- API Controller : Response('Asset successfully updated')
-            
-    API Controller --)- UI  : Asset sucessfully updated
-    
-    UI -->> User : Table is updated with information
-     
-```
-## Update asset information and status from scan
-### Used sequences in this diagram
-- [View one asset from scan](read-asset.md#view-one-asset-from-scan)
-```mermaid
-    sequenceDiagram
-        Note over User : View one asset from scan
-        Note over User: Actions on Asset
-            
-            Alt Update Asset
-            
-                UI -->> User : Form with input fields
-                Activate UI
-                Activate User
-                User ->> UI : Filled out form 
-
-            End
-        Deactivate User
-        
-        UI ->>+ API Controller: Post data
-        
-        API Controller -)+ Mediator Handler : Request to update asset
-            
-        Mediator Handler -)+ Asset Repository : UpdateAsset(data)
-                
-        Asset Repository  --)- Mediator Handler : Response(Asset)
-                        
-        Mediator Handler -->>- API Controller : Response('Asset successfully updated')
-        
-        API Controller --)- UI  : Asset sucessfully updated
-        
-        UI -->> User : Table is updated with information
+                UI ->>+ API /assets/{assets}: PUT Asset By List of Id's (data)
+                    API /assets/{assets} -)+ UpdateAssetsByIdsCommandHandler : UpdateAssetsByIdsCommand (data)
+                    
+                    alt length of list is one
+                        UpdateAssetsByIdsCommandHandler -)+ Asset Repository : UpdateAssetStatus(id, data) 
+                        Asset Repository  --)- UpdateAssetsByIdsCommandHandler : Response () 
+                    else length of list is > one
+                        UpdateAssetsByIdsCommandHandler -)+ Asset Repository : UpdateAssetsStatuses(List<id>, data) 
+                        Asset Repository  --)- UpdateAssetsByIdsCommandHandler : Response () 
+                    end
+                    
+                    UpdateAssetsByIdsCommandHandler -->>- API /assets/{assets} : Response ()
+                API /assets/{assets} --)- UI  : Response ()
         Deactivate UI
-
-     
+            UI -->> User : If valid, table is updated with information
+```
+## Update Asset information and status from scan
+### Used sequences in this diagram
+- [View one Asset from scan](read-Asset.md#view-one-Asset-from-scan)
+```mermaid
+sequenceDiagram
+    Note over User : View one Asset from scan
+    Note over User: Action: Update Asset
+    UI -->> User : Form with input fields
+    Activate UI
+    Activate User
+        User ->> UI : Filled out form 
+    Deactivate User
+            UI ->>+ API /assets/{id}: PUT Asset By Id (data)
+                API /assets/{id} -)+ UpdateAssetByIdCommandHandler : UpdateAssetByIdCommand (data)
+                    UpdateAssetByIdCommandHandler -)+ Asset Repository : Update (id, data)
+                    Asset Repository  --)- UpdateAssetByIdCommandHandler : Response ()
+                UpdateAssetByIdCommandHandler -->>- API /assets/{id} : Response ()
+            API /assets/{id} --)- UI  : Response ()
+        UI -->> User : If valid, Asset is updated in view
+    Deactivate UI     
 ```

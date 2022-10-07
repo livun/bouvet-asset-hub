@@ -1,110 +1,65 @@
 # Tag new asset
-## Tag asset with a serial number
+## Tag asset with a Serial Number
 ```mermaid
 sequenceDiagram
-    User ->> UI : Choose "new asset with serial number" from menu
-
-    loop 
-        UI ->> UI : Do OCR and identify serialnumber
-    end
-
-    UI  ->> External API: Validate serial number
-
-    activate External API
-        External API --) UI : response with validation and metdata on asset
-    deactivate External API
-    
-    UI ->>API Controller: Post asset with validated serial number, metadata and category
-
-    Activate API Controller
-        
-        API Controller -) Mediator Handler : Request to add asset
-        
-        Activate Mediator Handler
-
-            Mediator Handler -) Asset Repository : GetById() 
-
-            Activate Asset Repository
-                Asset Repository  --> Mediator Handler : Response(Asset)
-            Deactivate Asset Repository
-    
+    Note over User: Action: New Asset
+    User ->> UI : Scan Serial Number
+    Activate UI
+        loop 
+            UI ->> UI : Do OCR and identify Serial Number
+        end
+            UI  ->>+ External API: Validate Serial Number
+   
+                External API --)- UI : Response (Validation, Metadata)
+                UI ->>+ API /assets: POST Asset (SerialNumber, Metadata, Category)
+    Deactivate UI
+                    API /assets -)+ CreateAssetCommandHandler : CreateAssetCommand (data)
+                        Note over CreateAssetCommandHandler, Asset Repository : Check if Asset already exist
+                        CreateAssetCommandHandler -)+ Asset Repository : GetBySerialNumber (SerialNumber) 
+                        Asset Repository  -->>- CreateAssetCommandHandler : Response (Asset)
+                    
             alt Asset is some
+                        
+                    CreateAssetCommandHandler --) API /assets : Response('Asset aldready exist')
+                API /assets --) UI  : Response ()
+            UI -->> User : Message with response
                 
-                Mediator Handler --) API Controller : Response('Asset aldready exist')
-                
-                API Controller --) UI  : Asset already exist
-            
             else Asset in none
-                
-                Mediator Handler ->> QR Service : Generate QR code
-                
-                Activate QR Service
-                    QR Service -->> Mediator Handler : Response (QR-code)
-                Deactivate QR Service
+                    
+                        CreateAssetCommandHandler ->>+ QR Service : Generate QR code
+                        QR Service -->>- CreateAssetCommandHandler : Response (QR-code)
 
-                Mediator Handler -) Asset Repository : AddAsset(SerialNumber, Category, QrCode)
-                
-                activate Asset Repository
-                    Asset Repository  --) Mediator Handler : Response(Asset)
-                deactivate Asset Repository 
-                
-                Mediator Handler ->> External print system: Request to print label 
-                
-                Activate External print system
-                    External print system -->> Mediator Handler : Response()
-                Deactivate External print system
+                        CreateAssetCommandHandler -)+ Asset Repository : AddAsset (SerialNumber, Category, QrCode)
+                        Asset Repository  --)- CreateAssetCommandHandler : Response (Asset)
 
-
-
-                Mediator Handler -->> API Controller : Response('Asset successfully added')
-        
-        Deactivate Mediator Handler
-    
-                API Controller --) UI  : Asset sucessfully added
-    
-    Deactivate API Controller
-
+                    CreateAssetCommandHandler -->>- API /assets : Response ('Asset successfully added')
+                API /assets --)- UI  : Response ()
+                UI ->> External Print System : Request to print label
+                External Print System -->> UI : Response ()
+            UI -->> User : Message with repsonse
+            Note over User, UI: Label is printed and stuck on asset
             end
+        
 ```
 
-## Tag asset without serial number
+## Tag asset without Serial Number
 ```mermaid
 sequenceDiagram
     User ->> UI : Choose "new asset" from menu
-    
-    UI ->> API Controller: Post asset with category
-
-    Activate API Controller
+        UI ->>+ API /assets: Post asset with category
+            API /assets -)+ CreateAssetCommandHandler : Request to add asset
+                CreateAssetCommandHandler ->>+ QR Service : Generate QR code
+                QR Service -->>- CreateAssetCommandHandler : Response (QR-code)
+                
+                CreateAssetCommandHandler -)+ Asset Repository : AddAsset(Category, QrCode)
+                Asset Repository  --)- CreateAssetCommandHandler : Response(Asset)
+                
+            CreateAssetCommandHandler -->>- API /assets : Response('Asset successfully added')
+        API /assets --)- UI  : Asset sucessfully added
+        UI ->> External Print System : Request to print label
+        External Print System -->> UI : Response ()
+    UI -->> User : Message with repsonse
+    Note over User, UI: Label is printed and stuck on asset
         
-        API Controller -) Mediator Handler : Request to add asset
-        
-        Activate Mediator Handler
-                          
-                Mediator Handler ->> QR Service : Generate QR code
-                
-                Activate QR Service
-                    QR Service -->> Mediator Handler : Response (QR-code)
-                Deactivate QR Service
 
-                Mediator Handler -) Asset Repository : AddAsset(Category, QrCode)
-                
-                activate Asset Repository
-                    Asset Repository  --) Mediator Handler : Response(Asset)
-                deactivate Asset Repository 
-                
-                Mediator Handler ->> External print system: Request to print label 
-                
-                Activate External print system
-                    External print system -->> Mediator Handler : Response()
-                Deactivate External print system
-
-                Mediator Handler -->> API Controller : Response('Asset successfully added')
-        
-        Deactivate Mediator Handler
-    
-                API Controller --) UI  : Asset sucessfully added
-    
-    Deactivate API Controller
-
-           
 ```
