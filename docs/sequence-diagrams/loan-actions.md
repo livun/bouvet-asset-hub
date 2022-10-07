@@ -1,4 +1,4 @@
-# Loan
+# Loan Actions
 - [New Loan](#new-loan)
 - [Hand in Loan](#hand-in-loan)
 - [Extend Loan](#extend-loan)
