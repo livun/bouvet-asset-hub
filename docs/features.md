@@ -10,7 +10,7 @@
 - As a user, I want to retrieve metadata about Asset from external system, to make the creating process more automatic.
 - As a user, I want to validate the Serial Number to the external system, to make sure the OCR identfied an actual Asset
     - [Sequence: Tag Asset with Serial Number](/sequence-diagrams/tag-new-asset.md#tag-asset-with-serial-number)
-    - [test](../sequence-diagrams/tag-new-asset.md)
+    - [test](./sequence-diagrams/tag-new-asset.md)
 - As as user, I want to add  Assets without serial number, with generating a unique id and qr code and stick to asset, to make it easier to manage that asset. 
     - [Sequence: Tag Asset without Serial Number](/sequence-diagrams/tag-new-asset.md#tag-asset-without-serial-number)
 
