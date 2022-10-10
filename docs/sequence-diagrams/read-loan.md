@@ -40,12 +40,12 @@ User ->> UI : Select one Loan
 sequenceDiagram
 User ->> UI : Select one Loan
    Activate UI
-        UI ->>+ API /loans/{assetId}: GET Loan By AssetId
-        API /loans/{assetId} ->>+ GetLoanByAssetIdQueryHandler : GetLoanByAssetIdQuery (AssetId)
+        UI ->>+ API /assets/1/loans: GET Loan By AssetId
+        API /assets/1/loans ->>+ GetLoanByAssetIdQueryHandler : GetLoanByAssetIdQuery (AssetId)
         GetLoanByAssetIdQueryHandler ->>+ Loan Repository : GetByAssetId (AssetId)
         Loan Repository -->>- GetLoanByAssetIdQueryHandler : Response(Loan)
-        GetLoanByAssetIdQueryHandler -->>- API /loans/{assetId} : Response (Loan)
-        API /loans/{assetId} -->>- UI : Response (Loan)
+        GetLoanByAssetIdQueryHandler -->>- API /assets/1/loans : Response (Loan)
+        API /assets/1/loans -->>- UI : Response (Loan)
         UI -->> User: Display Loan
     Deactivate UI
 
@@ -55,12 +55,12 @@ User ->> UI : Select one Loan
 sequenceDiagram
 User ->> UI : Select one Loan
    Activate UI
-        UI ->>+ API /loans/{emloyeeId}: GET Loan By EmployeeId
-        API /loans/{emloyeeId} ->>+ GetLoanByEmployeeIdQueryHandler : GetLoanByAssetIdQuery (EmployeeId)
+        UI ->>+ API /employee/1/loans: GET Loan By EmployeeId
+        API /employee/1/loans ->>+ GetLoanByEmployeeIdQueryHandler : GetLoanByAssetIdQuery (EmployeeId)
         GetLoanByEmployeeIdQueryHandler ->>+ Loan Repository : GetByAssetId (EmployeeId)
         Loan Repository -->>- GetLoanByEmployeeIdQueryHandler : Response(Loan)
-        GetLoanByEmployeeIdQueryHandler -->>- API /loans/{emloyeeId} : Response (Loan)
-        API /loans/{emloyeeId} -->>- UI : Response (Loan)
+        GetLoanByEmployeeIdQueryHandler -->>- API /employee/1/loans : Response (Loan)
+        API /employee/1/loans -->>- UI : Response (Loan)
         UI -->> User: Display Loan
     Deactivate UI
 

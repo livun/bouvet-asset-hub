@@ -31,7 +31,7 @@ sequenceDiagram
                         CreateAssetCommandHandler ->>+ QR Service : Generate QR code
                         QR Service -->>- CreateAssetCommandHandler : Response (QrCode)
 
-                        CreateAssetCommandHandler -)+ Asset Repository : AddAsset (SerialNumber, Category, QrCode)
+                        CreateAssetCommandHandler -)+ Asset Repository : Add (Data)
                         Asset Repository  --)- CreateAssetCommandHandler : Response (Asset)
 
                     CreateAssetCommandHandler -->>- API /assets : Response ('Asset successfully added')
@@ -59,7 +59,7 @@ sequenceDiagram
                     CreateAssetCommandHandler ->>+ QR Service : Generate QR code
                     QR Service -->>- CreateAssetCommandHandler : Response (QR-code)
                     
-                    CreateAssetCommandHandler -)+ Asset Repository : AddAsset(DTO, QrCode)
+                    CreateAssetCommandHandler -)+ Asset Repository : Add(Data)
                     Asset Repository  --)- CreateAssetCommandHandler : Response(Asset)
                     
                 CreateAssetCommandHandler -->>- API /assets : Response('Asset successfully added')

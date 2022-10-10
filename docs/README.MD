@@ -13,5 +13,5 @@ In this folder you find documentation of the system.
 
 ###  files
 - [Entity Relationship Diagram](entity-relationship-diagram.md) shows the relationshp between the main entities in application.
-- [Features](features.md) lists all feutures and connected user stories of application.
+- [Features](features.md) lists all features and connected user stories of application.
 - [Figma](figma.md) links to a figma prototype. Only accesible to Bouvet employees with access to figma. 

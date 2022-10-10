@@ -11,16 +11,16 @@ sequenceDiagram
     UI -->>+ User : New loan form
     Activate UI 
         User ->>- UI : Filled form
-            UI ->>+ API /loan : POST Loan (Asset, EmployeeNumber, Date)
-                API /loan ->>+ CreateLoanCommandHandler : CreateLoanCommand (DTO)
+            UI ->>+ API /loans : POST Loan (Asset, EmployeeNumber, Date)
+                API /loans ->>+ CreateLoanCommandHandler : CreateLoanCommand (DTO)
                     CreateLoanCommandHandler ->>+ Loan Repository : Add (Data)
                     Loan Repository -->>- CreateLoanCommandHandler : Response()
                     CreateLoanCommandHandler ->>+ Asset Repository : UpdateAssetStatus (Unavailable)
                     Asset Repository -->>- CreateLoanCommandHandler : Response()   
                     CreateLoanCommandHandler ->>+ External API : Notification on new Loan (Employee, Asset)
                     External API -->>- CreateLoanCommandHandler : Response ()
-                CreateLoanCommandHandler -->>- API /loan : Response ('Loan is added') 
-            API /loan -->>- UI : Response()
+                CreateLoanCommandHandler -->>- API /loans : Response ('Loan is added') 
+            API /loans -->>- UI : Response()
         UI -->> User : Message with response
     Deactivate UI
    
@@ -33,7 +33,7 @@ sequenceDiagram
     User ->>+ UI: Hand in loan
         UI ->>+ API /loans/{Id} : DELETE Loan By Id
             API /loans/{Id}  ->>+ DeleteLoanByIdCommandHandler : DeleteLoanByIdCommand (Id)
-                DeleteLoanByIdCommandHandler ->>+ Loan Repository : Remove(Id)
+                DeleteLoanByIdCommandHandler ->>+ Loan Repository : Delete (Id)
                 Loan Repository -->>- DeleteLoanByIdCommandHandler : Response()
                 
                 DeleteLoanByIdCommandHandler ->>+ LoanHistory Repository : Add (Loan)
