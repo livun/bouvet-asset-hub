@@ -4,13 +4,8 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.3.32825.248
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bouvet.AssetHub.API", "Bouvet.AssetHub.API\Bouvet.AssetHub.API.csproj", "{41957E4C-C21B-4AE4-B2C3-073FEC53CC3A}"
-	ProjectSection(ProjectDependencies) = postProject
-		{6B00A06D-6390-402C-A999-6110CF8C2937} = {6B00A06D-6390-402C-A999-6110CF8C2937}
-	EndProjectSection
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{0D48775C-FBBF-4BF6-88C5-EFC5DDCB9A96}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bouvet.AssetHub.Domain", "Bouvet.AssetHub.Domain\Bouvet.AssetHub.Domain.csproj", "{6B00A06D-6390-402C-A999-6110CF8C2937}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -26,10 +21,6 @@ Global
 		{0D48775C-FBBF-4BF6-88C5-EFC5DDCB9A96}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0D48775C-FBBF-4BF6-88C5-EFC5DDCB9A96}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0D48775C-FBBF-4BF6-88C5-EFC5DDCB9A96}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6B00A06D-6390-402C-A999-6110CF8C2937}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6B00A06D-6390-402C-A999-6110CF8C2937}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6B00A06D-6390-402C-A999-6110CF8C2937}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6B00A06D-6390-402C-A999-6110CF8C2937}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

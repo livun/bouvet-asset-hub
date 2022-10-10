@@ -1,4 +1,8 @@
-using Bouvet.AssetHub.Domain.Data;
+using Bouvet.AssetHub.API.Data;
+using Bouvet.AssetHub.API.Domain.Asset.Interfaces;
+using Bouvet.AssetHub.API.Domain.Asset.Repositories;
+using Bouvet.AssetHub.API.Domain.Loan.Interfaces;
+using Bouvet.AssetHub.API.Domain.Loan.Repositories;
 using MediatR;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
@@ -26,8 +30,13 @@ builder.Services.AddDbContext<DataContext>(options =>
     //var connectionString = builder.Configuration.GetConnectionString("DataContext");
     options.UseSqlServer(connection);
 });
-
+//var assembly = AppDomain.CurrentDomain.Load("Bouvet.AssetHub.Domain");
 builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
+
+
+builder.Services.AddScoped<ILoanRepository, LoanRepository>();
+builder.Services.AddScoped<IAssetRepository, AssetRepository>();
+
 
 var app = builder.Build();
 
