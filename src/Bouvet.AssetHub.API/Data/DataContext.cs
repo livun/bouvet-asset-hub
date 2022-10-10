@@ -2,6 +2,7 @@
 using Bouvet.AssetHub.API.Domain.Asset.Model;
 using Bouvet.AssetHub.API.Domain.Employee.Model;
 using Bouvet.AssetHub.API.Domain.Loan.Model;
+using Bouvet.AssetHub.API.Domain.LoanHistory.Model;
 using LanguageExt;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,6 +16,7 @@ namespace Bouvet.AssetHub.API.Data
         public DbSet<LoanEntity> Loans => Set<LoanEntity>();
         public DbSet<EmployeeEntity> Employees => Set<EmployeeEntity>();
         public DbSet<CategoryEntity> Categories => Set<CategoryEntity>();
+        public DbSet<LoanHistoryEntity> LoanHistory => Set<LoanHistoryEntity>();
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<AssetEntity>()
