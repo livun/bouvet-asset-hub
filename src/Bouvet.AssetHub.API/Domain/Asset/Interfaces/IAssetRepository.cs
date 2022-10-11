@@ -11,13 +11,15 @@ namespace Bouvet.AssetHub.API.Domain.Asset.Interfaces
 {
     public interface IAssetRepository 
     {
-        AssetEntity GetById(int id);
-        Option<List<AssetEntity>> GetAll();
-        void Add(AssetEntity entity);
-        void AddRange(IEnumerable<AssetEntity> entities);
-        void Remove(AssetEntity entity);
-        void Save();
-        //void RemoveRange(IEnumerable<AssetEntity> entities);
+        Task<Option<AssetEntity>> Add(AssetEntity entity);
+        Task<Option<AssetEntity>> Update(AssetEntity entity);
+        Task<Option<AssetEntity>> UpdateAssetStatus(int id, Status status);
+        Task<Option<AssetEntity>> Get(int id);
+        Task<Option<AssetEntity>> GetBySerialNumber(int serialNumber);
+        Task<List<AssetEntity>> GetAll();
+        Task<List<AssetEntity>> GetByCategory(int categoryId);
+        Task<Option<AssetEntity>> Delete(AssetEntity entity);
+        
         
     }
 }
