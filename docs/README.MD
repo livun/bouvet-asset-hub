@@ -9,7 +9,7 @@ In this folder you find documentation of the system.
 
 ### /sequence-diagrams
 - [Folder](./sequence-diagrams/README.md) contains all sequences in application. 
-- They are tightly connected to the feutures listed in this [document](features.md).
+- They are tightly connected to the features listed in this [document](features.md).
 
 ###  files
 - [Entity Relationship Diagram](entity-relationship-diagram.md) shows the relationshp between the main entities in application.

@@ -16,16 +16,20 @@ namespace Bouvet.AssetHub.API.Domain.Asset.Repositories
     public class AssetRepository : IAssetRepository
     {
         private readonly DataContext _context;
-        private readonly ILogger _log;
+        private readonly ILogger _logger;
 
-        public AssetRepository(DataContext context, ILogger log) 
+        public AssetRepository(ILogger<AssetRepository> logger, DataContext context) 
         {
             _context = context;
-            _log = log;
+            _logger = logger;
         }
 
         public async Task<Option<AssetEntity>> Add(AssetEntity entity)
         {
+            //entity.Category = await _context.Categories
+            //    .FirstOrDefaultAsync(c => c.Id == entity.Category.Id);
+         
+            //entity.Category = cat;
             await _context.Assets.AddAsync(entity);
             try
             {
@@ -34,7 +38,7 @@ namespace Bouvet.AssetHub.API.Domain.Asset.Repositories
 
             } catch(UniqueConstraintException ex)
             {
-                _log.LogError(ex.Message);
+                _logger.LogError(ex.Message);
                 return Option<AssetEntity>.None;
             }
         }
@@ -107,7 +111,7 @@ namespace Bouvet.AssetHub.API.Domain.Asset.Repositories
             }
             catch (UniqueConstraintException ex)
             {
-                _log.LogError(ex.Message);
+                _logger.LogError(ex.Message);
                 return Option<AssetEntity>.None;
             }
         }    

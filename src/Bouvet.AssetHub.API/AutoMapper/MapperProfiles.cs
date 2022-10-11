@@ -9,7 +9,7 @@ namespace Bouvet.AssetHub.API.AutoMapper
         public MapperProfiles()
         {
             CreateMap<AssetEntity, AssetRequestDto>().ReverseMap();
-            CreateMap<AssetEntity, AssetResponseDto>();
+            CreateMap<AssetEntity, AssetResponseDto>().ReverseMap();
         }
     }
 }

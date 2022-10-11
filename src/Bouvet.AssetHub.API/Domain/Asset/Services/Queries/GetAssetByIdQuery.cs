@@ -1,5 +1,5 @@
 ﻿using Bouvet.AssetHub.API.Domain.Asset.Model;
-
+using LanguageExt;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -9,6 +9,6 @@ using System.Threading.Tasks;
 
 namespace Bouvet.AssetHub.API.Domain.Asset.Services.Queries
 {
-    public record GetAssetByIdQuery(int Id) : IRequest<AssetEntity>;
+    public record GetAssetByIdQuery(int Id) : IRequest<Option<AssetEntity>>;
   
 }

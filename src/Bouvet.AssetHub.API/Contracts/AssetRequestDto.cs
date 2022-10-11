@@ -7,7 +7,7 @@ namespace Bouvet.AssetHub.API.Contracts
     public class AssetRequestDto
     {
         public int SerialNumberValue { get; set; }
-        public string CategoryName { get; set; } = "";
+        public int CategoryId { get; set; }
 
     }
 }

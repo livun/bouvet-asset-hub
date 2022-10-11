@@ -16,6 +16,7 @@ namespace Bouvet.AssetHub.API.Domain.Asset.Model
         public Status Status { get; set; } = Status.Registered;
 
         [Required]
+        public int CategoryId { get; set; }
         public CategoryEntity Category { get; set; } = new CategoryEntity();
     }
 

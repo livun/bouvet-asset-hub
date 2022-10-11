@@ -2,7 +2,9 @@
 using AutoMapper;
 using Bouvet.AssetHub.API.Contracts;
 using Bouvet.AssetHub.API.Domain.Asset.Model;
+using Bouvet.AssetHub.API.Domain.Asset.Services.Commands;
 using Bouvet.AssetHub.API.Domain.Asset.Services.Queries;
+using LanguageExt.UnsafeValueAccess;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -40,18 +42,13 @@ namespace Bouvet.AssetHub.API.Controllers
         [HttpPost]
         public async Task<IActionResult> AddAssetAsync(AssetRequestDto dto)
         {
-           
-
-            AssetEntity newAsset = new AssetEntity
+            var result = await _mediator.Send(new CreateAssetCommand { Asset = _mapper.Map<AssetEntity>(dto)});
+            if (result.IsSome)
             {
-                SerialNumber = new SerialNumber { Value = 123345678 },
-                Category = new CategoryEntity { Name = "PC" },
-            };
-            //AssetRequestDto dtos = _mapper.Map<AssetRequestDto>(newAsset);
-            AssetEntity asset = _mapper.Map<AssetEntity>(dto);
-            //Console.WriteLine(asset);
-            
-            return Ok(asset);
+                return Ok("New asset is added!");
+            }
+            return BadRequest("Could not add asset");
+
 
         }
         // PUT /assets
@@ -67,7 +64,13 @@ namespace Bouvet.AssetHub.API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAssetbyIdAsync(int id)
         {
+            var result = await _mediator.Send( new GetAssetByIdQuery(id));
+            if (result.IsSome)
+            {
+                return Ok(_mapper.Map<AssetEntity, AssetResponseDto>((AssetEntity)result));
+            }
             return NotFound();
+
 
         }
         // PUT /assets/1

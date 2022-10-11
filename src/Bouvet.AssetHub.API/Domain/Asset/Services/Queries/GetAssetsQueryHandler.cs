@@ -26,16 +26,9 @@ namespace Bouvet.AssetHub.API.Domain.Asset.Services.Queries
 
             public async Task<List<AssetEntity>> Handle(GetAssetsQuery request, CancellationToken cancellationToken)
             {
-            var response = await _repository.Get(1);
+            throw new NotImplementedException();
 
-            response.Match(
-                r => Console.WriteLine("Test"),
-                () => Console.WriteLine("None")
-                 );
-
-                return new List<AssetEntity>();
-
-
+           
 
         }
     }
