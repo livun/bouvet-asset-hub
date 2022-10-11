@@ -32,6 +32,7 @@ builder.Services.AddDbContext<DataContext>(options =>
 });
 //var assembly = AppDomain.CurrentDomain.Load("Bouvet.AssetHub.Domain");
 builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
+builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
 
 builder.Services.AddScoped<ILoanRepository, LoanRepository>();
