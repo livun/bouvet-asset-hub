@@ -40,8 +40,16 @@ namespace Bouvet.AssetHub.API.Controllers
         [HttpPost]
         public async Task<IActionResult> AddAssetAsync(AssetRequestDto dto)
         {
+           
+
+            AssetEntity newAsset = new AssetEntity
+            {
+                SerialNumber = new SerialNumber { Value = 123345678 },
+                Category = new CategoryEntity { Name = "PC" },
+            };
+            //AssetRequestDto dtos = _mapper.Map<AssetRequestDto>(newAsset);
             AssetEntity asset = _mapper.Map<AssetEntity>(dto);
-            Console.WriteLine(asset);
+            //Console.WriteLine(asset);
             
             return Ok(asset);
 
