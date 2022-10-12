@@ -26,7 +26,10 @@ namespace Bouvet.AssetHub.API.Domain.Asset.Services.Queries
 
             public async Task<Option<AssetEntity>> Handle(GetAssetByIdQuery request, CancellationToken cancellationToken)
             {
-                return await _repository.Get(request.Id);
-            }
+            Func<AssetEntity, bool> ById = (a => a.Id == request.Id);
+            return await _repository.Get(ById);
+
+            //return await _repository.Get(request.Id);
+        }
     }
 }

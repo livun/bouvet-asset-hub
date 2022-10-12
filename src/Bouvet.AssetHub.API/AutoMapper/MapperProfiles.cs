@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Bouvet.AssetHub.API.Contracts;
 using Bouvet.AssetHub.API.Domain.Asset.Model;
+using Bouvet.AssetHub.API.Domain.Asset.Services.Commands;
 
 namespace Bouvet.AssetHub.API.AutoMapper
 {
@@ -8,7 +9,7 @@ namespace Bouvet.AssetHub.API.AutoMapper
     {
         public MapperProfiles()
         {
-            CreateMap<AssetEntity, AssetRequestDto>().ReverseMap();
+            CreateMap<AssetEntity, CreateAssetCommand>().ReverseMap();
             CreateMap<AssetEntity, AssetResponseDto>().ReverseMap();
         }
     }

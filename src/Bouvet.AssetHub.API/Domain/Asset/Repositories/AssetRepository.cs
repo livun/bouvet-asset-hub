@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Bouvet.AssetHub.API.Domain.Asset.Predicates;
 
 namespace Bouvet.AssetHub.API.Domain.Asset.Repositories
 {
@@ -26,10 +27,9 @@ namespace Bouvet.AssetHub.API.Domain.Asset.Repositories
 
         public async Task<Option<AssetEntity>> Add(AssetEntity entity)
         {
-            //entity.Category = await _context.Categories
-            //    .FirstOrDefaultAsync(c => c.Id == entity.Category.Id);
-         
-            //entity.Category = cat;
+            var category = _context.Categories.Find(entity.CategoryId);
+            entity.Category = category;
+
             await _context.Assets.AddAsync(entity);
             try
             {
@@ -72,11 +72,32 @@ namespace Bouvet.AssetHub.API.Domain.Asset.Repositories
             return Option<AssetEntity>.None;
         }
 
-        public async Task<Option<AssetEntity>> Get(int id)
+          
+
+        public async Task<Option<AssetEntity>> Get(Func<AssetEntity, bool> predicate)
         {
-            return await _context.Assets
+            //return await _context.Assets
+            //    .Include(a => a.Category)
+            //    .Where(predicate)
+            //    .AsQueryable()
+            //    .FirstOrDefaultAsync();
+            return _context.Assets
                 .Include(a => a.Category)
-                .SingleOrDefaultAsync(a => a.Id == id);
+                .AsQueryable()
+                .Where(predicate)
+                .First();
+
+            //return await _context.Assets
+            //    .Include(a => a.Category)
+            //    .AsQueryable()
+            //    .AsAsyncEnumerable()
+
+
+            //    .()
+            //    .Where(predicate)
+            //    .First();
+
+
         }
         public async Task<Option<AssetEntity>> GetBySerialNumber(int serialNumber)
         {

@@ -38,12 +38,11 @@ namespace Bouvet.AssetHub.API.Controllers
 
         }
 
-        // POST /assets
         [HttpPost]
-        public async Task<IActionResult> AddAssetAsync(AssetRequestDto dto)
+        public async Task<IActionResult> AddAssetAsync(CreateAssetCommand dto)
         {
-            var result = await _mediator.Send(new CreateAssetCommand { Asset = _mapper.Map<AssetEntity>(dto)});
-            if (result.IsSome)
+            var response = await _mediator.Send(dto);
+            if (response.IsSome)
             {
                 return Ok("New asset is added!");
             }

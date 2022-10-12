@@ -14,10 +14,11 @@ namespace Bouvet.AssetHub.API.Domain.Asset.Interfaces
         Task<Option<AssetEntity>> Add(AssetEntity entity);
         Task<Option<AssetEntity>> Update(AssetEntity entity);
         Task<Option<AssetEntity>> UpdateAssetStatus(int id, Status status);
-        Task<Option<AssetEntity>> Get(int id);
-        Task<Option<AssetEntity>> GetBySerialNumber(int serialNumber);
+        //Task<Option<AssetEntity>> Get(int id);
+        Task<Option<AssetEntity>> Get(Func<AssetEntity, bool> predicate);
+        //Task<Option<AssetEntity>> GetBySerialNumber(int serialNumber);
         Task<List<AssetEntity>> GetAll();
-        Task<List<AssetEntity>> GetByCategory(int categoryId);
+        //Task<List<AssetEntity>> GetByCategory(int categoryId);
         Task<Option<AssetEntity>> Delete(AssetEntity entity);
         
         
