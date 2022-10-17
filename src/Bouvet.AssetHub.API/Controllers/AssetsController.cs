@@ -1,8 +1,14 @@
 ﻿
 using AutoMapper;
 using Bouvet.AssetHub.API.Contracts;
+using Bouvet.AssetHub.API.Controllers.Helpers;
 using Bouvet.AssetHub.API.Domain.Asset.Model;
+using Bouvet.AssetHub.API.Domain.Asset.Repositories;
+using Bouvet.AssetHub.API.Domain.Asset.Services.Commands;
 using Bouvet.AssetHub.API.Domain.Asset.Services.Queries;
+using LanguageExt;
+using LanguageExt.SomeHelp;
+using LanguageExt.UnsafeValueAccess;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -26,32 +32,22 @@ namespace Bouvet.AssetHub.API.Controllers
 
         // GET /assets
         [HttpGet]
-        public async Task<IActionResult> GetAssetsAsync()
+        public async Task<ActionResult<List<AssetResponseDto>>> GetAssetsAsync()
         {
-            var response = await _mediator.Send(new GetAssetsQuery());
-            Console.WriteLine(response);
-            return Ok(response);
-          
-            
-
+            var result = await _mediator.Send(new GetAssetsQuery());
+            return new ResultHelper<List<AssetResponseDto>>().OkOrNotFound(result);
         }
 
-        // POST /assets
         [HttpPost]
-        public async Task<IActionResult> AddAssetAsync(AssetRequestDto dto)
+        public async Task<IActionResult> AddAssetAsync(CreateAssetCommand dto)
         {
-           
-
-            AssetEntity newAsset = new AssetEntity
+            var response = await _mediator.Send(dto);
+            if (response.IsSome)
             {
-                SerialNumber = new SerialNumber { Value = 123345678 },
-                Category = new CategoryEntity { Name = "PC" },
-            };
-            //AssetRequestDto dtos = _mapper.Map<AssetRequestDto>(newAsset);
-            AssetEntity asset = _mapper.Map<AssetEntity>(dto);
-            //Console.WriteLine(asset);
-            
-            return Ok(asset);
+                return Ok("New asset is added!");
+            }
+            return BadRequest("Could not add asset");
+
 
         }
         // PUT /assets
@@ -65,11 +61,15 @@ namespace Bouvet.AssetHub.API.Controllers
         // GET /assets/1
         [Route("{id}")]
         [HttpGet]
-        public async Task<IActionResult> GetAssetbyIdAsync(int id)
+        public async Task<ActionResult<AssetResponseDto>> GetAssetbyIdAsync(int id)
         {
-            return NotFound();
+            var result = await _mediator.Send(new GetAssetByIdQuery(id));
+            return new ResultHelper<AssetResponseDto>().OkOrNotFound(result);
+            //return OkOrNotFound(result);
 
         }
+
+
         // PUT /assets/1
         [Route("{id}")]
         [HttpPut]

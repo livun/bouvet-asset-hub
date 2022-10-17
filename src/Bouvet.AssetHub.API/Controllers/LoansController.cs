@@ -33,12 +33,13 @@ namespace Bouvet.AssetHub.API.Controllers
 
         // POST /loans
         [HttpPost]
-        public async Task<IActionResult> AddLoanAsync(AssetRequestDto dto)
+        public async Task<IActionResult> AddLoanAsync()
         {
-            AssetEntity asset = _mapper.Map<AssetEntity>(dto);
-            Console.WriteLine(asset);
-            
-            return Ok(asset);
+            //AssetEntity asset = _mapper.Map<AssetEntity>();
+            //Console.WriteLine(asset);
+
+            //return Ok(asset);
+            throw new NotImplementedException();    
 
         }
 

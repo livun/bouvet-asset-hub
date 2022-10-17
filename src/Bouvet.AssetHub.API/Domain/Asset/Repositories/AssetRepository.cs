@@ -10,22 +10,27 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Bouvet.AssetHub.API.Domain.Asset.Predicates;
 
 namespace Bouvet.AssetHub.API.Domain.Asset.Repositories
 {
     public class AssetRepository : IAssetRepository
     {
         private readonly DataContext _context;
-        private readonly ILogger _log;
+        private readonly ILogger _logger;
 
-        public AssetRepository(DataContext context, ILogger log) 
+        public AssetRepository(ILogger<AssetRepository> logger, DataContext context) 
         {
             _context = context;
-            _log = log;
+            _logger = logger;
         }
 
         public async Task<Option<AssetEntity>> Add(AssetEntity entity)
         {
+            var category = _context.Categories.Find(entity.CategoryId);
+            if (category is not null)
+                entity.Category = category;
+
             await _context.Assets.AddAsync(entity);
             try
             {
@@ -34,25 +39,25 @@ namespace Bouvet.AssetHub.API.Domain.Asset.Repositories
 
             } catch(UniqueConstraintException ex)
             {
-                _log.LogError(ex.Message);
+                _logger.LogError(ex.Message);
                 return Option<AssetEntity>.None;
             }
         }
-        public async Task<Option<AssetEntity>> Update(AssetEntity entity)
-        {
-            //var asset = _context.Assets
-            //    .Where(a => a.Id == entity.Id)
-            //    .First();
-            //if (asset is not null)
-            //{
-            //    asset.Status = entity.Status;
-            //    await _context.SaveChangesAsync();
-            //    return (Option<AssetEntity>)asset;  
-            //}
+        //public async Task<Option<AssetEntity>> Update(AssetEntity entity)
+        //{
+        //    //var asset = _context.Assets
+        //    //    .Where(a => a.Id == entity.Id)
+        //    //    .First();
+        //    //if (asset is not null)
+        //    //{
+        //    //    asset.Status = entity.Status;
+        //    //    await _context.SaveChangesAsync();
+        //    //    return (Option<AssetEntity>)asset;  
+        //    //}
 
-            return Option<AssetEntity>.None ;
+        //    return Option<AssetEntity>.None ;
            
-        }
+        //}
 
         public async Task<Option<AssetEntity>> UpdateAssetStatus(int id, Status status)
         {
@@ -68,26 +73,50 @@ namespace Bouvet.AssetHub.API.Domain.Asset.Repositories
             return Option<AssetEntity>.None;
         }
 
-        public async Task<Option<AssetEntity>> Get(int id)
-        {
-            return await _context.Assets
-                .Include(a => a.Category)
-                .SingleOrDefaultAsync(a => a.Id == id);
-        }
-        public async Task<Option<AssetEntity>> GetBySerialNumber(int serialNumber)
-        {
-            return await _context.Assets
-                .Include(a => a.Category)
-                .SingleOrDefaultAsync(a => a.SerialNumber.Value == serialNumber);
-        }
+          
 
-        public async Task<List<AssetEntity>> GetAll()
+        public async Task<Option<AssetEntity>> Get(Func<AssetEntity, bool> predicate)
         {
-           return await _context.Assets.ToListAsync();
+            //return await _context.Assets
+            //    .Include(a => a.Category)
+            //    .Where(predicate)
+            //    .AsQueryable()
+            //    .FirstOrDefaultAsync();
+            return _context.Assets
+                .Include(a => a.Category)
+                .AsQueryable()
+                .Where(predicate)
+                .First();
+
+            //return await _context.Assets
+            //    .Include(a => a.Category)
+            //    .AsQueryable()
+            //    .AsAsyncEnumerable()
+
+
+            //    .()
+            //    .Where(predicate)
+            //    .First();
+
+
+        }
+        //public async Task<Option<AssetEntity>> GetBySerialNumber(int serialNumber)
+        //{
+        //    return await _context.Assets
+        //        .Include(a => a.Category)
+        //        .SingleOrDefaultAsync(a => a.SerialNumber.Value == serialNumber);
+        //}
+
+        public async Task<Option<List<AssetEntity>>> GetAll()
+        {
+            var assets = await _context.Assets.ToListAsync();
+            if (assets.Count == 0)
+                return Option<List<AssetEntity>>.None;
+            return (Option<List<AssetEntity>>)assets;
         }
        
 
-        public async Task<List<AssetEntity>> GetByCategory(int categoryId)
+        public async Task<Option<List<AssetEntity>>> GetByCategory(int categoryId)
         {
             return await _context.Assets
                 .Include(a => a.Category)
@@ -107,7 +136,7 @@ namespace Bouvet.AssetHub.API.Domain.Asset.Repositories
             }
             catch (UniqueConstraintException ex)
             {
-                _log.LogError(ex.Message);
+                _logger.LogError(ex.Message);
                 return Option<AssetEntity>.None;
             }
         }    
