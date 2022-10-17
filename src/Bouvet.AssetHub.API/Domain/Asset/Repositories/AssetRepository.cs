@@ -28,7 +28,8 @@ namespace Bouvet.AssetHub.API.Domain.Asset.Repositories
         public async Task<Option<AssetEntity>> Add(AssetEntity entity)
         {
             var category = _context.Categories.Find(entity.CategoryId);
-            entity.Category = category;
+            if (category is not null)
+                entity.Category = category;
 
             await _context.Assets.AddAsync(entity);
             try
@@ -42,21 +43,21 @@ namespace Bouvet.AssetHub.API.Domain.Asset.Repositories
                 return Option<AssetEntity>.None;
             }
         }
-        public async Task<Option<AssetEntity>> Update(AssetEntity entity)
-        {
-            //var asset = _context.Assets
-            //    .Where(a => a.Id == entity.Id)
-            //    .First();
-            //if (asset is not null)
-            //{
-            //    asset.Status = entity.Status;
-            //    await _context.SaveChangesAsync();
-            //    return (Option<AssetEntity>)asset;  
-            //}
+        //public async Task<Option<AssetEntity>> Update(AssetEntity entity)
+        //{
+        //    //var asset = _context.Assets
+        //    //    .Where(a => a.Id == entity.Id)
+        //    //    .First();
+        //    //if (asset is not null)
+        //    //{
+        //    //    asset.Status = entity.Status;
+        //    //    await _context.SaveChangesAsync();
+        //    //    return (Option<AssetEntity>)asset;  
+        //    //}
 
-            return Option<AssetEntity>.None ;
+        //    return Option<AssetEntity>.None ;
            
-        }
+        //}
 
         public async Task<Option<AssetEntity>> UpdateAssetStatus(int id, Status status)
         {
@@ -99,20 +100,23 @@ namespace Bouvet.AssetHub.API.Domain.Asset.Repositories
 
 
         }
-        public async Task<Option<AssetEntity>> GetBySerialNumber(int serialNumber)
-        {
-            return await _context.Assets
-                .Include(a => a.Category)
-                .SingleOrDefaultAsync(a => a.SerialNumber.Value == serialNumber);
-        }
+        //public async Task<Option<AssetEntity>> GetBySerialNumber(int serialNumber)
+        //{
+        //    return await _context.Assets
+        //        .Include(a => a.Category)
+        //        .SingleOrDefaultAsync(a => a.SerialNumber.Value == serialNumber);
+        //}
 
-        public async Task<List<AssetEntity>> GetAll()
+        public async Task<Option<List<AssetEntity>>> GetAll()
         {
-           return await _context.Assets.ToListAsync();
+            var assets = await _context.Assets.ToListAsync();
+            if (assets.Count == 0)
+                return Option<List<AssetEntity>>.None;
+            return (Option<List<AssetEntity>>)assets;
         }
        
 
-        public async Task<List<AssetEntity>> GetByCategory(int categoryId)
+        public async Task<Option<List<AssetEntity>>> GetByCategory(int categoryId)
         {
             return await _context.Assets
                 .Include(a => a.Category)

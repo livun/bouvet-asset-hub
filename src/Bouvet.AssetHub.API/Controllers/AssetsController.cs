@@ -1,9 +1,13 @@
 ﻿
 using AutoMapper;
 using Bouvet.AssetHub.API.Contracts;
+using Bouvet.AssetHub.API.Controllers.Helpers;
 using Bouvet.AssetHub.API.Domain.Asset.Model;
+using Bouvet.AssetHub.API.Domain.Asset.Repositories;
 using Bouvet.AssetHub.API.Domain.Asset.Services.Commands;
 using Bouvet.AssetHub.API.Domain.Asset.Services.Queries;
+using LanguageExt;
+using LanguageExt.SomeHelp;
 using LanguageExt.UnsafeValueAccess;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -28,14 +32,10 @@ namespace Bouvet.AssetHub.API.Controllers
 
         // GET /assets
         [HttpGet]
-        public async Task<IActionResult> GetAssetsAsync()
+        public async Task<ActionResult<List<AssetResponseDto>>> GetAssetsAsync()
         {
-            var response = await _mediator.Send(new GetAssetsQuery());
-            Console.WriteLine(response);
-            return Ok(response);
-          
-            
-
+            var result = await _mediator.Send(new GetAssetsQuery());
+            return new ResultHelper<List<AssetResponseDto>>().OkOrNotFound(result);
         }
 
         [HttpPost]
@@ -61,17 +61,15 @@ namespace Bouvet.AssetHub.API.Controllers
         // GET /assets/1
         [Route("{id}")]
         [HttpGet]
-        public async Task<IActionResult> GetAssetbyIdAsync(int id)
+        public async Task<ActionResult<AssetResponseDto>> GetAssetbyIdAsync(int id)
         {
-            var result = await _mediator.Send( new GetAssetByIdQuery(id));
-            if (result.IsSome)
-            {
-                return Ok(_mapper.Map<AssetEntity, AssetResponseDto>((AssetEntity)result));
-            }
-            return NotFound();
-
+            var result = await _mediator.Send(new GetAssetByIdQuery(id));
+            return new ResultHelper<AssetResponseDto>().OkOrNotFound(result);
+            //return OkOrNotFound(result);
 
         }
+
+
         // PUT /assets/1
         [Route("{id}")]
         [HttpPut]

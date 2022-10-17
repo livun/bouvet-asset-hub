@@ -1,4 +1,6 @@
-﻿using Bouvet.AssetHub.API.Domain.Asset.Model;
+﻿using Bouvet.AssetHub.API.Contracts;
+using Bouvet.AssetHub.API.Domain.Asset.Model;
+using LanguageExt;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -8,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Bouvet.AssetHub.API.Domain.Asset.Services.Queries
 {
-    public class GetAssetsQuery : IRequest<List<AssetEntity>>
+    public class GetAssetsQuery : IRequest<Option<List<AssetResponseDto>>>
     {
     }
 }

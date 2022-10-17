@@ -17,7 +17,7 @@ namespace Bouvet.AssetHub.API.Domain.Asset.Model
 
         [Required]
         public int CategoryId { get; set; }
-        public CategoryEntity? Category { get; set; } 
+        public CategoryEntity Category { get; set; } = new CategoryEntity();
     }
 
     

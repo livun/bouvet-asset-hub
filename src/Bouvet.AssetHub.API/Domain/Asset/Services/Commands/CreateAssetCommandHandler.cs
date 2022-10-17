@@ -22,10 +22,8 @@ namespace Bouvet.AssetHub.API.Domain.Asset.Services.Commands
         {
             Func<AssetEntity, bool> BySerialNumber = (a => a.SerialNumber.Value == request.SerialNumberValue);
             var asset = await  _repository.Get(BySerialNumber);
-            Console.WriteLine("¤¤¤¤¤¤¤¤¤¤¤#¤###################", request.SerialNumberValue);
             if ( asset.IsNone || request.SerialNumberValue == 0 )
             {
-                Console.WriteLine("hello");
                 var assetEntity = _mapper.Map<AssetEntity>(request);
                 return await _repository.Add(assetEntity);
             }

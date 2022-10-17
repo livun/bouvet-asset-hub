@@ -1,4 +1,6 @@
-﻿using Bouvet.AssetHub.API.Domain.Asset.Interfaces;
+﻿using AutoMapper;
+using Bouvet.AssetHub.API.Contracts;
+using Bouvet.AssetHub.API.Domain.Asset.Interfaces;
 using Bouvet.AssetHub.API.Domain.Asset.Model;
 using FluentValidation;
 using LanguageExt;
@@ -12,29 +14,41 @@ using System.Threading.Tasks;
 
 namespace Bouvet.AssetHub.API.Domain.Asset.Services.Queries
 {
- 
 
-        public class GetAssetsQueryHandler : IRequestHandler<GetAssetsQuery, List<AssetEntity>>
+
+    public class GetAssetsQueryHandler : IRequestHandler<GetAssetsQuery, Option<List<AssetResponseDto>>>
+    {
+        private readonly IAssetRepository _repository;
+        private readonly IMapper _mapper;
+
+        public GetAssetsQueryHandler(IAssetRepository repository, IMapper mapper)
         {
-            private readonly IAssetRepository _repository;
+            _repository = repository;
+            _mapper = mapper;
 
-            public GetAssetsQueryHandler(IAssetRepository repository)
+        }
+
+        public async Task<Option<List<AssetResponseDto>>> Handle(GetAssetsQuery request, CancellationToken cancellationToken)
+        {
+
+            var result = await _repository.GetAll();
+            if (result.IsSome)
             {
-                _repository = repository;
-
+               
+                return _mapper.Map<List<AssetEntity>, List<AssetResponseDto>>((List<AssetEntity>)result);
             }
 
-            public async Task<List<AssetEntity>> Handle(GetAssetsQuery request, CancellationToken cancellationToken)
-            {
-            throw new NotImplementedException();
+            return Option<List<AssetResponseDto>>.None;
 
-           
+
+
 
         }
     }
 
 
-    public class Indetificator {
+    public class Indetificator
+    {
         public int Id { get; set; }
     }
 
@@ -42,12 +56,12 @@ namespace Bouvet.AssetHub.API.Domain.Asset.Services.Queries
     {
         public IndetificatorValidator()
         {
-            
+
         }
     }
 
-    public class Assets<T> : List<T> 
+    public class Assets<T> : List<T>
     {
-        
+
     }
 }
