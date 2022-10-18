@@ -12,6 +12,9 @@ namespace Bouvet.AssetHub.API.AutoMapper
             CreateMap<AssetEntity, CreateAssetCommand>().ReverseMap();
             CreateMap<AssetEntity, AssetResponseDto>().ReverseMap();
             CreateMap<AssetEntity, UpdateAssetCommand>().ReverseMap();
+            CreateMap<CategoryEntity, CreateCategoryCommand>().ReverseMap();
+            CreateMap<CategoryEntity, CategoryResponseDto>().ReverseMap();
+            CreateMap<CategoryEntity, UpdateCategoryCommand>().ReverseMap();
         }
     }
 }
