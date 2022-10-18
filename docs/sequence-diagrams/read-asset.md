@@ -54,12 +54,12 @@ User ->> UI : View table of Assets
 sequenceDiagram
 User ->> UI : Toggle Category in Assets table
     Activate UI
-        UI ->>+ API /assets/{category}: GET Assets by Category 
-        API /assets/{category} ->>+ GetAssetsByCategoryQueryHandler : GetAssetsByCategoryQuery (DTO)
+        UI ->>+ API /categories/{id}/assets: GET Assets by Category 
+        API /categories/{id}/assets ->>+ GetAssetsByCategoryQueryHandler : GetAssetsByCategoryQuery (DTO)
         GetAssetsByCategoryQueryHandler ->>+ Asset Repository : GetByCategory(Data)
         Asset Repository -->>- GetAssetsByCategoryQueryHandler : Response(List<Asset>)
-        GetAssetsByCategoryQueryHandler -->>- API /assets/{category} : Response (List<Asset>)
-        API /assets/{category} -->>- UI : Response (List<Asset>)
+        GetAssetsByCategoryQueryHandler -->>- API /categories/{id}/assets : Response (List<Asset>)
+        API /categories/{id}/assets -->>- UI : Response (List<Asset>)
         UI -->> User: Display Assets Table
     Deactivate UI
 

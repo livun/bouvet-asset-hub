@@ -45,23 +45,4 @@ namespace Bouvet.AssetHub.API.Domain.Asset.Services.Queries
 
         }
     }
-
-
-    public class Indetificator
-    {
-        public int Id { get; set; }
-    }
-
-    public class IndetificatorValidator : AbstractValidator<Indetificator>
-    {
-        public IndetificatorValidator()
-        {
-
-        }
-    }
-
-    public class Assets<T> : List<T>
-    {
-
-    }
 }
