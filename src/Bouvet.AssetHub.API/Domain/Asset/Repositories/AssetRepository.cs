@@ -118,7 +118,9 @@ namespace Bouvet.AssetHub.API.Domain.Asset.Repositories
 
         public async Task<Option<List<AssetEntity>>> GetAll()
         {
-            var assets = await _context.Assets.ToListAsync();
+            var assets = await _context.Assets
+                .Include(a => a.Category)
+                .ToListAsync();
             if (assets.Count == 0)
                 return Option<List<AssetEntity>>.None;
             return assets;

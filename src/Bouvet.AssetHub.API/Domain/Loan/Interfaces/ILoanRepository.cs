@@ -1,4 +1,6 @@
-﻿using Bouvet.AssetHub.API.Domain.Loan.Model;
+﻿using Bouvet.AssetHub.API.Domain.Asset.Model;
+using Bouvet.AssetHub.API.Domain.Loan.Model;
+using LanguageExt;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,8 +13,8 @@ namespace Bouvet.AssetHub.API.Domain.Loan.Interfaces
     public interface ILoanRepository
     {
         LoanEntity GetById(int id);
-        IEnumerable<LoanEntity> GetAll();
-        void Add(LoanEntity entity);
+        Task<Option<List<LoanEntity>>> GetAll();
+        Task<Option<LoanEntity>> Add(LoanEntity entity);
         //void AddRange(IEnumerable<AssetEntity> entities);
         void Remove(LoanEntity entity);
         void Save();

@@ -2,6 +2,8 @@
 using Bouvet.AssetHub.API.Contracts;
 using Bouvet.AssetHub.API.Domain.Asset.Model;
 using Bouvet.AssetHub.API.Domain.Asset.Services.Commands;
+using Bouvet.AssetHub.API.Domain.Loan.Model;
+using Bouvet.AssetHub.API.Domain.Loan.Services.Commands;
 
 namespace Bouvet.AssetHub.API.AutoMapper
 {
@@ -15,6 +17,8 @@ namespace Bouvet.AssetHub.API.AutoMapper
             CreateMap<CategoryEntity, CreateCategoryCommand>().ReverseMap();
             CreateMap<CategoryEntity, CategoryResponseDto>().ReverseMap();
             CreateMap<CategoryEntity, UpdateCategoryCommand>().ReverseMap();
+            CreateMap<LoanEntity, CreateLoanCommand>().ReverseMap();
+            CreateMap<LoanEntity, LoanResponseDto>().ReverseMap();
         }
     }
 }

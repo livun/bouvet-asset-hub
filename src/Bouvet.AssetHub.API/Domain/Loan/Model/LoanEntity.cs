@@ -6,7 +6,6 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Bouvet.AssetHub.API.Domain.Loan.Contracts;
 using Bouvet.AssetHub.API.Domain.Asset.Model;
 
 namespace Bouvet.AssetHub.API.Domain.Loan.Model
@@ -18,6 +17,7 @@ namespace Bouvet.AssetHub.API.Domain.Loan.Model
         public EmployeeNumber AssignedTo { get; set; } = new EmployeeNumber();
         public EmployeeEntity Loaner { get; set; } = new EmployeeEntity();
         [Required]
+        public int AssetId { get; set; }
         public AssetEntity Asset { get; set; } = new AssetEntity();
         public Bsd? Bsd { get; set; }
     }
