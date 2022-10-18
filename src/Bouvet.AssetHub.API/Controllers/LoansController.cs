@@ -1,8 +1,10 @@
 ﻿
 using AutoMapper;
 using Bouvet.AssetHub.API.Contracts;
+using Bouvet.AssetHub.API.Controllers.Helpers;
 using Bouvet.AssetHub.API.Domain.Asset.Model;
 using Bouvet.AssetHub.API.Domain.Asset.Services.Queries;
+using Bouvet.AssetHub.API.Domain.Loan.Services.Commands;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -25,21 +27,20 @@ namespace Bouvet.AssetHub.API.Controllers
         }
 
         // GET /loans
+      
         [HttpGet]
-        public async Task<IActionResult> GetLoansAsync()
+        public async Task<ActionResult<List<LoanResponseDto>>> GetLoansAsync()
         {
-                        throw new NotImplementedException();
+            var result = await _mediator.Send(new GetLoansQuery());
+            return new ResultHelper<List<LoanResponseDto>>().OkOrNotFound(result);
         }
 
         // POST /loans
         [HttpPost]
-        public async Task<IActionResult> AddLoanAsync()
+        public async Task<ActionResult<LoanResponseDto>> AddLoanAsync(CreateLoanCommand dto)
         {
-            //AssetEntity asset = _mapper.Map<AssetEntity>();
-            //Console.WriteLine(asset);
-
-            //return Ok(asset);
-            throw new NotImplementedException();    
+            var result = await _mediator.Send(dto);
+            return new ResultHelper<LoanResponseDto>().OkOrBadRequest(result, "Could not add loan!");    
 
         }
 

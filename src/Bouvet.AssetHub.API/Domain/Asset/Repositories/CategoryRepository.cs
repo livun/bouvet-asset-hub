@@ -12,7 +12,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Bouvet.AssetHub.API.Domain.Asset.Predicates;
 using System.Linq.Expressions;
-using Bouvet.AssetHub.API.Domain.Loan.Contracts;
 
 namespace Bouvet.AssetHub.API.Domain.Asset.Repositories
 {
