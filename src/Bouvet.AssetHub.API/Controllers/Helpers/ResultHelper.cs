@@ -10,6 +10,10 @@ namespace Bouvet.AssetHub.API.Controllers.Helpers
         {
             return result.IsSome ? Ok(result.FirstOrDefault()) : NotFound();
         }
-      
+        public ActionResult<T> OkOrBadRequest(Option<T> result, string msg)
+        {
+            return result.IsSome ? Ok(result.FirstOrDefault()) : BadRequest(msg);
+        }
+
     }
 }

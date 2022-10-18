@@ -1,12 +1,14 @@
 ﻿using AutoMapper;
+using Bouvet.AssetHub.API.Contracts;
 using Bouvet.AssetHub.API.Domain.Asset.Interfaces;
 using Bouvet.AssetHub.API.Domain.Asset.Model;
+using Bouvet.AssetHub.API.Domain.Asset.Predicates;
 using LanguageExt;
 using MediatR;
 
 namespace Bouvet.AssetHub.API.Domain.Asset.Services.Commands
 {
-    public class CreateAssetCommandHandler : IRequestHandler<CreateAssetCommand, Option<AssetEntity>>
+    public class CreateAssetCommandHandler : IRequestHandler<CreateAssetCommand, Option<AssetResponseDto>>
     {
         private readonly IAssetRepository _repository;
         private readonly IMapper _mapper;
@@ -18,16 +20,15 @@ namespace Bouvet.AssetHub.API.Domain.Asset.Services.Commands
 
         }
 
-        public async Task<Option<AssetEntity>> Handle(CreateAssetCommand request, CancellationToken cancellationToken)
+        public async Task<Option<AssetResponseDto>> Handle(CreateAssetCommand request, CancellationToken cancellationToken)
         {
-            Func<AssetEntity, bool> BySerialNumber = (a => a.SerialNumber.Value == request.SerialNumberValue);
-            var asset = await  _repository.Get(BySerialNumber);
+            var asset = await _repository.Get(Predicate.BySerialNumber(request.SerialNumberValue));
             if ( asset.IsNone || request.SerialNumberValue == 0 )
             {
-                var assetEntity = _mapper.Map<AssetEntity>(request);
-                return await _repository.Add(assetEntity);
+                var assetEntity = _mapper.Map<CreateAssetCommand, AssetEntity>(request);
+                return _mapper.Map<AssetEntity, AssetResponseDto>((await _repository.Add(assetEntity)).First());
             }
-            return Option<AssetEntity>.None;
+            return Option<AssetResponseDto>.None;
             
         }
     }

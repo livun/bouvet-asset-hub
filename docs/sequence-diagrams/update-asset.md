@@ -13,10 +13,10 @@ sequenceDiagram
         User ->> UI : Filled out form
     Deactivate User
             UI ->>+ API /assets/{id}: PUT Asset By Id (DTO)
-                API /assets/{id} -)+ UpdateAssetByIdCommandHandler : UpdateAssetByIdCommand (DTO)
-                    UpdateAssetByIdCommandHandler -)+ Asset Repository : Update (Data)
-                    Asset Repository  --)- UpdateAssetByIdCommandHandler : Response()
-                UpdateAssetByIdCommandHandler -->>- API /assets/{id} : Response ()
+                API /assets/{id} -)+ UpdateAssetCommandHandler : UpdateAssetByIdCommand (DTO)
+                    UpdateAssetCommandHandler -)+ Asset Repository : Update (Data)
+                    Asset Repository  --)- UpdateAssetCommandHandler : Response()
+                UpdateAssetCommandHandler -->>- API /assets/{id} : Response ()
             API /assets/{id} --)- UI  : Response ()
         UI -->> User : If valid, table is updated with information
     Deactivate UI
@@ -61,10 +61,10 @@ sequenceDiagram
         User ->> UI : Filled out form 
     Deactivate User
             UI ->>+ API /assets/{id}: PUT Asset By Id (DTO)
-                API /assets/{id} -)+ UpdateAssetByIdCommandHandler : UpdateAssetByIdCommand (DTO)
-                    UpdateAssetByIdCommandHandler -)+ Asset Repository : Update (Id, Data)
-                    Asset Repository  --)- UpdateAssetByIdCommandHandler : Response ()
-                UpdateAssetByIdCommandHandler -->>- API /assets/{id} : Response ()
+                API /assets/{id} -)+ UpdateAssetCommandHandler : UpdateAssetByIdCommand (DTO)
+                    UpdateAssetCommandHandler -)+ Asset Repository : Update (Id, Data)
+                    Asset Repository  --)- UpdateAssetCommandHandler : Response ()
+                UpdateAssetCommandHandler -->>- API /assets/{id} : Response ()
             API /assets/{id} --)- UI  : Response ()
         UI -->> User : If valid, Asset is updated in view
     Deactivate UI     

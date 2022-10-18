@@ -2,6 +2,7 @@
 using Bouvet.AssetHub.API.Contracts;
 using Bouvet.AssetHub.API.Domain.Asset.Interfaces;
 using Bouvet.AssetHub.API.Domain.Asset.Model;
+using Bouvet.AssetHub.API.Domain.Asset.Predicates;
 using FluentValidation;
 using LanguageExt;
 using LanguageExt.Common;
@@ -15,33 +16,29 @@ using System.Threading.Tasks;
 
 namespace Bouvet.AssetHub.API.Domain.Asset.Services.Queries
 {
- 
-
-        public class GetAssetByIdQueryHandler : IRequestHandler<GetAssetByIdQuery, Option<AssetResponseDto>>
-        {
-            private readonly IAssetRepository _repository;
-            private readonly IMapper _mapper;
+    public class GetAssetByIdQueryHandler : IRequestHandler<GetAssetByIdQuery, Option<AssetResponseDto>>
+    {
+        private readonly IAssetRepository _repository;
+        private readonly IMapper _mapper;
 
         public GetAssetByIdQueryHandler(IAssetRepository repository, IMapper mapper)
-            {
-                _repository = repository;
-                _mapper = mapper;
+        {
+            _repository = repository;
+            _mapper = mapper;
 
-            }
+        }
 
-            public async Task<Option<AssetResponseDto>> Handle(GetAssetByIdQuery request, CancellationToken cancellationToken)
-            {
-            Func<AssetEntity, bool> ById = (a => a.Id == request.Id);
-            var result = await _repository.Get(ById);
+        public async Task<Option<AssetResponseDto>> Handle(GetAssetByIdQuery request, CancellationToken cancellationToken)
+        {
+
+            var result = await _repository.Get(Predicate.ById(request.Id));
             if (result.IsSome)
             {
                 var dto = _mapper.Map<AssetEntity, AssetResponseDto>((AssetEntity)result);
                 return dto;
             }
-
             return Option<AssetResponseDto>.None;
 
-            //return await _repository.Get(request.Id);
         }
     }
 }
