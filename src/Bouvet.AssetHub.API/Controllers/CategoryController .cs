@@ -25,32 +25,56 @@ namespace Bouvet.AssetHub.API.Controllers
 
         public CategoryController(IMediator mediator)
         {
-            _mediator = mediator; 
+            _mediator = mediator;
         }
 
-        // GET /categories
+        //// GET /categories
         [HttpGet]
-        public async Task<ActionResult<List<AssetResponseDto>>> GetCategoriesAsync()
+        public async Task<ActionResult<List<CategoryResponseDto>>> GetCategoriesAsync()
         {
-            var result = await _mediator.Send(new GetAssetsQuery());
-            return new ResultHelper<List<AssetResponseDto>>().OkOrNotFound(result);
-        }
-
-        
+            var result = await _mediator.Send(new GetCategoriesQuery());
+            return new ResultHelper<List<CategoryResponseDto>>().OkOrNotFound(result);
         }
         // GET /categories/1/assets
         [Route("{id}/assets")]
         [HttpGet]
-        public async Task<IActionResult> GetAssetsByCategoryAsync(int id)
+        public async Task<ActionResult<List<AssetResponseDto>>> GetAssetsByCategoryAsync(int id)
         {
-            throw new NotImplementedException();
-
+            var result = await _mediator.Send(new GetAssetsByCategoryQuery(id));
+            return new ResultHelper<List<AssetResponseDto>>().OkOrNotFound(result);
         }
 
-       
+        // POST /categories
+        [HttpPost]
+        public async Task<ActionResult<CategoryResponseDto>> AddCategoryAsync(CreateCategoryCommand dto)
+        {
+            var result = await _mediator.Send(dto);
+            return new ResultHelper<CategoryResponseDto>().OkOrBadRequest(result, "Could not add category!");
+        }
+
+        // DELETE /categories/1
+        [Route("{id}")]
+        [HttpDelete]
+        public async Task<ActionResult<CategoryResponseDto>> DeleteAssetByIdAsync(int id)
+        {
+            var result = await _mediator.Send(new DeleteCategoryCommand(id));
+            return new ResultHelper<CategoryResponseDto>().OkOrBadRequest(result, "Category cannot be deleted!");
+        }
+        // PUT /categories/1
+        [Route("{id}")]
+        [HttpPut]
+        public async Task<ActionResult<CategoryResponseDto>> UpdateAssetAsync(UpdateCategoryDto dto, int id)
+        {
+            var result = await _mediator.Send(new UpdateCategoryCommand(id, dto.Name));
+            return new ResultHelper<CategoryResponseDto>().OkOrNotFound(result);
+        }
 
 
     }
- 
+
+
+
+
 
 }
+

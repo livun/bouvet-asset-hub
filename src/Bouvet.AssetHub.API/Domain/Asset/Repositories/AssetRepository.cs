@@ -127,10 +127,13 @@ namespace Bouvet.AssetHub.API.Domain.Asset.Repositories
 
         public async Task<Option<List<AssetEntity>>> GetByCategory(int categoryId)
         {
-            return await _context.Assets
+            var assets = await _context.Assets
                 .Include(a => a.Category)
                 .Where(a => a.Category.Id == categoryId)
                 .ToListAsync();
+            if (assets.Count == 0)
+                return Option<List<AssetEntity>>.None;
+            return assets;
         }
 
 

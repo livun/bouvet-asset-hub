@@ -27,8 +27,7 @@ namespace Bouvet.AssetHub.API.Domain.Asset.Services.Commands
 
             if (result.IsSome)
             {
-                var dto = _mapper.Map<AssetEntity, AssetResponseDto>(result.First());
-                return dto;
+                return _mapper.Map<AssetEntity, AssetResponseDto>(result.First());
             }
        
             return Option<AssetResponseDto>.None;

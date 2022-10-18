@@ -26,8 +26,8 @@ namespace Bouvet.AssetHub.API.Domain.Asset.Services.Commands
             var asset = await _repository.Delete(request.Id);
             if ( asset.IsSome )
             {
-                var dto = _mapper.Map<AssetEntity, AssetResponseDto>(asset.First());
-                return dto;
+
+                return _mapper.Map<AssetEntity, AssetResponseDto>(asset.First());
             }
             return Option<AssetResponseDto>.None;
             
