@@ -1,11 +1,11 @@
 ﻿
 using AutoMapper;
 using Bouvet.AssetHub.API.Contracts;
-using Bouvet.AssetHub.API.Controllers.Helpers;
 using Bouvet.AssetHub.API.Domain.Asset.Model;
 using Bouvet.AssetHub.API.Domain.Asset.Repositories;
 using Bouvet.AssetHub.API.Domain.Asset.Services.Commands;
 using Bouvet.AssetHub.API.Domain.Asset.Services.Queries;
+using Bouvet.AssetHub.API.Helpers;
 using LanguageExt;
 using LanguageExt.Common;
 using LanguageExt.SomeHelp;
@@ -33,7 +33,7 @@ namespace Bouvet.AssetHub.API.Controllers
         public async Task<ActionResult<List<CategoryResponseDto>>> GetCategoriesAsync()
         {
             var result = await _mediator.Send(new GetCategoriesQuery());
-            return new ResultHelper<List<CategoryResponseDto>>().OkOrNotFound(result);
+            return new ActionResultHelper<List<CategoryResponseDto>>().OkOrNotFound(result);
         }
         // GET /categories/1/assets
         [Route("{id}/assets")]
@@ -41,7 +41,7 @@ namespace Bouvet.AssetHub.API.Controllers
         public async Task<ActionResult<List<AssetResponseDto>>> GetAssetsByCategoryAsync(int id)
         {
             var result = await _mediator.Send(new GetAssetsByCategoryQuery(id));
-            return new ResultHelper<List<AssetResponseDto>>().OkOrNotFound(result);
+            return new ActionResultHelper<List<AssetResponseDto>>().OkOrNotFound(result);
         }
 
         // POST /categories
@@ -49,7 +49,7 @@ namespace Bouvet.AssetHub.API.Controllers
         public async Task<ActionResult<CategoryResponseDto>> AddCategoryAsync(CreateCategoryCommand dto)
         {
             var result = await _mediator.Send(dto);
-            return new ResultHelper<CategoryResponseDto>().OkOrBadRequest(result, "Could not add category!");
+            return new ActionResultHelper<CategoryResponseDto>().OkOrBadRequest(result, "Could not add category!");
         }
 
         // DELETE /categories/1
@@ -58,7 +58,7 @@ namespace Bouvet.AssetHub.API.Controllers
         public async Task<ActionResult<CategoryResponseDto>> DeleteAssetByIdAsync(int id)
         {
             var result = await _mediator.Send(new DeleteCategoryCommand(id));
-            return new ResultHelper<CategoryResponseDto>().OkOrBadRequest(result, "Category cannot be deleted!");
+            return new ActionResultHelper<CategoryResponseDto>().OkOrBadRequest(result, "Category cannot be deleted!");
         }
         // PUT /categories/1
         [Route("{id}")]
@@ -66,7 +66,7 @@ namespace Bouvet.AssetHub.API.Controllers
         public async Task<ActionResult<CategoryResponseDto>> UpdateAssetAsync(UpdateCategoryDto dto, int id)
         {
             var result = await _mediator.Send(new UpdateCategoryCommand(id, dto.Name));
-            return new ResultHelper<CategoryResponseDto>().OkOrNotFound(result);
+            return new ActionResultHelper<CategoryResponseDto>().OkOrNotFound(result);
         }
 
 

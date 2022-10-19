@@ -1,11 +1,11 @@
 ﻿
 using AutoMapper;
 using Bouvet.AssetHub.API.Contracts;
-using Bouvet.AssetHub.API.Controllers.Helpers;
 using Bouvet.AssetHub.API.Domain.Asset.Model;
 using Bouvet.AssetHub.API.Domain.Asset.Repositories;
 using Bouvet.AssetHub.API.Domain.Asset.Services.Commands;
 using Bouvet.AssetHub.API.Domain.Asset.Services.Queries;
+using Bouvet.AssetHub.API.Helpers;
 using LanguageExt;
 using LanguageExt.Common;
 using LanguageExt.SomeHelp;
@@ -33,7 +33,7 @@ namespace Bouvet.AssetHub.API.Controllers
         public async Task<ActionResult<List<AssetResponseDto>>> GetAssetsAsync()
         {
             var result = await _mediator.Send(new GetAssetsQuery());
-            return new ResultHelper<List<AssetResponseDto>>().OkOrNotFound(result);
+            return new ActionResultHelper<List<AssetResponseDto>>().OkOrNotFound(result);
         }
 
         // POST /assets
@@ -41,7 +41,7 @@ namespace Bouvet.AssetHub.API.Controllers
         public async Task<ActionResult<AssetResponseDto>> AddAssetAsync(CreateAssetCommand dto)
         {
             var result = await _mediator.Send(dto);
-            return new ResultHelper<AssetResponseDto>().OkOrBadRequest(result, "Could not add asset!");
+            return new ActionResultHelper<AssetResponseDto>().OkOrBadRequest(result, "Could not add asset!");
 
         }
         // PUT /assets
@@ -49,7 +49,7 @@ namespace Bouvet.AssetHub.API.Controllers
         public async Task<ActionResult<List<AssetResponseDto>>> UpdateAssetByIdAsync(UpdateAssetsByIdCommand dto)
         {
             var result = await _mediator.Send(dto);
-            return new ResultHelper<List<AssetResponseDto>>().OkOrNotFound(result);
+            return new ActionResultHelper<List<AssetResponseDto>>().OkOrNotFound(result);
         }
 
         // GET /assets/1
@@ -58,7 +58,7 @@ namespace Bouvet.AssetHub.API.Controllers
         public async Task<ActionResult<AssetResponseDto>> GetAssetbyIdAsync(int id)
         {
             var result = await _mediator.Send(new GetAssetByIdQuery(id));
-            return new ResultHelper<AssetResponseDto>().OkOrNotFound(result);
+            return new ActionResultHelper<AssetResponseDto>().OkOrNotFound(result);
 
         }
 
@@ -69,7 +69,7 @@ namespace Bouvet.AssetHub.API.Controllers
         public async Task<ActionResult<AssetResponseDto>> UpdateAssetAsync(UpdateAssetDto dto, int id)
         {
             var result = await _mediator.Send(new UpdateAssetCommand(id, dto.Status, dto.CategoryId));
-            return new ResultHelper<AssetResponseDto>().OkOrNotFound(result);
+            return new ActionResultHelper<AssetResponseDto>().OkOrNotFound(result);
 
         }
         // DELETE /assets/1
@@ -78,7 +78,7 @@ namespace Bouvet.AssetHub.API.Controllers
         public async Task<ActionResult<AssetResponseDto>> DeleteAssetByIdAsync(int id)
         {
             var result = await _mediator.Send(new DeleteAssetCommand(id));
-            return new ResultHelper<AssetResponseDto>().OkOrBadRequest(result, "Asset cannot be deleted!");
+            return new ActionResultHelper<AssetResponseDto>().OkOrBadRequest(result, "Asset cannot be deleted!");
 
 
         }

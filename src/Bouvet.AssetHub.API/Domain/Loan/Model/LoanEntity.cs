@@ -15,7 +15,7 @@ namespace Bouvet.AssetHub.API.Domain.Loan.Model
         public Interval Interval { get; set; } = new Interval();
         [Required]
         public EmployeeNumber AssignedTo { get; set; } = new EmployeeNumber();
-        public EmployeeEntity Loaner { get; set; } = new EmployeeEntity();
+        public EmployeeEntity Borrower { get; set; } = new EmployeeEntity();
         [Required]
         public int AssetId { get; set; }
         public AssetEntity Asset { get; set; } = new AssetEntity();

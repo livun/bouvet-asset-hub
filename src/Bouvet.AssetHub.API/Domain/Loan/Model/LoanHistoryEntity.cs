@@ -8,16 +8,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Bouvet.AssetHub.API.Domain.LoanHistory.Model
+namespace Bouvet.AssetHub.API.Domain.Loan.Model
 {
     public class LoanHistoryEntity : Entity
-    {        
-        public EmployeeEntity AssignedTo { get; set; } = new EmployeeEntity();
+    {
+        public Interval Interval { get; set; } = new Interval();
+        public DateTime ReturnDate { get; set; } = DateTime.Now;
+        public EmployeeEntity Borrower { get; set; } = new EmployeeEntity();
         [Required]
         public AssetEntity Asset { get; set; } = new AssetEntity();
     }
 
-    
 
-   
+
+
 }

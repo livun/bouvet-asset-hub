@@ -2,7 +2,6 @@
 using Bouvet.AssetHub.API.Contracts;
 using Bouvet.AssetHub.API.Domain.Asset.Interfaces;
 using Bouvet.AssetHub.API.Domain.Asset.Model;
-using Bouvet.AssetHub.API.Domain.Asset.Predicates;
 using FluentValidation;
 using LanguageExt;
 using LanguageExt.Common;

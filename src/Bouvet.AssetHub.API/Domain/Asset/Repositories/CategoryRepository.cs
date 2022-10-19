@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Bouvet.AssetHub.API.Domain.Asset.Predicates;
 using System.Linq.Expressions;
 
 namespace Bouvet.AssetHub.API.Domain.Asset.Repositories
@@ -63,9 +62,7 @@ namespace Bouvet.AssetHub.API.Domain.Asset.Repositories
         public async Task<Option<List<CategoryEntity>>> GetAll()
         {
             var categories = await _context.Categories.ToListAsync();
-            if (categories.Count == 0)
-                return Option<List<CategoryEntity>>.None;
-            return categories;
+            return categories.Any() ? categories : null;
         }
 
         public async Task<Option<CategoryEntity>> Update(CategoryEntity entity)

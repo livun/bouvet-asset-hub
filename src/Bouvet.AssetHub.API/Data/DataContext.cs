@@ -2,7 +2,6 @@
 using Bouvet.AssetHub.API.Domain.Asset.Model;
 using Bouvet.AssetHub.API.Domain.Employee.Model;
 using Bouvet.AssetHub.API.Domain.Loan.Model;
-using Bouvet.AssetHub.API.Domain.LoanHistory.Model;
 using LanguageExt;
 using Microsoft.EntityFrameworkCore;
 

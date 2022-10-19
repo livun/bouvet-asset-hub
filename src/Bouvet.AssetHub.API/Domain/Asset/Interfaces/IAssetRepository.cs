@@ -17,7 +17,7 @@ namespace Bouvet.AssetHub.API.Domain.Asset.Interfaces
         //Task<Option<AssetEntity>> Get(int id);
         Task<Option<AssetEntity>> Get(Expression<Func<AssetEntity, bool>> predicate);
         //Task<Option<AssetEntity>> GetBySerialNumber(int serialNumber);
-        Task<Option<List<AssetEntity>>> GetAll();
+        Task<Option<List<AssetEntity>?>> GetAll();
         Task<Option<List<AssetEntity>>> GetByCategory(int categoryId);
         Task<Option<AssetEntity>> Delete(int Id);
         

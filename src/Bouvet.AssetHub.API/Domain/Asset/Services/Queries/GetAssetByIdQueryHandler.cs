@@ -2,7 +2,7 @@
 using Bouvet.AssetHub.API.Contracts;
 using Bouvet.AssetHub.API.Domain.Asset.Interfaces;
 using Bouvet.AssetHub.API.Domain.Asset.Model;
-using Bouvet.AssetHub.API.Domain.Asset.Predicates;
+using Bouvet.AssetHub.API.Helpers;
 using FluentValidation;
 using LanguageExt;
 using LanguageExt.Common;
@@ -31,7 +31,7 @@ namespace Bouvet.AssetHub.API.Domain.Asset.Services.Queries
         public async Task<Option<AssetResponseDto>> Handle(GetAssetByIdQuery request, CancellationToken cancellationToken)
         {
 
-            var result = await _repository.Get(Predicate.ById(request.Id));
+            var result = await _repository.Get(AssetPredicates.ById(request.Id));
             if (result.IsSome)
             {
                 var dto = _mapper.Map<AssetEntity, AssetResponseDto>((AssetEntity)result);

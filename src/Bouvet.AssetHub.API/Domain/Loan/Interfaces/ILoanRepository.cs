@@ -12,13 +12,11 @@ namespace Bouvet.AssetHub.API.Domain.Loan.Interfaces
 {
     public interface ILoanRepository
     {
-        LoanEntity GetById(int id);
+        
+        Task<Option<LoanEntity>> Get(Expression<Func<LoanEntity, bool>> predicate);
         Task<Option<List<LoanEntity>>> GetAll();
         Task<Option<LoanEntity>> Add(LoanEntity entity);
-        //void AddRange(IEnumerable<AssetEntity> entities);
-        void Remove(LoanEntity entity);
-        void Save();
-        //void RemoveRange(IEnumerable<AssetEntity> entities);
-
+        Task<Option<LoanEntity>> Update(LoanEntity entity);
+        Task<Option<LoanEntity>> Delete(int id);
     }
 }

@@ -10,8 +10,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Bouvet.AssetHub.API.Domain.Asset.Predicates;
 using System.Linq.Expressions;
+using Bouvet.AssetHub.API.ExtensionMethods;
 
 namespace Bouvet.AssetHub.API.Domain.Asset.Repositories
 {
@@ -84,47 +84,22 @@ namespace Bouvet.AssetHub.API.Domain.Asset.Repositories
 
         public async Task<Option<AssetEntity>> Get(Expression<Func<AssetEntity, bool>> predicate)
         {
-            //return await _context.Assets
-            //    .Include(a => a.Category)
-            //    .Where(predicate)
-            //    .AsQueryable()
-            //    .FirstOrDefaultAsync();
-            return _context.Assets
+            return await _context.Assets
                 .Include(a => a.Category)
                 .AsQueryable()
                 .Where(predicate)
-                .FirstOrDefault();
-
-            //return Option<AssetEntity>.None;
-
-            //return await _context.Assets
-            //    .Include(a => a.Category)
-            //    .AsQueryable()
-            //    .AsAsyncEnumerable()
-
-
-            //    .()
-            //    .Where(predicate)
-            //    .First();
-
+                .FirstOrDefaultAsync();
 
         }
-        //public async Task<Option<AssetEntity>> GetBySerialNumber(int serialNumber)
-        //{
-        //    return await _context.Assets
-        //        .Include(a => a.Category)
-        //        .SingleOrDefaultAsync(a => a.SerialNumber.Value == serialNumber);
-        //}
-
-        public async Task<Option<List<AssetEntity>>> GetAll()
+      
+        public async Task<Option<List<AssetEntity>?>> GetAll()
         {
-            var assets = await _context.Assets
+           var assets = await _context.Assets
                 .Include(a => a.Category)
                 .ToListAsync();
-            if (assets.Count == 0)
-                return Option<List<AssetEntity>>.None;
-            return assets;
+            return assets.Any() ? assets : null;
         }
+
 
 
         public async Task<Option<List<AssetEntity>>> GetByCategory(int categoryId)
@@ -133,9 +108,7 @@ namespace Bouvet.AssetHub.API.Domain.Asset.Repositories
                 .Include(a => a.Category)
                 .Where(a => a.Category.Id == categoryId)
                 .ToListAsync();
-            if (assets.Count == 0)
-                return Option<List<AssetEntity>>.None;
-            return assets;
+            return assets.Any() ? assets : null;
         }
 
 
