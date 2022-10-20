@@ -1,14 +1,8 @@
-﻿using Bouvet.AssetHub.API.Domain.Asset.Model;
-using Bouvet.AssetHub.API.Domain.Employee.Model;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
+﻿using Bouvet.AssetHub.API.Domain.Asset.Models;
+using Bouvet.AssetHub.API.Domain.Employee.Models;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Bouvet.AssetHub.API.Domain.Loan.Model
+namespace Bouvet.AssetHub.API.Domain.Loan.Models
 {
     public class LoanHistoryEntity : Entity
     {

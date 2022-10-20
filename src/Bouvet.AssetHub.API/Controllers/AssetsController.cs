@@ -1,19 +1,9 @@
-﻿
-using AutoMapper;
-using Bouvet.AssetHub.API.Contracts;
-using Bouvet.AssetHub.API.Domain.Asset.Model;
-using Bouvet.AssetHub.API.Domain.Asset.Repositories;
+﻿using Bouvet.AssetHub.API.Contracts;
 using Bouvet.AssetHub.API.Domain.Asset.Services.Commands;
 using Bouvet.AssetHub.API.Domain.Asset.Services.Queries;
 using Bouvet.AssetHub.API.Helpers;
-using LanguageExt;
-using LanguageExt.Common;
-using LanguageExt.SomeHelp;
-using LanguageExt.UnsafeValueAccess;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace Bouvet.AssetHub.API.Controllers
 {
@@ -85,9 +75,10 @@ namespace Bouvet.AssetHub.API.Controllers
         // GET /assets/1/loans
         [Route("{id}/loans")]
         [HttpGet]
-        public async Task<IActionResult> GetLoansByAssetIdAsync(int id)
+        public async Task<ActionResult<LoanResponseDto>> GetLoansByAssetIdAsync(int id)
         {
-            throw new NotImplementedException();
+            var result = await _mediator.Send(new GetLoanByAssetIdQuery(id));
+            return new ActionResultHelper<LoanResponseDto>().OkOrNotFound(result);
 
         }
 

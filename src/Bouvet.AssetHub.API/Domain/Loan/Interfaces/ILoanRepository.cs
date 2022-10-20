@@ -1,12 +1,6 @@
-﻿using Bouvet.AssetHub.API.Domain.Asset.Model;
-using Bouvet.AssetHub.API.Domain.Loan.Model;
+﻿using Bouvet.AssetHub.API.Domain.Loan.Models;
 using LanguageExt;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Bouvet.AssetHub.API.Domain.Loan.Interfaces
 {
@@ -15,6 +9,7 @@ namespace Bouvet.AssetHub.API.Domain.Loan.Interfaces
         
         Task<Option<LoanEntity>> Get(Expression<Func<LoanEntity, bool>> predicate);
         Task<Option<List<LoanEntity>>> GetAll();
+        Task<Option<List<LoanEntity>>> GetByEmployeeNumber(int id);
         Task<Option<LoanEntity>> Add(LoanEntity entity);
         Task<Option<LoanEntity>> Update(LoanEntity entity);
         Task<Option<LoanEntity>> Delete(int id);

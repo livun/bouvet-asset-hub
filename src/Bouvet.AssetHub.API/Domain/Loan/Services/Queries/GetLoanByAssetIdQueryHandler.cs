@@ -10,21 +10,21 @@ namespace Bouvet.AssetHub.API.Domain.Asset.Services.Queries
 {
 
 
-    public class GetLoanByIdQueryHandler : IRequestHandler<GetLoanByIdQuery, Option<LoanResponseDto>>
+    public class GetLoanByAssetIdQueryHandler : IRequestHandler<GetLoanByAssetIdQuery, Option<LoanResponseDto>>
     {
         private readonly ILoanRepository _repository;
         private readonly IMapper _mapper;
 
-        public GetLoanByIdQueryHandler(ILoanRepository repository, IMapper mapper)
+        public GetLoanByAssetIdQueryHandler(ILoanRepository repository, IMapper mapper)
         {
             _repository = repository;
             _mapper = mapper;
 
         }
 
-        public async Task<Option<LoanResponseDto>> Handle(GetLoanByIdQuery request, CancellationToken cancellationToken)
+        public async Task<Option<LoanResponseDto>> Handle(GetLoanByAssetIdQuery request, CancellationToken cancellationToken)
         {
-            var result = await _repository.Get(LoanPredicates.ById(request.Id));
+            var result = await _repository.Get(LoanPredicates.ByAssetId(request.Id));
             return result.IsSome ? _mapper.Map<LoanEntity, LoanResponseDto>(result.First()) : null;
         }
     }

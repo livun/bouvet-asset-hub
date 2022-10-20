@@ -1,5 +1,4 @@
-﻿using Bouvet.AssetHub.API.Domain.Asset.Model;
-using Bouvet.AssetHub.API.Domain.Loan.Model;
+﻿using Bouvet.AssetHub.API.Domain.Loan.Models;
 using System.Linq.Expressions;
 
 namespace Bouvet.AssetHub.API.Helpers
@@ -11,10 +10,11 @@ namespace Bouvet.AssetHub.API.Helpers
         {
             return (a => a.Id == id);
         }
-        //public static Expression<Func<LoanEntity, bool>> BySerialNumber(int serialNumber)
-        //{
-        //    return (a => a.SerialNumber.Value == serialNumber);
-        //}
+        public static Expression<Func<LoanEntity, bool>> ByAssetId(int id)
+        {
+            return (a => a.AssetId == id);
+        }
+     
     }
 
 }

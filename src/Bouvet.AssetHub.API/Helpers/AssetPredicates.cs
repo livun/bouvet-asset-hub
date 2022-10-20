@@ -1,4 +1,4 @@
-﻿using Bouvet.AssetHub.API.Domain.Asset.Model;
+﻿using Bouvet.AssetHub.API.Domain.Asset.Models;
 using System.Linq.Expressions;
 
 namespace Bouvet.AssetHub.API.Helpers

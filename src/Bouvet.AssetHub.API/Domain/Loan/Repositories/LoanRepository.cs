@@ -1,19 +1,13 @@
 ﻿using AutoMapper;
 using Bouvet.AssetHub.API.Data;
-using Bouvet.AssetHub.API.Domain.Asset.Model;
-using Bouvet.AssetHub.API.Domain.Asset.Repositories;
-using Bouvet.AssetHub.API.Domain.Employee.Model;
+using Bouvet.AssetHub.API.Domain.Asset.Models;
+using Bouvet.AssetHub.API.Domain.Employee.Models;
 using Bouvet.AssetHub.API.Domain.Loan.Interfaces;
-using Bouvet.AssetHub.API.Domain.Loan.Model;
+using Bouvet.AssetHub.API.Domain.Loan.Models;
 using EntityFramework.Exceptions.Common;
 using LanguageExt;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Bouvet.AssetHub.API.Domain.Loan.Repositories
 {
@@ -102,7 +96,14 @@ namespace Bouvet.AssetHub.API.Domain.Loan.Repositories
                 .ToListAsync();
             return loans.Any() ? loans : null;
         }
-
+        public async Task<Option<List<LoanEntity>>> GetByEmployeeNumber(int employeeNumber)        {
+            var loans = await _context.Loans
+                .Include(l => l.Asset).ThenInclude(a => a.Category)
+                .Include(l => l.Borrower)
+                .Where(a => a.AssignedTo.Value == employeeNumber)
+                .ToListAsync();
+            return loans.Any() ? loans : null;
+        }
         public async Task<Option<LoanEntity>> Get(Expression<Func<LoanEntity, bool>> predicate)
         {
             return await _context.Loans

@@ -4,6 +4,6 @@ using MediatR;
 
 namespace Bouvet.AssetHub.API.Domain.Asset.Services.Queries
 {
-    public record GetLoanHistoryQuery : IRequest<Option<List<LoanHistoryResponseDto>>>;
+    public record GetLoanByAssetIdQuery(int Id) : IRequest<Option<LoanResponseDto>>;
     
 }

@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Bouvet.AssetHub.API.Domain.Employee.Model
+namespace Bouvet.AssetHub.API.Domain.Employee.Models
 {
 
     public class EmployeeEntity : Entity
