@@ -56,8 +56,8 @@ sequenceDiagram
 User ->> UI : Select one Loan
    Activate UI
         UI ->>+ API /employee/1/loans: GET Loan By EmployeeId
-        API /employee/1/loans ->>+ GetLoanByEmployeeIdQueryHandler : GetLoanByAssetIdQuery (EmployeeId)
-        GetLoanByEmployeeIdQueryHandler ->>+ Loan Repository : GetByAssetId (EmployeeId)
+        API /employee/1/loans ->>+ GetLoanByEmployeeIdQueryHandler : GetLoanByEmplyeeIdQuery (EmployeeId)
+        GetLoanByEmployeeIdQueryHandler ->>+ Loan Repository : GetByEmployeeId (EmployeeId)
         Loan Repository -->>- GetLoanByEmployeeIdQueryHandler : Response(Loan)
         GetLoanByEmployeeIdQueryHandler -->>- API /employee/1/loans : Response (Loan)
         API /employee/1/loans -->>- UI : Response (Loan)
