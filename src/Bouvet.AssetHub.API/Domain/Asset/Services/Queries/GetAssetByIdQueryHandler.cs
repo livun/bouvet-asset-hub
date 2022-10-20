@@ -1,18 +1,10 @@
 ﻿using AutoMapper;
 using Bouvet.AssetHub.API.Contracts;
 using Bouvet.AssetHub.API.Domain.Asset.Interfaces;
-using Bouvet.AssetHub.API.Domain.Asset.Model;
-using Bouvet.AssetHub.API.Domain.Asset.Predicates;
-using FluentValidation;
+using Bouvet.AssetHub.API.Domain.Asset.Models;
+using Bouvet.AssetHub.API.Helpers;
 using LanguageExt;
-using LanguageExt.Common;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Bouvet.AssetHub.API.Domain.Asset.Services.Queries
 {
@@ -31,7 +23,7 @@ namespace Bouvet.AssetHub.API.Domain.Asset.Services.Queries
         public async Task<Option<AssetResponseDto>> Handle(GetAssetByIdQuery request, CancellationToken cancellationToken)
         {
 
-            var result = await _repository.Get(Predicate.ById(request.Id));
+            var result = await _repository.Get(AssetPredicates.ById(request.Id));
             if (result.IsSome)
             {
                 var dto = _mapper.Map<AssetEntity, AssetResponseDto>((AssetEntity)result);

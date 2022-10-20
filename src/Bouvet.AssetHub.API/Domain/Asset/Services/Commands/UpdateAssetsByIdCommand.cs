@@ -1,5 +1,5 @@
 ﻿using Bouvet.AssetHub.API.Contracts;
-using Bouvet.AssetHub.API.Domain.Asset.Model;
+using Bouvet.AssetHub.API.Domain.Asset.Models;
 using LanguageExt;
 using MediatR;
 

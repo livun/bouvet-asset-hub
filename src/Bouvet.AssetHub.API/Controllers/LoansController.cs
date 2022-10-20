@@ -1,14 +1,11 @@
 ﻿
 using AutoMapper;
 using Bouvet.AssetHub.API.Contracts;
-using Bouvet.AssetHub.API.Controllers.Helpers;
-using Bouvet.AssetHub.API.Domain.Asset.Model;
 using Bouvet.AssetHub.API.Domain.Asset.Services.Queries;
 using Bouvet.AssetHub.API.Domain.Loan.Services.Commands;
+using Bouvet.AssetHub.API.Helpers;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace Bouvet.AssetHub.API.Controllers
 {
@@ -32,7 +29,7 @@ namespace Bouvet.AssetHub.API.Controllers
         public async Task<ActionResult<List<LoanResponseDto>>> GetLoansAsync()
         {
             var result = await _mediator.Send(new GetLoansQuery());
-            return new ResultHelper<List<LoanResponseDto>>().OkOrNotFound(result);
+            return new ActionResultHelper<List<LoanResponseDto>>().OkOrNotFound(result);
         }
 
         // POST /loans
@@ -40,30 +37,35 @@ namespace Bouvet.AssetHub.API.Controllers
         public async Task<ActionResult<LoanResponseDto>> AddLoanAsync(CreateLoanCommand dto)
         {
             var result = await _mediator.Send(dto);
-            return new ResultHelper<LoanResponseDto>().OkOrBadRequest(result, "Could not add loan!");    
+            return new ActionResultHelper<LoanResponseDto>().OkOrBadRequest(result, "Could not add loan!");    
 
         }
 
         // GET /loans/id
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetLoanByIdAsync(int id)
+        public async Task<ActionResult<LoanResponseDto>> GetLoanByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            var result = await _mediator.Send(new GetLoanByIdQuery(id));
+            return new ActionResultHelper<LoanResponseDto>().OkOrNotFound(result);
 
         }
         // PUT /loans/1
         [Route("{id}")]
         [HttpPut]
-        public async Task<IActionResult> UpdateLoanById(int id)
+        public async Task<ActionResult<LoanResponseDto>> UpdateLoanById(UpdateLoanDto dto, int id)
         {
-            throw new NotImplementedException(nameof(id));  
+            var result = await _mediator.Send(new UpdateLoanByIdCommand(id, dto.IntervalStop));
+            return new ActionResultHelper<LoanResponseDto>().OkOrNotFound(result);
         }
-        // DELETE /assets/1
+        // DELETE /loans/1
         [Route("{id}")]
         [HttpDelete]
-        public async Task<IActionResult> DeleteLoanById(int id)
+        public async Task<ActionResult<LoanResponseDto>> DeleteLoanById(int id)
         {
-            throw new NotImplementedException();
+            var result = await _mediator.Send(new DeleteLoanByIdCommand(id));
+            return new ActionResultHelper<LoanResponseDto>().OkOrBadRequest(result, "Could not delete loan!");
+
+
         }
 
     }

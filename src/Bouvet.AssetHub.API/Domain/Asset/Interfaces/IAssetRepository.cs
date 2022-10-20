@@ -1,11 +1,6 @@
-﻿using Bouvet.AssetHub.API.Domain.Asset.Model;
+﻿using Bouvet.AssetHub.API.Domain.Asset.Models;
 using LanguageExt;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Bouvet.AssetHub.API.Domain.Asset.Interfaces
 {
@@ -17,7 +12,7 @@ namespace Bouvet.AssetHub.API.Domain.Asset.Interfaces
         //Task<Option<AssetEntity>> Get(int id);
         Task<Option<AssetEntity>> Get(Expression<Func<AssetEntity, bool>> predicate);
         //Task<Option<AssetEntity>> GetBySerialNumber(int serialNumber);
-        Task<Option<List<AssetEntity>>> GetAll();
+        Task<Option<List<AssetEntity>?>> GetAll();
         Task<Option<List<AssetEntity>>> GetByCategory(int categoryId);
         Task<Option<AssetEntity>> Delete(int Id);
         

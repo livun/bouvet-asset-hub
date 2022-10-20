@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace Bouvet.AssetHub.API.Domain.Asset.Model
+namespace Bouvet.AssetHub.API.Domain.Asset.Models
 {
     [Owned]
     public class SerialNumber

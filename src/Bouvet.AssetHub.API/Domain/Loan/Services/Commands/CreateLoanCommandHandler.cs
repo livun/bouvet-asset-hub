@@ -1,11 +1,7 @@
 ﻿using AutoMapper;
 using Bouvet.AssetHub.API.Contracts;
-using Bouvet.AssetHub.API.Domain.Asset.Interfaces;
-using Bouvet.AssetHub.API.Domain.Asset.Model;
-using Bouvet.AssetHub.API.Domain.Asset.Predicates;
 using Bouvet.AssetHub.API.Domain.Loan.Interfaces;
-using Bouvet.AssetHub.API.Domain.Loan.Model;
-using Bouvet.AssetHub.API.Domain.Loan.Services.Commands;
+using Bouvet.AssetHub.API.Domain.Loan.Models;
 using LanguageExt;
 using MediatR;
 

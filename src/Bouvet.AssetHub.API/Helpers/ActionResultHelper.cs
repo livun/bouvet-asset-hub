@@ -2,9 +2,9 @@
 using LanguageExt;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Bouvet.AssetHub.API.Controllers.Helpers
+namespace Bouvet.AssetHub.API.Helpers
 {
-    public class ResultHelper<T> : ControllerBase
+    public class ActionResultHelper<T> : ControllerBase
     {
         public ActionResult<T> OkOrNotFound(Option<T> result)
         {

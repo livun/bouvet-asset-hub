@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Bouvet.AssetHub.API.Domain.Asset.Model
+namespace Bouvet.AssetHub.API.Domain.Asset.Models
 {
     public class AssetEntity : Entity
     {

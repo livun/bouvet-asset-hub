@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Bouvet.AssetHub.API.Domain.Loan.Model
+namespace Bouvet.AssetHub.API.Domain.Loan.Models
 {
     [Owned]
     public class Interval

@@ -1,17 +1,9 @@
 ﻿using Bouvet.AssetHub.API.Data;
 using Bouvet.AssetHub.API.Domain.Asset.Interfaces;
-using Bouvet.AssetHub.API.Domain.Asset.Model;
+using Bouvet.AssetHub.API.Domain.Asset.Models;
 using EntityFramework.Exceptions.Common;
 using LanguageExt;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Bouvet.AssetHub.API.Domain.Asset.Predicates;
-using System.Linq.Expressions;
 
 namespace Bouvet.AssetHub.API.Domain.Asset.Repositories
 {
@@ -63,9 +55,7 @@ namespace Bouvet.AssetHub.API.Domain.Asset.Repositories
         public async Task<Option<List<CategoryEntity>>> GetAll()
         {
             var categories = await _context.Categories.ToListAsync();
-            if (categories.Count == 0)
-                return Option<List<CategoryEntity>>.None;
-            return categories;
+            return categories.Any() ? categories : null;
         }
 
         public async Task<Option<CategoryEntity>> Update(CategoryEntity entity)

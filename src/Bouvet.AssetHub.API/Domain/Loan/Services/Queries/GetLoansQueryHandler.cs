@@ -1,18 +1,9 @@
 ﻿using AutoMapper;
 using Bouvet.AssetHub.API.Contracts;
-using Bouvet.AssetHub.API.Domain.Asset.Interfaces;
-using Bouvet.AssetHub.API.Domain.Asset.Model;
 using Bouvet.AssetHub.API.Domain.Loan.Interfaces;
-using Bouvet.AssetHub.API.Domain.Loan.Model;
-using FluentValidation;
+using Bouvet.AssetHub.API.Domain.Loan.Models;
 using LanguageExt;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Bouvet.AssetHub.API.Domain.Asset.Services.Queries
 {

@@ -1,12 +1,10 @@
 ﻿
 using AutoMapper;
 using Bouvet.AssetHub.API.Contracts;
-using Bouvet.AssetHub.API.Domain.Asset.Model;
 using Bouvet.AssetHub.API.Domain.Asset.Services.Queries;
+using Bouvet.AssetHub.API.Helpers;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace Bouvet.AssetHub.API.Controllers
 {
@@ -25,12 +23,12 @@ namespace Bouvet.AssetHub.API.Controllers
         }
 
         //GET /employees/1/loans
-        [Route("{id}/loans")]
+        [Route("{number}/loans")]
         [HttpGet]
-        public async Task<IActionResult> GetLoansByEmployeeIdAsync(int id)
+        public async Task<ActionResult<List<LoanResponseDto>>> GetLoansByEmployeeIdAsync(int number)
         {
-            throw new NotImplementedException();
-
+            var result = await _mediator.Send(new GetLoansByEmployeeNumberQuery(number));
+            return new ActionResultHelper<List<LoanResponseDto>>().OkOrNotFound(result);
 
 
         }

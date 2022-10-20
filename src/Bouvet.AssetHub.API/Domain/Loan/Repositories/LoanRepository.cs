@@ -1,17 +1,13 @@
-﻿using Bouvet.AssetHub.API.Data;
-using Bouvet.AssetHub.API.Domain.Asset.Model;
-using Bouvet.AssetHub.API.Domain.Asset.Repositories;
-using Bouvet.AssetHub.API.Domain.Employee.Model;
+﻿using AutoMapper;
+using Bouvet.AssetHub.API.Data;
+using Bouvet.AssetHub.API.Domain.Asset.Models;
+using Bouvet.AssetHub.API.Domain.Employee.Models;
 using Bouvet.AssetHub.API.Domain.Loan.Interfaces;
-using Bouvet.AssetHub.API.Domain.Loan.Model;
+using Bouvet.AssetHub.API.Domain.Loan.Models;
 using EntityFramework.Exceptions.Common;
 using LanguageExt;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Linq.Expressions;
 
 namespace Bouvet.AssetHub.API.Domain.Loan.Repositories
 {
@@ -20,12 +16,13 @@ namespace Bouvet.AssetHub.API.Domain.Loan.Repositories
     {
         private readonly DataContext _context;
         private readonly ILogger _logger;
+        private readonly IMapper _mapper;
 
-
-        public LoanRepository(DataContext context, ILogger<LoanRepository> logger)
+        public LoanRepository(DataContext context, ILogger<LoanRepository> logger, IMapper mapper)
         {
             _context = context;
             _logger = logger;
+            _mapper = mapper;
 
         }
 
@@ -40,10 +37,10 @@ namespace Bouvet.AssetHub.API.Domain.Loan.Repositories
             {
                 var newEmployee = new EmployeeEntity { EmployeeNumber = new EmployeeNumber { Value = loan.AssignedTo.Value } };
                 _context.Employees.Add(newEmployee);
-                loan.Loaner = newEmployee;
+                loan.Borrower = newEmployee;
             } else
             {
-                loan.Loaner = employee;
+                loan.Borrower = employee;
             }
             
             // add asset to loan
@@ -73,39 +70,67 @@ namespace Bouvet.AssetHub.API.Domain.Loan.Repositories
             }
         }
 
-        public void AddRange(IEnumerable<LoanEntity> entities)
+        public async Task<Option<LoanEntity>> Update(LoanEntity loan)
         {
-            _context.Loans.AddRange(entities);
+            var entity = await _context.Loans
+                .Include(l => l.Asset).ThenInclude(a => a.Category)
+                .Include(l => l.Borrower)
+                .Where(a => a.Id == loan.Id)
+                .FirstOrDefaultAsync();
+                            
+            if (entity is not null)
+            {
+                entity.Interval.Stop = loan.Interval.Stop;
+                await _context.SaveChangesAsync();
+                return entity;
+            }
+            return Option<LoanEntity>.None;
+
         }
 
         public async Task<Option<List<LoanEntity>>> GetAll()
         {
             var loans = await _context.Loans
                 .Include(l => l.Asset).ThenInclude(a => a.Category)
-                .Include(l => l.Loaner)
+                .Include(l => l.Borrower)
                 .ToListAsync();
+            return loans.Any() ? loans : null;
+        }
+        public async Task<Option<List<LoanEntity>>> GetByEmployeeNumber(int employeeNumber)        {
+            var loans = await _context.Loans
+                .Include(l => l.Asset).ThenInclude(a => a.Category)
+                .Include(l => l.Borrower)
+                .Where(a => a.AssignedTo.Value == employeeNumber)
+                .ToListAsync();
+            return loans.Any() ? loans : null;
+        }
+        public async Task<Option<LoanEntity>> Get(Expression<Func<LoanEntity, bool>> predicate)
+        {
+            return await _context.Loans
+                .Include(l => l.Asset).ThenInclude(a => a.Category)
+                .Include(l => l.Borrower)
+                .AsQueryable()
+                .Where(predicate)
+                .FirstOrDefaultAsync();
 
-            if (loans.Count == 0)
-                return Option<List<LoanEntity>>.None;
-            return loans;
         }
 
-        public LoanEntity GetById(int id)
+        public async Task<Option<LoanEntity>> Delete(int id)
         {
-            return _context.Loans
-                .Include(l => l.Asset)
-                .Include(l => l.AssignedTo)
-                .Where(a => a.Id == id)
-                .First();
-        }
+            var entity = await _context.Loans
+                .Include(l => l.Asset).ThenInclude(a => a.Category)
+                .Include(l => l.Borrower)
+                .Where(l => l.Id == id)
+                .FirstOrDefaultAsync();
+            if (entity is not null)
+            {
+                _context.Loans.Remove(entity);
+                await _context.SaveChangesAsync();
+                return entity;
+            }
+            return Option<LoanEntity>.None;
 
-        public void Remove(LoanEntity entity)
-        {
-            _context.Loans.Remove(entity);
-        }
-        public void Save()
-        {
-            _context.SaveChanges();
+
         }
     }
 }
