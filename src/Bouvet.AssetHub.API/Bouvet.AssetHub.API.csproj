@@ -33,8 +33,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Domain\Notification\Model\" />
-	<InternalsVisibleTo Include="Bouvet.AssetHub.API.Test.csproj" />
+	<InternalsVisibleTo Include="Bouvet.AssetHub.API.Tests" />
   </ItemGroup>
 
 </Project>

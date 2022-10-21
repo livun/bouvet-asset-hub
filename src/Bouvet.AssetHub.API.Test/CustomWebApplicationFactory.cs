@@ -1,12 +1,15 @@
 ﻿using Bouvet.AssetHub.API.Data;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using Microsoft.VisualStudio.TestPlatform.Utilities;
 
 namespace Bouvet.AssetHub.API.Tests
 {
-    public class CustomWebApplicationFactory<TStartup>
-     : WebApplicationFactory<TStartup> where TStartup : class
+    public class CustomWebApplicationFactory : WebApplicationFactory<Program>
     {
+    
         protected override void ConfigureWebHost(IWebHostBuilder builder)
         {
             builder.ConfigureServices(services =>
@@ -15,7 +18,7 @@ namespace Bouvet.AssetHub.API.Tests
                     d => d.ServiceType ==
                         typeof(DbContextOptions<DataContext>));
 
-                services.Remove(descriptor);
+                services.Remove(descriptor!);
 
                 services.AddDbContext<DataContext>(options =>
                 {
@@ -29,16 +32,18 @@ namespace Bouvet.AssetHub.API.Tests
                     var scopedServices = scope.ServiceProvider;
                     var db = scopedServices.GetRequiredService<DataContext>();
                     var logger = scopedServices
-                        .GetRequiredService<ILogger<CustomWebApplicationFactory<TStartup>>>();
+                        .GetRequiredService<ILogger<CustomWebApplicationFactory>>();
 
                     db.Database.EnsureCreated();
 
                     try
                     {
-                        Utilities.InitializeDbForTests(db);
+                        //Utilities.InitializeDbForTests(db);
+                        Utilities.ReinitializeDbForTests(db);
                     }
                     catch (Exception ex)
                     {
+                        
                         logger.LogError(ex, "An error occurred seeding the " +
                             "database with test messages. Error: {Message}", ex.Message);
                     }
@@ -47,3 +52,5 @@ namespace Bouvet.AssetHub.API.Tests
         }
     }
 }
+
+

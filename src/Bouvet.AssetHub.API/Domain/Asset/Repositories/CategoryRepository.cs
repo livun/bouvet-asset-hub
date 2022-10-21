@@ -38,6 +38,14 @@ namespace Bouvet.AssetHub.API.Domain.Asset.Repositories
    
         public async Task<Option<CategoryEntity>> Delete(int id)
         {
+            var assets = await _context.Assets
+                .Include(a => a.Category)
+                .Where(a => a.Category.Id == id)
+                .ToListAsync();
+            if (assets.Any())
+            {
+                return null;
+            }
             var category = await _context.Categories
                 .Where(a => a.Id == id)
                 .FirstOrDefaultAsync();
@@ -56,6 +64,12 @@ namespace Bouvet.AssetHub.API.Domain.Asset.Repositories
         {
             var categories = await _context.Categories.ToListAsync();
             return categories.Any() ? categories : null;
+        }
+        public async Task<Option<CategoryEntity>> Get(int id)
+        {
+            return await _context.Categories
+                .Where(a => a.Id == id)
+                .FirstOrDefaultAsync();
         }
 
         public async Task<Option<CategoryEntity>> Update(CategoryEntity entity)
