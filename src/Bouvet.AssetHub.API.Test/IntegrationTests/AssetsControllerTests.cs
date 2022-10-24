@@ -36,6 +36,7 @@ namespace Bouvet.AssetHub.API.Tests
             var result = await _httpClient.GetAsync($"api/assets");
             var json = await result.Content.ReadAsStringAsync();
             var assets = JsonSerializer.Deserialize<List<AssetResponseDto>>(json);
+                       
 
             // Assert
             result.StatusCode.ShouldBe(HttpStatusCode.OK);
@@ -145,35 +146,6 @@ namespace Bouvet.AssetHub.API.Tests
         [Fact]
         public async Task DeleteAssetById_Ok_200()
         {
-            ////Arrange
-            //var client = _factory.WithWebHostBuilder(builder =>
-            //{
-            //    builder.ConfigureServices(services =>
-            //    {
-            //        var serviceProvider = services.BuildServiceProvider();
-
-            //        using (var scope = serviceProvider.CreateScope())
-            //        {
-            //            var scopedServices = scope.ServiceProvider;
-            //            var db = scopedServices
-            //                .GetRequiredService<DataContext>();
-            //            var logger = scopedServices
-            //                .GetRequiredService<ILogger<AssetsControllerTests>>();
-
-            //            try
-            //            {
-            //                Utilities.ReinitializeDbForTests(db);
-            //            }
-            //            catch (Exception ex)
-            //            {
-            //                logger.LogError(ex, "An error occurred seeding " +
-            //                    "the database with test messages. Error: {Message}",
-            //                    ex.Message);
-            //            }
-            //        }
-            //    });
-            //})
-            //    .CreateClient(new WebApplicationFactoryClientOptions { AllowAutoRedirect = false });
             
             // Act
             var result = await _httpClient.DeleteAsync($"api/assets/2");
@@ -187,44 +159,15 @@ namespace Bouvet.AssetHub.API.Tests
         [Fact]
         public async Task GetLoanByAssetId_Ok_200()
         {
-            Assert.Equal(2, 2);
-            //////Arrange
-            ////var client = _factory.WithWebHostBuilder(builder =>
-            ////{
-            ////    builder.ConfigureServices(services =>
-            ////    {
-            ////        var serviceProvider = services.BuildServiceProvider();
 
-            ////        using (var scope = serviceProvider.CreateScope())
-            ////        {
-            ////            var scopedServices = scope.ServiceProvider;
-            ////            var db = scopedServices
-            ////                .GetRequiredService<DataContext>();
-            ////            var logger = scopedServices
-            ////                .GetRequiredService<ILogger<AssetsControllerTests>>();
+            // Act
+            var result = await _httpClient.GetAsync($"api/assets/5/loans");
+            var json = await result.Content.ReadAsStringAsync();
+            var assets = JsonSerializer.Deserialize<LoanResponseDto>(json);
 
-            ////            try
-            ////            {
-            ////                Utilities.ReinitializeDbForTests(db);
-            ////            }
-            ////            catch (Exception ex)
-            ////            {
-            ////                logger.LogError(ex, "An error occurred seeding " +
-            ////                    "the database with test messages. Error: {Message}",
-            ////                    ex.Message);
-            ////            }
-            ////        }
-            ////    });
-            ////})
-            ////    .CreateClient(new WebApplicationFactoryClientOptions { AllowAutoRedirect = false });
-
-            //// Act
-            //var result = await _httpClient.DeleteAsync($"api/assets/2");
-            //var check = await _httpClient.GetAsync($"api/assets/2");
-
-            //// Assert
-            //result.StatusCode.ShouldBe(HttpStatusCode.OK);
-            //check.StatusCode.ShouldBe(HttpStatusCode.NotFound);
+            // Assert
+            result.StatusCode.ShouldBe(HttpStatusCode.OK);
+            assets.ShouldNotBeNull();
 
         }
     }

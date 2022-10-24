@@ -3,6 +3,7 @@ using Bouvet.AssetHub.API.Controllers;
 using Bouvet.AssetHub.API.Data;
 using Bouvet.AssetHub.API.Domain.Asset.Models;
 using Bouvet.AssetHub.API.Domain.Asset.Services.Commands;
+using EmptyFiles;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Shouldly;
 using System.Net;
@@ -36,7 +37,8 @@ namespace Bouvet.AssetHub.API.Tests
             var result = await _httpClient.GetAsync($"api/categories");
             var json = await result.Content.ReadAsStringAsync();
             var categories = JsonSerializer.Deserialize<List<CategoryResponseDto>>(json);
-
+            _output.WriteLine(json);
+           
             // Assert
             result.StatusCode.ShouldBe(HttpStatusCode.OK);
             categories.ShouldNotBeEmpty();
@@ -95,7 +97,7 @@ namespace Bouvet.AssetHub.API.Tests
             // Arrange 
             var dto = new CreateCategoryCommand { Name = "Keyboard" };
             var json = JsonSerializer.Serialize(dto);
-            
+
             // Act
             var result = await _httpClient.PostAsync($"api/categories", new StringContent(json, Encoding.UTF8, "application/json"));
 
@@ -108,7 +110,7 @@ namespace Bouvet.AssetHub.API.Tests
         public async Task PutCategoryById_Ok_200()
         {
             // Arrange
-            var dto = new UpdateCategoryDto("Develeoper MAC");
+            var dto = new UpdateCategoryDto("Developer MAC");
             var json = SerializeHelper.Serialize(dto);
            
             // Act 
@@ -124,12 +126,12 @@ namespace Bouvet.AssetHub.API.Tests
       
         
         [Fact]
-        public async Task DeleteAssetById_Ok_200()
+        public async Task DeleteCategoryById_Ok_200()
         {
             
             // Act
-            var result = await _httpClient.DeleteAsync($"api/categories/4");
-            var check = await _httpClient.GetAsync($"api/categories/4");
+            var result = await _httpClient.DeleteAsync($"api/categories/5");
+            var check = await _httpClient.GetAsync($"api/categories/5");
 
             // Assert
             result.StatusCode.ShouldBe(HttpStatusCode.OK);

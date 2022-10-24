@@ -10,18 +10,22 @@ namespace Bouvet.AssetHub.API.Tests
     {
         public static void InitializeDbForTests(DataContext db)
         {
+            
             db.Assets.AddRange(GetSeedingAssets());
+            db.Categories.AddRange(GetSeedingCategories());
             db.Employees.AddRange(GetSeedingEmployees());
+            db.Loans.AddRange(GetSeedingLoans());
             db.SaveChanges();
         }
 
         public static void ReinitializeDbForTests(DataContext db)
         {
-            db.Categories.RemoveRange(db.Categories);
+            db.Categories.RemoveRange(db.Categories.ToList());
             db.Assets.RemoveRange(db.Assets);
             db.Employees.RemoveRange(db.Employees);
             db.LoanHistory.RemoveRange(db.LoanHistory);
             db.Loans.RemoveRange(db.Loans);
+            db.SaveChanges();
 
             InitializeDbForTests(db);
         }
@@ -79,11 +83,70 @@ namespace Bouvet.AssetHub.API.Tests
                     Id = 2
                 },
             };
-            
-
-            
         }
+        public static List<CategoryEntity> GetSeedingCategories()
+        {
+            return new List<CategoryEntity>
+            {
+                new CategoryEntity { Id = 5, Name = "Exam PC" }
+            };
+    }
+        public static List<LoanEntity> GetSeedingLoans()
+        {
+            var employee3 = new EmployeeEntity
+            {
+                EmployeeNumber = new EmployeeNumber { Value = 3456 },
+                Id = 3
+            };
+            var employee4 = new EmployeeEntity
+            {
+                EmployeeNumber = new EmployeeNumber { Value = 4567 },
+                Id = 4
+            };
+            var category6 = new CategoryEntity { Id = 6, Name = "Screen" };
+            var category7 = new CategoryEntity { Id = 7, Name = "Regular PC" };
+
+            var asset5 = new AssetEntity
+            {
+                Id = 5,
+                CategoryId = 6,
+                Category = category6
+            };
+            var asset6 = new AssetEntity
+            {
+                Id = 6,
+                CategoryId = 7,
+                Category = category7
+            };
+           
+
+            return new List<LoanEntity>()
+            {
+                new LoanEntity
+                {
+                    Id = 1,
+                    Interval = new Interval { IsLongterm = true, Start = DateTime.Today, Stop = null },
+                    AssignedTo = employee3.EmployeeNumber,
+                    Borrower = employee3,
+                    AssetId = asset5.Id,
+                    Asset = asset5,
+                    Bsd = new Bsd { Reference = "RK4568"}
+
+                },
+                new LoanEntity
+                {
+                    Id = 2,
+                    Interval = new Interval { IsLongterm = false, Start = DateTime.Today, Stop = DateTime.Today.AddDays(7) },
+                    AssignedTo = employee4.EmployeeNumber,
+                    Borrower = employee4,
+                    AssetId = asset6.Id,
+                    Asset = asset6,
+                },
 
 
+            };
+        }
     }
 }
+
+
