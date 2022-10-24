@@ -12,10 +12,12 @@ namespace Bouvet.AssetHub.API.Controllers
     public class AssetsController : ControllerBase
     {
         private readonly IMediator _mediator;
+        private readonly ILogger<AssetsController> _logger;
 
-        public AssetsController(IMediator mediator)
+        public AssetsController(IMediator mediator, ILogger<AssetsController> logger)
         {
-            _mediator = mediator; 
+            _mediator = mediator;
+            _logger = logger;
         }
 
         // GET /assets

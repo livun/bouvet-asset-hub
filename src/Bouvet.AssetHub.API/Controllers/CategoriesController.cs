@@ -9,11 +9,11 @@ namespace Bouvet.AssetHub.API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class CategoryController : ControllerBase
+    public class CategoriesController : ControllerBase
     {
         private readonly IMediator _mediator;
 
-        public CategoryController(IMediator mediator)
+        public CategoriesController(IMediator mediator)
         {
             _mediator = mediator;
         }
@@ -24,6 +24,15 @@ namespace Bouvet.AssetHub.API.Controllers
         {
             var result = await _mediator.Send(new GetCategoriesQuery());
             return new ActionResultHelper<List<CategoryResponseDto>>().OkOrNotFound(result);
+        }
+        // GET /categories/1
+        [Route("{id}")]
+        [HttpGet]
+        public async Task<ActionResult<CategoryResponseDto>> GetCategorybyIdAsync(int id)
+        {
+            var result = await _mediator.Send(new GetCategoryByIdQuery(id));
+            return new ActionResultHelper<CategoryResponseDto>().OkOrNotFound(result);
+
         }
         // GET /categories/1/assets
         [Route("{id}/assets")]
@@ -45,7 +54,7 @@ namespace Bouvet.AssetHub.API.Controllers
         // DELETE /categories/1
         [Route("{id}")]
         [HttpDelete]
-        public async Task<ActionResult<CategoryResponseDto>> DeleteAssetByIdAsync(int id)
+        public async Task<ActionResult<CategoryResponseDto>> DeleteCategoryByIdAsync(int id)
         {
             var result = await _mediator.Send(new DeleteCategoryCommand(id));
             return new ActionResultHelper<CategoryResponseDto>().OkOrBadRequest(result, "Category cannot be deleted!");

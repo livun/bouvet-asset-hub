@@ -7,6 +7,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bouvet.AssetHub.API", "Bouv
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{0D48775C-FBBF-4BF6-88C5-EFC5DDCB9A96}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bouvet.AssetHub.API.Tests", "Bouvet.AssetHub.API.Test\Bouvet.AssetHub.API.Tests.csproj", "{EAD284A1-B119-4D73-B3AE-A5B0F56CFD24}"
+	ProjectSection(ProjectDependencies) = postProject
+		{41957E4C-C21B-4AE4-B2C3-073FEC53CC3A} = {41957E4C-C21B-4AE4-B2C3-073FEC53CC3A}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +26,10 @@ Global
 		{0D48775C-FBBF-4BF6-88C5-EFC5DDCB9A96}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0D48775C-FBBF-4BF6-88C5-EFC5DDCB9A96}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0D48775C-FBBF-4BF6-88C5-EFC5DDCB9A96}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EAD284A1-B119-4D73-B3AE-A5B0F56CFD24}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EAD284A1-B119-4D73-B3AE-A5B0F56CFD24}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EAD284A1-B119-4D73-B3AE-A5B0F56CFD24}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EAD284A1-B119-4D73-B3AE-A5B0F56CFD24}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
