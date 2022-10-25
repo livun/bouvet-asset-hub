@@ -28,7 +28,7 @@ namespace Bouvet.AssetHub.API.Domain.Asset.Services.Queries
             if (result.IsSome)
             {
                
-                return _mapper.Map<List<AssetEntity>, List<AssetResponseDto>>((List<AssetEntity>)result);
+                return _mapper.Map<List<AssetEntity>, List<AssetResponseDto>>(result.First());
             }
 
             return Option<List<AssetResponseDto>>.None;

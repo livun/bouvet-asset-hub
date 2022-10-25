@@ -14,6 +14,19 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Logging.ClearProviders();
 builder.Logging.AddConsole();
 
+// Enable cors
+// Add cors
+
+var MyCorsPolicy = "_myCorsPolicy";
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: MyCorsPolicy, policy =>
+    {
+        policy.WithOrigins("http://localhost:3000")
+            .WithHeaders("*")
+            .WithMethods("PUT", "DELETE", "GET", "POST");
+    });
+});
 // Add services to the container.
 
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
@@ -55,6 +68,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors(MyCorsPolicy);
 
 app.UseAuthorization();
 
