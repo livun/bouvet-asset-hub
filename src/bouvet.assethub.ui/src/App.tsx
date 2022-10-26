@@ -7,7 +7,7 @@ import FullMenu from './components/FullMenu';
 import Main from './components/Main';
 import { Route, Routes } from 'react-router-dom';
 import { Test } from './components/test';
-import Assets from './components/Assets';
+import Assets from './routes/Assets';
 
 
 function App() {

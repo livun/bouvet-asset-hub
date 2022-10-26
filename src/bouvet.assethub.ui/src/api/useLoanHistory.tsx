@@ -1,20 +1,6 @@
-import { useState } from "react"
-import { Client, LoanHistoryResponseDto } from "../__generated__/api-client";
-import { client } from "./Client";
+import { LoanHistoryResponseDto } from "../__generated__/api-types";
+import { ApiResponse, useGetApi } from "./useApi";
 
-const useLoanHistory = () => {
-
-    const [loanHistory, setLoanHistory] = useState<LoanHistoryResponseDto[]>();
-        
-    const getLoanHistory = async () => {
-        const data: LoanHistoryResponseDto[] = await client.loanhistory();
-        setLoanHistory(data);
-
-    };
-
-    return {loanHistory, getLoanHistory};
-
+export function useGetLoanHistory(): ApiResponse<LoanHistoryResponseDto[]> {
+    return useGetApi<LoanHistoryResponseDto[]>("/loanhistory")
 };
-
-export default useLoanHistory;
-
