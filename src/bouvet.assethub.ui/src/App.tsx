@@ -6,8 +6,9 @@ import { Box } from '@mui/material';
 import FullMenu from './components/FullMenu';
 import Main from './components/Main';
 import { Route, Routes } from 'react-router-dom';
-import { Test } from './components/test';
 import Assets from './routes/Assets';
+import Loans from './routes/Loans';
+import LoanHistory from './routes/LoanHistory';
 
 
 function App() {
@@ -22,9 +23,9 @@ function App() {
       
 
       <Routes>
-          <Route path='Assets' element={<Main open={open} child={<Assets/>}/>} />	
-          <Route path='test' element={<Main open={open} child={<Test/>}/>} />	
-          <Route path='test' element={<Main open={open} child={<Test/>}/>} />	
+          <Route path='assets' element={<Main open={open} child={<Assets/>}/>} />	
+          <Route path='loans' element={<Main open={open} child={<Loans/>}/>} />	
+          <Route path='loanhistory' element={<Main open={open} child={<LoanHistory/>}/>} />	
         </Routes>
     </Box>
    

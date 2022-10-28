@@ -25,6 +25,7 @@ const drawerWidth = 240;
 const Body = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })<{
     open?: boolean;
   }>(({ theme, open }) => ({
+    height: '90vh',
     flexGrow: 1,
     padding: theme.spacing(3),
     transition: theme.transitions.create('margin', {

@@ -1,22 +1,15 @@
 import { useGetAssets } from "../api/useAssets";
+import CircularLoader from "../components/CircularLoader";
 import DataGridTable from "../components/Table";
+import { AssetResponseDto } from "../__generated__/api-types";
 
 export default function Assets () {
     const {status, statusText, data, error, loading} = useGetAssets();
     
-    console.log(status)
-    console.log("loading is;", loading)
-    if(!loading)
-    {
-        console.log(data)
-    }
-
-   
-   
-
    
     return <>
-    {data !== undefined ? <DataGridTable rows={data} /> : <></> }
+    {data !== undefined ? <DataGridTable<AssetResponseDto> rows={data} /> : <CircularLoader />}
+    
     
     </>
 }

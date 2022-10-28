@@ -1,105 +1,184 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
-import { AssetResponseDto } from '../__generated__/api-types';
-import { Status } from '../api/enums';
+import { AssetResponseDto, LoanResponseDto } from '../__generated__/api-types';
+import { Status } from '../types/enums';
+import { TableProps } from '../types/props';
 
 
-
-
-function formatHeaderName(name: string){
-    const string = (name[0].toUpperCase() + name.substring(1)).replace(/([a-z0-9])([A-Z])/g, '$1 $2')
-    if(string.includes("Value")){
-        var lastIndex = string.lastIndexOf(" ")
-        return string.substring(0, lastIndex)
+const lookupKeysMapper: any = {
+    'serialNumberValue': 'Serial Number',
+    'categoryName': 'Category',
+    'intervalStart': 'Start Date',
+    'intervalStop': 'Stop Date',
+    'intervalIsLongterm': 'Longterm',
+    'assignedToValue': 'Borrower',
+    'bsdReference': 'BSD',
+    'borrowerEmployeeNumberValue' : 'Borrower',
+    'assetCategoryName': 'Asset Category'
+};
+const formatHeaderKeys = (key: string) => {
+    const result = lookupKeysMapper[key];
+    if (result !== undefined){
+        return result
     }
-    return string
+    // Capitalize first letter and split the string on capitalized letters
+    return key.split(/(?=[A-Z])/).map((p) => { return p[0].toUpperCase() + p.slice(1); }).join(' ');
+}
+
+
+
+
+function formatString (key: string, object: any){
+    const filter = () => typeof(object) === "string";
+    const value = () => {
+        const col : GridColDef = {
+            field: key,
+                headerName: formatHeaderKeys(key),
+                flex: 1,
+                //width: 150,
+                type: typeof (object)
+
+        }
+        return col
+    }
+    return [filter, value]
+}
+function formatBooleans (key: string, object: any) {
+    const filter = () => typeof (object) === "boolean"
+    const value = () => {
+        console.log("hi i am a bool")
+        const col : GridColDef = {
+            field: key,
+                headerName: formatHeaderKeys(key),
+                flex: 0.5,
+                type: typeof (object)
+
+        }
+        return col
+    }
+    return [filter, value]
 
 }
 
-export default function DataGridTable(prop: { rows: AssetResponseDto[] }) {
-    const { rows } = prop
-    const rowDef = rows[0]
-
-    const cols: GridColDef[] = []
-    const fieldEntries = Object.entries(rowDef);
-    fieldEntries.map( ([key, val] ) => {
-        console.log(key)
-        console.log(val)
-        console.log(formatHeaderName(key))
-        if (key === "status" && typeof(val) === 'number')
-        {
-            var value : number = val
-            var statusEnum = Status[value]
-            console.log("statisenum", statusEnum);
-        }
+function formatId (key: string, object: any){
+    const filter = () => key.toLocaleLowerCase().includes("id")
+    const value = () => {
         const col : GridColDef = {
             field: key,
-            headerName: formatHeaderName(key),
-            width: 150,
-            type: typeof(val)
+                headerName: formatHeaderKeys(key),
+                flex: 0.5,
+                //width: 150,
+                type: typeof (object)
+
         }
-        cols.push(col);
-    } )
+        return col
+    }
+    return [filter, value]
+}
+
+// Value getter for Status - maps number to "Status enum"
+const formatStatusValue = (params: GridValueGetterParams)  => {
+    return `${Status[params.row.status]}`
+    }
+function formatStatus (key: string, object: any){
+    const filter = () => key === "status"
+    const value = () => {
+        const col : GridColDef = {
+            field: key,
+                headerName: formatHeaderKeys(key),
+                flex: 1,
+                type: typeof (object),
+                valueGetter: formatStatusValue,
+        }
+        return col
+    }
+    return [filter, value]
+}
+
+function formatDate (key: string, object: any){
+    const filter = () =>  key.toLocaleLowerCase().includes("interval")
+    const value = () => {
+        const col : GridColDef = {
+            field: key,
+                headerName: formatHeaderKeys(key),
+                flex: 1,
+                type: 'dateTime',
+                valueGetter: ({ value }) => value && new Date(value).toLocaleDateString(),
+        }
+        return col
+    }
+    return [filter, value]
+}
+function formatGeneral (key: string, object: any){
+    const filter = () => typeof(key) === "string";
+    const value = () => {
+        const col : GridColDef = {
+            field: key,
+                headerName: formatHeaderKeys(key),
+                flex: 1,
+                //width: 150,
+                type: typeof (object)
+
+        }
+        return col
+    }
+    return [filter, value]
+}
+
+// Array of formatproviders, the less generic in the beginning of array
+const formatProviders = [formatId, formatBooleans, formatDate, formatStatus, formatString, formatGeneral]
+
+// Loops through all formatters and renders column definitions based on properties of objects. 
+function getColumnsFor(key: string, object: any){
+    for (const formatter of formatProviders){
+        const [filter, value] = formatter(key, object);
+        if (filter())
+            return value();
+    }
+    return false
+}
 
 
+// Maps through object type and adds the column definitions to the array of column definitions.
+function formatGridColumnsDefinition(data: object): GridColDef[] {
+    const columns: GridColDef[] = []
+    const fieldEntries = Object.entries(data);
+    fieldEntries.map(([key, val]) => {
+        const column = getColumnsFor(key, val);
+        if (typeof(column) === "object")
+            columns.push(column);
+      
+    })
+    return columns;
 
-    const columns: GridColDef[] = [
-        { field: 'id', headerName: 'ID', width: 90 },
-        {
-            field: 'firstName',
-            headerName: 'First name',
-            width: 150,
-            editable: true,
-        },
-        {
-            field: 'lastName',
-            headerName: 'Last name',
-            width: 150,
-            editable: true,
-        },
-        {
-            field: 'age',
-            headerName: 'Age',
-            type: 'number',
-            width: 110,
-            editable: true,
-        },
-        {
-            field: 'fullName',
-            headerName: 'Full name',
-            description: 'This column has a value getter and is not sortable.',
-            sortable: false,
-            width: 160,
-            valueGetter: (params: GridValueGetterParams) =>
-                `${params.row.firstName || ''} ${params.row.lastName || ''}`,
-        },
-    ];
+}
 
-   
+export default function DataGridTable<T extends Object>(props: TableProps<T>)  {
+    const { rows } = props
+    const gridColDef = formatGridColumnsDefinition(rows[0])
 
-    const row = [
-        { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35 },
-        { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
-        { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45 },
-        { id: 4, lastName: 'Stark', firstName: 'Arya', age: 16 },
-        { id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: null },
-        { id: 6, lastName: 'Melisandre', firstName: null, age: 150 },
-        { id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44 },
-        { id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36 },
-        { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
-    ];
-    return (
-        <Box sx={{ height: 400, width: '100%' }}>
-            <DataGrid
-                rows={rows}
-                columns={cols}
-                pageSize={5}
-                rowsPerPageOptions={[5]}
-                checkboxSelection
-                disableSelectionOnClick
-                experimentalFeatures={{ newEditingApi: true }}
-            />
-        </Box>
+
+    return (<>
+        <div style={{ display: "flex", height: "100%" }}>
+            <div style={{ flexGrow: 1 }}>
+                <DataGrid
+                    rows={rows}
+                    rowHeight={45}
+                    //getRowHeight={() => 'auto'}
+                    columns={gridColDef}
+                    pageSize={10}
+                    rowsPerPageOptions={[10]}
+                    checkboxSelection
+                    disableSelectionOnClick
+                    experimentalFeatures={{ newEditingApi: true }}
+                />
+
+            </div>
+
+        </div>
+    </>
+
+
     );
 };
