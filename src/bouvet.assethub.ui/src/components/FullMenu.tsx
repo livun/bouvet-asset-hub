@@ -110,7 +110,7 @@ export default function FullMenu(prop: { open: boolean, handleOpen: () => void }
 				<Divider />
 				<List>
 					{pages.map((page, index) => (
-							<Link to={`/${page.toLocaleLowerCase()}`} style={{ color: 'inherit', textDecoration: 'none' }}>
+							<Link key={index} to={`/${page.toLocaleLowerCase()}`} style={{ color: 'inherit', textDecoration: 'none' }}>
 
 <ListItem key={index} disablePadding>
 							<ListItemButton>
@@ -126,7 +126,7 @@ export default function FullMenu(prop: { open: boolean, handleOpen: () => void }
 				
 				<List>
 					{actions.map((text, index) => (
-						<ListItem key={text} disablePadding>
+						<ListItem key={index} disablePadding>
 							<ListItemButton>
 								<ListItemText primary={text} />
 							</ListItemButton>

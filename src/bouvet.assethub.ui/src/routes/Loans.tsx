@@ -11,9 +11,6 @@ export default function Loans () {
       
     return <>
     {status === 404 ? 
-        <NotFound message={errorMsg}/> : data !== undefined ? <DataGridTable<LoanResponseDto> rows={data} /> : <CircularLoader />}
-    {/* {data !== undefined ? <DataGridTable<LoanResponseDto> rows={data} /> : <CircularLoader />} */}
-    
-    
+        <NotFound message={errorMsg}/> : data !== undefined ? <DataGridTable<LoanResponseDto> rows={data} /> : <CircularLoader />}    
     </>
 }

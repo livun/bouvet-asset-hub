@@ -9,6 +9,8 @@ import { Route, Routes } from 'react-router-dom';
 import Assets from './routes/Assets';
 import Loans from './routes/Loans';
 import LoanHistory from './routes/LoanHistory';
+import Asset from './routes/Asset';
+import Loan from './routes/Loan';
 
 
 function App() {
@@ -25,7 +27,10 @@ function App() {
       <Routes>
           <Route path='assets' element={<Main open={open} child={<Assets/>}/>} />	
           <Route path='loans' element={<Main open={open} child={<Loans/>}/>} />	
-          <Route path='loanhistory' element={<Main open={open} child={<LoanHistory/>}/>} />	
+          <Route path='loanhistory' element={<Main open={open} child={<LoanHistory/>}/>} />
+          <Route path='assets/:id' element={<Main open={open} child={<Asset />} />} />	
+          <Route path='loans/:id' element={<Main open={open} child={<Loan />} />} />	
+        
         </Routes>
     </Box>
    
