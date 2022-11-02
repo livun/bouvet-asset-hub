@@ -139,7 +139,7 @@ const ButtonsColumn = () => {
             getActions: (params: GridRowParams) => [
                 <GridActionsCellItem 
                 icon={<VisibilityIcon />} 
-                onClick={() => navigate(`${location.pathname}/${params.id}`,  {replace: true})}                 
+                onClick={() => navigate(`${location.pathname}/${params.id}`)}                 
                 label="Show" 
                 ></ GridActionsCellItem>,
                 <GridActionsCellItem 
