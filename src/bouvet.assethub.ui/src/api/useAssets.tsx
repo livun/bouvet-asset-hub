@@ -10,6 +10,7 @@ export function usePostAssets(dto: CreateAssetCommand): ApiResponse<AssetRespons
 };
 
 export function usePutAssets(dto: UpdateAssetsByIdCommand): ApiResponse<AssetResponseDto[]> {
+    console.log("useputassets")
     return useApi<UpdateAssetsByIdCommand, AssetResponseDto[]>("/assets", dto, "PUT")
 };
 

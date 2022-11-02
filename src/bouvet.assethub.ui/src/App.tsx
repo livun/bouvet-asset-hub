@@ -1,20 +1,18 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState } from 'react';
 import './App.css';
-
 import { Box } from '@mui/material';
 import FullMenu from './components/FullMenu';
 import Main from './components/Main';
 import { Route, Routes } from 'react-router-dom';
-import Assets from './routes/Assets';
-import Loans from './routes/Loans';
-import LoanHistory from './routes/LoanHistory';
-import Asset from './routes/Asset';
-import Loan from './routes/Loan';
+import Assets from './views/Assets';
+import Loans from './views/Loans';
+import LoanHistory from './views/LoanHistory';
+import Asset from './views/Asset';
+import Loan from './views/Loan';
 
 
 function App() {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   const handleOpen = () => {
     setOpen(!open)
   }
