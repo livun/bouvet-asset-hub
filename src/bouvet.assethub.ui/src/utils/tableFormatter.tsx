@@ -1,12 +1,11 @@
 import { GridActionsCellItem, GridColDef, GridRowId, GridRowParams, GridValueGetterParams } from "@mui/x-data-grid";
-import { Status } from "./enums";
+import { StatusEnum } from "./enums";
 import { lookupKeysMapper } from "./mappers";
 import { capitalizeAndSplit } from "./regex";
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
-import VisibilityIcon from '@mui/icons-material/Visibility';
+
 import { deleteItem, useViewAsset} from "./actions";
 import { Link, redirect, useLocation, useNavigate } from "react-router-dom";
+import { TableButtonsColumn } from "../components/TableButtonsColumn";
 
 
 const formatHeaderKeys = (key: string) => {
@@ -83,7 +82,7 @@ function formatStatus (key: string, object: any){
                 align: "left",
                 flex: 1,
                 type: typeof (object),
-                valueGetter: ({ value }) => Status[value],
+                valueGetter: ({ value }) => StatusEnum[value],
         }
         return col
     }
@@ -125,42 +124,7 @@ function formatGeneral (key: string, object: any){
 }
 
 
-const ButtonsColumn = () => {
-    const navigate = useNavigate();
-    const location = useLocation();
 
-    console.log(location.pathname)
-   
-        const col = {
-            field: "actions",
-            headerName: "Actions",
-            flex: 0.8,
-            type: "actions",
-            getActions: (params: GridRowParams) => [
-                <GridActionsCellItem 
-                icon={<VisibilityIcon />} 
-                onClick={() => navigate(`${location.pathname}/${params.id}`)}                 
-                label="Show" 
-                ></ GridActionsCellItem>,
-                <GridActionsCellItem 
-                icon={<EditIcon />} 
-                onClick={() => deleteItem(params.id, params)} 
-                label="Edit" 
-                />,
-                <GridActionsCellItem 
-                icon={<DeleteIcon />} 
-                onClick={() => deleteItem(params.id, params)} 
-                label="Delete" 
-                />,
-                
-
-            ]
-      
-        }
-
-  
-    return col
-}
 
 // Array of formatproviders, the less generic in the beginning of array
 const formatProviders = [formatId, formatBooleans, formatDate, formatStatus, formatString, formatGeneral]
@@ -185,7 +149,7 @@ export function formatGridColumnsDefinition(data: object): GridColDef[] {
         if (typeof(column) === "object")
             columns.push(column);
     })
-    columns.push(ButtonsColumn())
+    columns.push(TableButtonsColumn())
     return columns;
 
 }

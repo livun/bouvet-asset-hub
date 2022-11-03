@@ -12,13 +12,8 @@ import { AssetResponseDto } from "../__generated__/api-types";
 export default function Assets () {
     const {status, statusText, data, error, loading} = useGetAssets();
     const errorMsg = "There is no assets in database"
-    const navigate = useNavigate()
 
-    const navigator = () => {
-        navigate(`/assets/0`,  {replace: true})
-    }
-
-    
+  
    
     return <>
    {status === 404 ? 
