@@ -1,23 +1,30 @@
 import { GridRowId } from "@mui/x-data-grid";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { getAssetsFn } from "../api/assetsApi";
 import { useGetAssets } from "../api/useAssets";
 import CircularLoader from "../components/CircularLoader";
 import NotFound from "../components/NotFound";
 import DataGridTable from "../components/Table";
+import apiClient from "../config/apiClient";
 import { AssetResponseDto } from "../__generated__/api-types";
 
 
 
-export default function Assets () {
-    const {status, statusText, data, error, loading} = useGetAssets();
-    const errorMsg = "There is no assets in database"
+export default function Assets() {
+    const { isLoading, isSuccess, isError, error, data} = useQuery<AssetResponseDto[], Error>(["assets"], getAssetsFn)
 
-  
-   
     return <>
-   {status === 404 ? 
-        <NotFound message={errorMsg}/> : data !== undefined ? <DataGridTable<AssetResponseDto> rows={data} /> : <CircularLoader />}    
-    </>
-    
+        { isLoading 
+        ? <CircularLoader /> 
+        :  isError && axios.isAxiosError(error)
+        ? <NotFound message={error?.response?.data} />  
+        : isSuccess 
+        ? <DataGridTable<AssetResponseDto> rows={data} />
+        : <></>
+        }
+    </>   
 }
+

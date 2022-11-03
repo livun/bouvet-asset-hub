@@ -27,7 +27,8 @@ namespace Bouvet.AssetHub.API.Controllers
         public async Task<ActionResult<List<LoanHistoryResponseDto>>> GetLoansAsync()
         {
             var result = await _mediator.Send(new GetLoanHistoryQuery());
-            return new ActionResultHelper<List<LoanHistoryResponseDto>>().OkOrNotFound(result);
+            // return new ActionResultHelper<List<LoanHistoryResponseDto>>().OkOrNotFound(result);
+            return new ActionResultHelper<List<LoanHistoryResponseDto>>().OkOrBadRequest(result, "no assets");
         }
     }
 
