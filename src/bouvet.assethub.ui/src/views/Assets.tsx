@@ -4,7 +4,6 @@ import axios from "axios";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { getAssetsFn } from "../api/assetsApi";
-import { useGetAssets } from "../api/useAssets";
 import CircularLoader from "../components/CircularLoader";
 import NotFound from "../components/NotFound";
 import DataGridTable from "../components/Table";

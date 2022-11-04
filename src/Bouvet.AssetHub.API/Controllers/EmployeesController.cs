@@ -28,7 +28,7 @@ namespace Bouvet.AssetHub.API.Controllers
         public async Task<ActionResult<List<LoanResponseDto>>> GetLoansByEmployeeNumberAsync(int number)
         {
             var result = await _mediator.Send(new GetLoansByEmployeeNumberQuery(number));
-            return new ActionResultHelper<List<LoanResponseDto>>().OkOrNotFound(result);
+            return new ActionResultHelper<List<LoanResponseDto>>().OkOrNotFound(result, $"No loans on employee number: {number}!");
 
 
         }

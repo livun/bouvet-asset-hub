@@ -1,16 +1,15 @@
 import { Box, Button, FormControl, Grid, InputLabel, MenuItem, Select, SelectChangeEvent, Typography } from "@mui/material";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useLocation } from "react-router-dom";
-import { getAssetsFn, putAssetsFn } from "../api/assetsApi";
-import { usePutAssets } from "../api/useAssets";
+import { putAssetsFn } from "../api/assetsApi";
 import queryClient from "../config/queryClient";
-import { capitalizeAndSplit, removeFirstCharacter } from "../utils/regex";
+import { routeMapper } from "../utils/mappers";
 import { Status, UpdateAssetsByIdCommand } from "../__generated__/api-types";
 import AlertBar from "./AlertBar";
 
-export default function TableToolbar(props: { changeStatus: boolean, updateAssetsCommand: UpdateAssetsByIdCommand   }) {
-    const { changeStatus, updateAssetsCommand } = props
+export default function TableToolbar(props: { changeStatus: boolean, updateAssetsCommand: UpdateAssetsByIdCommand, removeSelectedModel: () => void  }) {
+    const { changeStatus, updateAssetsCommand, removeSelectedModel } = props
     const location = useLocation();
     const pathname = location.pathname
     const [newStatusString, setNewStatusString] = useState("")
@@ -18,14 +17,13 @@ export default function TableToolbar(props: { changeStatus: boolean, updateAsset
 
     const {
         mutate: updateAssets,
-        isLoading,
         isError,
-        error,
-        data,
-        isSuccess,
       } = useMutation((dto: UpdateAssetsByIdCommand) => putAssetsFn(dto), {
         onError:() => openAlertBar(),
-        onSuccess:()=> {queryClient.invalidateQueries(["assets"])}
+        onSuccess:()=> {
+            queryClient.invalidateQueries(["assets"])
+            removeSelectedModel()
+        }
 
       });
 
@@ -57,12 +55,12 @@ export default function TableToolbar(props: { changeStatus: boolean, updateAsset
 
     return <>
         <Box sx={{ borderBottom: 1, borderColor: 'divider', p: 1 }}>
-            <Grid container>
+            <Grid container sx={{paddingTop:0.5}}>
                 <Grid xs={6} item>
                     <Grid container>
                         <Grid item paddingLeft={5}>
                             <Typography variant='h5' gutterBottom>
-                                {capitalizeAndSplit(removeFirstCharacter(pathname))}
+                                {routeMapper[pathname]}
                             </ Typography>
                         </Grid>
                     </Grid>
@@ -83,7 +81,7 @@ export default function TableToolbar(props: { changeStatus: boolean, updateAsset
                                         <MenuItem value={0}>Registred</MenuItem>
                                         <MenuItem value={1}>Available</MenuItem>
                                         <MenuItem value={2}>Unavailable</MenuItem>
-                                        <MenuItem value={3}>Deprecated</MenuItem>
+                                        <MenuItem value={3}>Discontinued</MenuItem>
                                     </Select>
                                 </FormControl>
                             </Grid>

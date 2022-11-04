@@ -1,20 +1,25 @@
-import { Typography } from "@mui/material";
-import { useGetAssets } from "../api/useAssets";
-import { useGetLoanHistory } from "../api/useLoanHistory";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
+import { getLoanHistoryFn,  } from "../api/loanHistoryApi";
 import CircularLoader from "../components/CircularLoader";
 import NotFound from "../components/NotFound";
 import DataGridTable from "../components/Table";
 import { LoanHistoryResponseDto, LoanResponseDto } from "../__generated__/api-types";
 
 export default function LoanHistory () {
-    const {status, statusText, data, error, loading} = useGetLoanHistory();
-    const errorMsg = "Loanhistory table is empty"
-   
+    const { isLoading, isSuccess, isError, error, data} = useQuery<LoanHistoryResponseDto[], Error>(["loanHistory"], getLoanHistoryFn)
+
 
    
     return <>
-    {status === 404 ? 
-        <NotFound message={errorMsg}/> : data !== undefined ? <DataGridTable<LoanHistoryResponseDto> rows={data} /> : <CircularLoader />}    
-    </>
+    { isLoading 
+    ? <CircularLoader /> 
+    :  isError && axios.isAxiosError(error)
+    ? <NotFound message={error?.response?.data} />  
+    : isSuccess 
+    ? <DataGridTable<LoanResponseDto> rows={data} />
+    : <></>
+    }
+</>   
     
 }

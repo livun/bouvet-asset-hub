@@ -23,7 +23,7 @@ namespace Bouvet.AssetHub.API.Controllers
         public async Task<ActionResult<List<CategoryResponseDto>>> GetCategoriesAsync()
         {
             var result = await _mediator.Send(new GetCategoriesQuery());
-            return new ActionResultHelper<List<CategoryResponseDto>>().OkOrNotFound(result);
+            return new ActionResultHelper<List<CategoryResponseDto>>().OkOrNotFound(result, "Currently no categories in table!");
         }
         // GET /categories/1
         [Route("{id}")]
@@ -31,7 +31,7 @@ namespace Bouvet.AssetHub.API.Controllers
         public async Task<ActionResult<CategoryResponseDto>> GetCategorybyIdAsync(int id)
         {
             var result = await _mediator.Send(new GetCategoryByIdQuery(id));
-            return new ActionResultHelper<CategoryResponseDto>().OkOrNotFound(result);
+            return new ActionResultHelper<CategoryResponseDto>().OkOrNotFound(result, "Category does not exist!");
 
         }
         // GET /categories/1/assets
@@ -40,7 +40,7 @@ namespace Bouvet.AssetHub.API.Controllers
         public async Task<ActionResult<List<AssetResponseDto>>> GetAssetsByCategoryAsync(int id)
         {
             var result = await _mediator.Send(new GetAssetsByCategoryQuery(id));
-            return new ActionResultHelper<List<AssetResponseDto>>().OkOrNotFound(result);
+            return new ActionResultHelper<List<AssetResponseDto>>().OkOrNotFound(result, $"No assets by category: {id} in table!");
         }
 
         // POST /categories
@@ -65,7 +65,7 @@ namespace Bouvet.AssetHub.API.Controllers
         public async Task<ActionResult<CategoryResponseDto>> UpdateAssetAsync(UpdateCategoryDto dto, int id)
         {
             var result = await _mediator.Send(new UpdateCategoryCommand(id, dto.Name));
-            return new ActionResultHelper<CategoryResponseDto>().OkOrNotFound(result);
+            return new ActionResultHelper<CategoryResponseDto>().OkOrNotFound(result, "Cannot update category!");
         }
 
 

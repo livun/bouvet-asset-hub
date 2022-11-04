@@ -21,6 +21,7 @@ import MailIcon from '@mui/icons-material/Mail';
 import { DrawerHeader } from './Main';
 import { Link } from 'react-router-dom';
 import { Avatar } from '@mui/material';
+import { capitalizeAndSplit } from '../utils/regex';
 
 const drawerWidth = 240;
 
@@ -74,7 +75,7 @@ export default function FullMenu(prop: { open: boolean, handleOpen: () => void }
 					</Typography>
 					<Typography variant="h6" noWrap component="div" px={1}>
 						<Link to={'/test'} style={{ color: 'inherit', textDecoration: 'none' }}>
-							LINK	
+							LINK
 						</Link>
 					</Typography>
 					<Typography variant="h6" noWrap component="div" px={1}>
@@ -84,7 +85,7 @@ export default function FullMenu(prop: { open: boolean, handleOpen: () => void }
 					</Typography>
 					<Typography variant="h6" noWrap component="div" px={1} >
 						<Link to={'/test'} style={{ color: 'inherit', textDecoration: 'none' }}>
-							LINK	
+							LINK
 						</Link>
 					</Typography>
 				</Toolbar>
@@ -110,20 +111,18 @@ export default function FullMenu(prop: { open: boolean, handleOpen: () => void }
 				<Divider />
 				<List>
 					{pages.map((page, index) => (
-							<Link key={index} to={`/${page.toLocaleLowerCase()}`} style={{ color: 'inherit', textDecoration: 'none' }}>
-
-<ListItem key={index} disablePadding>
-							<ListItemButton>
-							<ListItemText primary={page} />
-							
-							</ListItemButton>
-						</ListItem>
+						<Link key={index} to={`/${page.toLocaleLowerCase()}`} style={{ color: 'inherit', textDecoration: 'none' }}>
+							<ListItem key={index} disablePadding>
+								<ListItemButton>
+									<ListItemText primary={capitalizeAndSplit(page)} />
+								</ListItemButton>
+							</ListItem>
 						</Link>
 
 					))}
 				</List>
 				<Divider />
-				
+
 				<List>
 					{actions.map((text, index) => (
 						<ListItem key={index} disablePadding>

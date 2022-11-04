@@ -25,7 +25,7 @@ namespace Bouvet.AssetHub.API.Controllers
         public async Task<ActionResult<List<AssetResponseDto>>> GetAssetsAsync()
         {
             var result = await _mediator.Send(new GetAssetsQuery());
-            return new ActionResultHelper<List<AssetResponseDto>>().OkOrNotFound(result);
+            return new ActionResultHelper<List<AssetResponseDto>>().OkOrNotFound(result, "Currently no assets in table!");
         }
 
         // POST /assets
@@ -41,7 +41,7 @@ namespace Bouvet.AssetHub.API.Controllers
         public async Task<ActionResult<List<AssetResponseDto>>> UpdateAssetByIdAsync(UpdateAssetsByIdCommand dto)
         {
             var result = await _mediator.Send(dto);
-            return new ActionResultHelper<List<AssetResponseDto>>().OkOrNotFound(result);
+            return new ActionResultHelper<List<AssetResponseDto>>().OkOrNotFound(result, "Cannot update assets!");
         }
 
         // GET /assets/1
@@ -50,7 +50,7 @@ namespace Bouvet.AssetHub.API.Controllers
         public async Task<ActionResult<AssetResponseDto>> GetAssetbyIdAsync(int id)
         {
             var result = await _mediator.Send(new GetAssetByIdQuery(id));
-            return new ActionResultHelper<AssetResponseDto>().OkOrNotFound(result);
+            return new ActionResultHelper<AssetResponseDto>().OkOrNotFound(result, "Asset does not exist!");
 
         }
 
@@ -61,7 +61,7 @@ namespace Bouvet.AssetHub.API.Controllers
         public async Task<ActionResult<AssetResponseDto>> UpdateAssetAsync(UpdateAssetDto dto, int id)
         {
             var result = await _mediator.Send(new UpdateAssetCommand(id, dto.Status, dto.CategoryId));
-            return new ActionResultHelper<AssetResponseDto>().OkOrNotFound(result);
+            return new ActionResultHelper<AssetResponseDto>().OkOrNotFound(result, "Cannot update asset!");
 
         }
         // DELETE /assets/1
@@ -80,7 +80,7 @@ namespace Bouvet.AssetHub.API.Controllers
         public async Task<ActionResult<LoanResponseDto>> GetLoansByAssetIdAsync(int id)
         {
             var result = await _mediator.Send(new GetLoanByAssetIdQuery(id));
-            return new ActionResultHelper<LoanResponseDto>().OkOrNotFound(result);
+            return new ActionResultHelper<LoanResponseDto>().OkOrNotFound(result, $"There is no loan on asset with id {id}");
 
         }
 

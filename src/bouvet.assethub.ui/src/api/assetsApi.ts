@@ -1,4 +1,3 @@
-import apiClient from "../config/apiClient";
 import { AssetResponseDto, CreateAssetCommand, UpdateAssetDto, UpdateAssetsByIdCommand } from "../__generated__/api-types";
 import { deleteItem, formHeaders, get, postItem, putItem, regularHeaders } from "./genericAxios";
 
@@ -10,7 +9,7 @@ export const getAssetByIdFn = async (id: number) => {
   return await get<AssetResponseDto>(`/assets/${id}`)
 };
 export const postAssetsFn = async (dto: CreateAssetCommand) => {
-  return await postItem<CreateAssetCommand, AssetResponseDto[]>(`/assets`, dto, regularHeaders)
+  return await postItem<CreateAssetCommand, AssetResponseDto>(`/assets`, dto, regularHeaders)
 };
 
 export const putAssetsFn = async (dto: UpdateAssetsByIdCommand) => {
