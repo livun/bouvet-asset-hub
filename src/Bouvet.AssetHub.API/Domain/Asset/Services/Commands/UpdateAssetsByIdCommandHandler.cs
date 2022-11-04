@@ -2,6 +2,8 @@
 using Bouvet.AssetHub.API.Contracts;
 using Bouvet.AssetHub.API.Domain.Asset.Interfaces;
 using Bouvet.AssetHub.API.Domain.Asset.Models;
+using Bouvet.AssetHub.API.Domain.Loan.Interfaces;
+using Bouvet.AssetHub.API.Helpers;
 using LanguageExt;
 using MediatR;
 
@@ -10,11 +12,13 @@ namespace Bouvet.AssetHub.API.Domain.Asset.Services.Commands
     public class UpdateAssetsByIdCommandHandler : IRequestHandler<UpdateAssetsByIdCommand, Option<List<AssetResponseDto>>>
     {
         private readonly IAssetRepository _repository;
+        private readonly ILoanRepository _loanRepository;
         private readonly IMapper _mapper;
 
-        public UpdateAssetsByIdCommandHandler(IAssetRepository repository, IMapper mapper)
+        public UpdateAssetsByIdCommandHandler(IAssetRepository repository, ILoanRepository loanRepository,  IMapper mapper)
         {
             _repository = repository;
+            _loanRepository = loanRepository;
             _mapper = mapper;
 
         }
@@ -24,6 +28,11 @@ namespace Bouvet.AssetHub.API.Domain.Asset.Services.Commands
             var updatedAssets = new List<AssetResponseDto>();
             foreach(var id in request.Ids)
             {
+                var loan = await _loanRepository.Get(LoanPredicates.ByAssetId(id));
+                if (loan.IsSome)
+                {
+                    continue;
+                }
                 var asset = await _repository.UpdateAssetStatus(id, request.Status);
 
                 if (asset.IsSome)

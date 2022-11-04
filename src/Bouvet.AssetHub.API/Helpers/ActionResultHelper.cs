@@ -6,9 +6,9 @@ namespace Bouvet.AssetHub.API.Helpers
 {
     public class ActionResultHelper<T> : ControllerBase
     {
-        public ActionResult<T> OkOrNotFound(Option<T> result)
+        public ActionResult<T> OkOrNotFound(Option<T> result, string msg)
         {
-            return result.IsSome ? Ok(result.FirstOrDefault()) : NotFound();
+            return result.IsSome ? Ok(result.FirstOrDefault()) : NotFound(msg);
         }
         public ActionResult<T> OkOrBadRequest(Option<T> result, string msg)
         {

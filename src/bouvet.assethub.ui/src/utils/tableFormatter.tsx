@@ -90,7 +90,9 @@ function formatStatus (key: string, object: any){
 }
 
 function formatDate (key: string, object: any){
-    const filter = () =>  key.toLocaleLowerCase().includes("interval")
+    //const filter = () =>  key.toLocaleLowerCase().includes("interval", "return")
+    const filter = () =>  ["intervalstart", "intervalstop", "returndate"].includes(key.toLocaleLowerCase())
+    
     const value = () => {
         const col : GridColDef = {
             field: key,
@@ -141,15 +143,19 @@ function getColumnsFor(key: string, object: any){
 
 
 // Maps through object type and adds the column definitions to the array of column definitions.
-export function formatGridColumnsDefinition(data: object): GridColDef[] {
+export function formatGridColumnsDefinition(data: object, pathname: string): GridColDef[] {
     const columns: GridColDef[] = []
+    console.log(pathname)
     const fieldEntries = Object.entries(data);
     fieldEntries.map(([key, val]) => {
         const column = getColumnsFor(key, val);
         if (typeof(column) === "object")
             columns.push(column);
     })
-    columns.push(TableButtonsColumn())
+    if(pathname === "/loans" || pathname === "/assets") {
+        columns.push(TableButtonsColumn())
+
+    }
     return columns;
 
 }

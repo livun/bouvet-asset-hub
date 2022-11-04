@@ -29,7 +29,7 @@ namespace Bouvet.AssetHub.API.Controllers
         public async Task<ActionResult<List<LoanResponseDto>>> GetLoansAsync()
         {
             var result = await _mediator.Send(new GetLoansQuery());
-            return new ActionResultHelper<List<LoanResponseDto>>().OkOrNotFound(result);
+            return new ActionResultHelper<List<LoanResponseDto>>().OkOrNotFound(result, "Currently no loans in table!");
         }
 
         // POST /loans
@@ -46,7 +46,7 @@ namespace Bouvet.AssetHub.API.Controllers
         public async Task<ActionResult<LoanResponseDto>> GetLoanByIdAsync(int id)
         {
             var result = await _mediator.Send(new GetLoanByIdQuery(id));
-            return new ActionResultHelper<LoanResponseDto>().OkOrNotFound(result);
+            return new ActionResultHelper<LoanResponseDto>().OkOrNotFound(result, "Loan does not exist!");
 
         }
         // PUT /loans/1
@@ -55,7 +55,7 @@ namespace Bouvet.AssetHub.API.Controllers
         public async Task<ActionResult<LoanResponseDto>> UpdateLoanById(UpdateLoanDto dto, int id)
         {
             var result = await _mediator.Send(new UpdateLoanByIdCommand(id, dto.IntervalStop));
-            return new ActionResultHelper<LoanResponseDto>().OkOrNotFound(result);
+            return new ActionResultHelper<LoanResponseDto>().OkOrBadRequest(result, "Cannot update loan");
         }
         // DELETE /loans/1
         [Route("{id}")]
@@ -63,7 +63,7 @@ namespace Bouvet.AssetHub.API.Controllers
         public async Task<ActionResult<LoanResponseDto>> DeleteLoanById(int id)
         {
             var result = await _mediator.Send(new DeleteLoanByIdCommand(id));
-            return new ActionResultHelper<LoanResponseDto>().OkOrBadRequest(result, "Could not delete loan!");
+            return new ActionResultHelper<LoanResponseDto>().OkOrBadRequest(result, "Cannot not delete loan!");
 
 
         }

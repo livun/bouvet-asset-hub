@@ -60,6 +60,7 @@ namespace Bouvet.AssetHub.API.Domain.Asset.Repositories
 
         public async Task<Option<AssetEntity>> UpdateAssetStatus(int id, Status status)
         {
+            // have to implement restrictions on update
             var asset = _context.Assets
                 .Include(a => a.Category)
                 .Where(a => a.Id == id)
@@ -112,6 +113,7 @@ namespace Bouvet.AssetHub.API.Domain.Asset.Repositories
                 .Include(a => a.Category)
                 .Where(a => a.Id == id)
                 .FirstOrDefaultAsync();
+
             if (asset is not null && asset.Status == Status.Registered)
             {
                 _context.Assets.Remove(asset);

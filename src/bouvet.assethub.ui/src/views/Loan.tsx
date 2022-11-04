@@ -1,6 +1,7 @@
+import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom"
-import { useGetAssetById } from "../api/useAssets";
-import { useGetLoanById } from "../api/useLoans";
+import { getLoanByIdFn } from "../api/loansApi";
+import { LoanResponseDto } from "../__generated__/api-types";
 
 export default function Loan () {
    
@@ -9,7 +10,8 @@ export default function Loan () {
  
     const id : number = +params.id! ?? 0
   
-    const {status, statusText, data, error, loading} = useGetLoanById(id);
+    const { isLoading, isSuccess, isError, error, data} = useQuery<LoanResponseDto, Error>(["loan"], () => getLoanByIdFn(id))
+
 
     
     

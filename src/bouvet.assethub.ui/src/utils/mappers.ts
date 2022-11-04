@@ -7,5 +7,11 @@ export const lookupKeysMapper : any = {
     'assignedToValue': 'Borrower',
     'bsdReference': 'BSD',
     'borrowerEmployeeNumberValue' : 'Borrower',
-    'assetCategoryName': 'Asset Category'
+    'assetCategoryName': 'Asset Category',
 };
+export const routeMapper : any = {
+    '/assets': 'Assets',
+    '/loans': 'Loans',
+    '/loanhistory': 'Loan History'
+
+}
