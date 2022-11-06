@@ -14,14 +14,11 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
 import { DrawerHeader } from './Main';
 import { Link } from 'react-router-dom';
-import { Avatar } from '@mui/material';
 import { capitalizeAndSplit } from '../utils/regex';
+import CloseIcon from '@mui/icons-material/Close';
 
 const drawerWidth = 240;
 
@@ -105,7 +102,7 @@ export default function FullMenu(prop: { open: boolean, handleOpen: () => void }
 			>
 				<DrawerHeader>
 					<IconButton onClick={handleOpen}>
-						{theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+						{theme.direction === 'ltr' ? <CloseIcon /> : <ChevronRightIcon />}
 					</IconButton>
 				</DrawerHeader>
 				<Divider />
@@ -118,7 +115,6 @@ export default function FullMenu(prop: { open: boolean, handleOpen: () => void }
 								</ListItemButton>
 							</ListItem>
 						</Link>
-
 					))}
 				</List>
 				<Divider />

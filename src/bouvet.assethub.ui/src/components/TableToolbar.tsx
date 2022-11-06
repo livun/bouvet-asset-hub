@@ -8,6 +8,8 @@ import { routeMapper } from "../utils/mappers";
 import { Status, UpdateAssetsByIdCommand } from "../__generated__/api-types";
 import AlertBar from "./AlertBar";
 
+
+
 export default function TableToolbar(props: { changeStatus: boolean, updateAssetsCommand: UpdateAssetsByIdCommand, removeSelectedModel: () => void  }) {
     const { changeStatus, updateAssetsCommand, removeSelectedModel } = props
     const location = useLocation();
@@ -15,36 +17,34 @@ export default function TableToolbar(props: { changeStatus: boolean, updateAsset
     const [newStatusString, setNewStatusString] = useState("")
 
 
-    const {
-        mutate: updateAssets,
-        isError,
-      } = useMutation((dto: UpdateAssetsByIdCommand) => putAssetsFn(dto), {
-        onError:() => openAlertBar(),
+    const updateAssets = useMutation((dto: UpdateAssetsByIdCommand) => putAssetsFn(dto), {
+        onError:() => {
+            openAlertBar("Cannot update status, asset is Unavailable.", false)
+        },
         onSuccess:()=> {
             queryClient.invalidateQueries(["assets"])
             removeSelectedModel()
+            openAlertBar("Assets status successfully updated.", true)
         }
-
       });
 
-
-    const handleChange = (event: SelectChangeEvent) => {
-        setNewStatusString(event.target.value);
-
-    };
-   
     const handleUpdateStatus = () => {
         const dto : UpdateAssetsByIdCommand = updateAssetsCommand
         const newStatus : Status =  Number(newStatusString) as Status
         dto.status = newStatus
-        updateAssets(dto); 
+        updateAssets.mutate(dto); 
         setNewStatusString("")
     }
 
-    //AlertComponent (if reused, this must be pasted in parent component)
+	//AlertComponent handling (if reused, this must be pasted in parent component)
 	const [open, setOpen] = useState(false);
-	const openAlertBar = () => {
-		setOpen(true);
+    const [alertBarMsg, setAlertBarMsg] = useState("")
+    const [success, setSuccess] = useState(false)
+    const openAlertBar = (msg: string, isSuccess: boolean) => {
+        setAlertBarMsg(msg)
+        setSuccess(isSuccess)
+        setOpen(true);
+        
 	};
 	const handleClose = (event?: React.SyntheticEvent | Event, reason?: string) => {
 		if (reason === 'clickaway') {
@@ -76,11 +76,10 @@ export default function TableToolbar(props: { changeStatus: boolean, updateAsset
                                         sx={{ height: "38px" }}
                                         value={newStatusString}
                                         label="Status"
-                                        onChange={handleChange}
-                                    >
-                                        <MenuItem value={0}>Registred</MenuItem>
+                                        onChange={(event: SelectChangeEvent) => setNewStatusString(event.target.value)}
+                                    > 
+                                        <MenuItem value={0}>Registered</MenuItem>
                                         <MenuItem value={1}>Available</MenuItem>
-                                        <MenuItem value={2}>Unavailable</MenuItem>
                                         <MenuItem value={3}>Discontinued</MenuItem>
                                     </Select>
                                 </FormControl>
@@ -93,7 +92,7 @@ export default function TableToolbar(props: { changeStatus: boolean, updateAsset
                 </Grid>
             </Grid>
         </Box>
-        {isError ? <AlertBar open={open} handleClose={handleClose} message={"Cannot update status, asset is Unavailable."} success={false} /> : <></>}
+        <AlertBar open={open} handleClose={handleClose} message={alertBarMsg} success={success} /> 
     </>
 
 
