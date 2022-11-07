@@ -114,17 +114,7 @@ export default function TableToolbar(props: { changeStatus: boolean, updateAsset
             setLoanForm({...loanForm, intervalStop: newValue})
         }
     };
-    // const handleDateChange = (newValue: Date | null) => {
-    //     if (newValue) {
-    //         setStopDate(newValue)
-    //     }
-    // };
-    // const handleExtendLoan = () => {
-    //     if (stopDate) {
-    //         extendLoan.mutate({ intervalStop: stopDate.toISOString() })
-    //     }
-    //     setOpenExtendLoan(false)
-    // }
+   
 
     return <>
         <Box sx={{ borderBottom: 1, borderColor: 'divider', p: 1 }}>
@@ -178,9 +168,10 @@ export default function TableToolbar(props: { changeStatus: boolean, updateAsset
             ? <Dialog open={openAddAsset} onClose={() => setOpenAddAsset(false)}>
                 <DialogTitle>Add asset</DialogTitle>
                 <DialogContent>
-                    <Stack spacing={3} paddingTop={2} component="form" width={400} >
+                    <Stack spacing={3} paddingTop={2} component="form" autoComplete="off" width={400} >
                         <TextField
                             fullWidth
+                            type="number"
                             label="Serial Number"
                             value={assetForm.serialNumberValue}
                             onChange={(event) => setAssetForm({ ...assetForm, serialNumberValue: Number(event?.target.value) })}
@@ -211,7 +202,7 @@ export default function TableToolbar(props: { changeStatus: boolean, updateAsset
             <Dialog open={openAddLoan} onClose={() => setOpenAddLoan(false)}>
                 <DialogTitle>Add loan</DialogTitle>
                 <DialogContent>
-                    <Stack spacing={3} paddingTop={2} width={400} component="form">
+                    <Stack spacing={3} paddingTop={2} width={400} component="form" autoComplete="off">
                         <DesktopDatePicker
                             inputFormat="DD/MM/YYYY"
                             label="Start date"
@@ -236,6 +227,7 @@ export default function TableToolbar(props: { changeStatus: boolean, updateAsset
                         <TextField
                             fullWidth
                             label="Assigned to"
+                            type="number"
                             value={loanForm.assignedToValue}
                             onChange={(event) => setLoanForm({ ...loanForm, assignedToValue: Number(event?.target.value) })}
                         />
