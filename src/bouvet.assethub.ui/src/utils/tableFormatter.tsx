@@ -1,6 +1,6 @@
 import { GridColDef } from "@mui/x-data-grid";
 import { StatusEnum } from "./enums";
-import { lookupKeysMapper } from "./mappers";
+import { lookupKeysMapper, statusChecker, statusMapper } from "./mappers";
 import { capitalizeAndSplit } from "./regex";
 import { TableButtonsColumnForAssets } from "../components/TableButtonsColumnForAssets";
 import { TableButtonsColumnForLoans } from "../components/TableButtonsColumnForLoans";
@@ -24,6 +24,28 @@ function formatString(key: string, object: any) {
             align: "left",
             flex: 1,
             type: typeof (object)
+        }
+        return col
+    }
+    return [filter, value]
+}
+
+function formatSerialNumber(key: string, object: any) {
+    const filter = () => key.toLocaleLowerCase().includes("serial")
+    const value = () => {
+        const col: GridColDef = {
+            field: key,
+            headerName: formatHeaderKeys(key),
+            headerAlign: "left",
+            align: "left",
+            flex: 1,
+            type: 'dateTime',
+            valueFormatter(params) {
+                if (params.value === 0) {
+                    return ""
+                }
+                return params.value
+            },
         }
         return col
     }
@@ -64,7 +86,7 @@ function formatId(key: string, object: any) {
 function formatCatId(key: string, object: any) {
     const filter = () => key.toLocaleLowerCase().includes("categoryid")
     const value = () => {
-       
+
         return false
     }
     return [filter, value]
@@ -80,7 +102,6 @@ function formatStatus(key: string, object: any) {
             headerAlign: "left",
             align: "left",
             flex: 1,
-            type: typeof (object),
             valueGetter: ({ value }) => StatusEnum[value],
         }
         return col
@@ -121,7 +142,7 @@ function formatGeneral(key: string, object: any) {
 }
 
 // Array of formatproviders, the less generic in the beginning of array
-const formatProviders = [formatCatId, formatId, formatBooleans, formatDate, formatStatus, formatString, formatGeneral]
+const formatProviders = [formatCatId, formatSerialNumber, formatId, formatBooleans, formatDate, formatStatus, formatString, formatGeneral]
 
 // Loops through all formatters and renders column definitions based on properties of objects. 
 function getColumnsFor(key: string, object: any) {
@@ -135,7 +156,7 @@ function getColumnsFor(key: string, object: any) {
 
 
 // Maps through object type and adds the column definitions to the array of column definitions.
-export function formatGridColumnsDefinition(data: object, pathname: string) : [GridColDef[], number] {
+export function formatGridColumnsDefinition(data: object, pathname: string): [GridColDef[], number] {
     let returnStatus = 0;
     const columns: GridColDef[] = []
     const fieldEntries = Object.entries(data);
@@ -144,14 +165,14 @@ export function formatGridColumnsDefinition(data: object, pathname: string) : [G
         if (typeof (column) === "object")
             columns.push(column);
     })
-  
-    if ( pathname === "/assets") {
-        const {col, status} = TableButtonsColumnForAssets()
+
+    if (pathname === "/assets") {
+        const { col, status } = TableButtonsColumnForAssets()
         returnStatus = status
         columns.push(col)
     }
     if (pathname === "/loans") {
-        const {col, status} = TableButtonsColumnForLoans()
+        const { col, status } = TableButtonsColumnForLoans()
         returnStatus = status
         columns.push(col)
     }

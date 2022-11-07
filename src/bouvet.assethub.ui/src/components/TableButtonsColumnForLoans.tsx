@@ -8,7 +8,7 @@ import {  deleteAssetFn } from "../api/assetsApi";
 import queryClient from "../config/queryClient";
 import { useState } from "react";
 import { idText } from "typescript";
-import { IReadOnly } from "../utils/types";
+import { ILoanActions, IReadOnly } from "../utils/types";
 import { Tooltip } from "@mui/material";
 import MoreTimeIcon from '@mui/icons-material/MoreTime';
 import TaskAltIcon from '@mui/icons-material/TaskAlt';
@@ -17,6 +17,10 @@ export function TableButtonsColumnForLoans () {
     const navigate = useNavigate();
     const location = useLocation();
     const [status, setStatus] = useState(0)
+    const loanActionsFromShow : ILoanActions = {extendLoan: false, handInLoan: false }
+    const loanActionsFromExtend : ILoanActions = {extendLoan: true, handInLoan: false}
+    const loanActionsFromHandIn : ILoanActions = {extendLoan: false, handInLoan: true}
+    
     const readOnlyFromEdit : IReadOnly = {isReadOnly: false}
     const readOnlyFromView : IReadOnly = {isReadOnly: true}
     
@@ -37,17 +41,17 @@ export function TableButtonsColumnForLoans () {
         getActions: (params: GridRowParams) => [
             <GridActionsCellItem
             icon={<Tooltip title="Show"><VisibilityIcon /></Tooltip>}
-            onClick={() => navigate(`${location.pathname}/${params.id}`, {state : readOnlyFromView})}
+            onClick={() => navigate(`${location.pathname}/${params.id}`, {state : loanActionsFromShow})}
             label="Show"
         ></ GridActionsCellItem>,
             <GridActionsCellItem
                 icon={<Tooltip title="Extend loan"><MoreTimeIcon sx={{fill:"black"}} /></Tooltip>}
-                onClick={() => navigate(`${location.pathname}/${params.id}`, {state : readOnlyFromView})}
+                onClick={() => navigate(`${location.pathname}/${params.id}`, {state : loanActionsFromExtend})}
                 label="Show"
             ></ GridActionsCellItem>,
             <GridActionsCellItem
                 icon={<Tooltip title="Hand in loan"><TaskAltIcon  sx={{fill:"black"}}/></Tooltip>}
-                onClick={() => navigate(`${location.pathname}/${params.id}`, {state : readOnlyFromEdit})}
+                onClick={() => navigate(`${location.pathname}/${params.id}`, {state : loanActionsFromHandIn})}
                 label="Edit"
             />, 
         ]

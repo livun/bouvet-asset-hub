@@ -5,12 +5,12 @@ import { useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom"
 import { deleteAssetFn, getAssetByIdFn, putAssetByIdFn } from "../api/assetsApi";
 import { getCategoriesFn } from "../api/categoriesApi";
-import { getLoanByIdFn, putLoanFn } from "../api/loansApi";
+import { deleteLoanFn, getLoanByIdFn, putLoanFn } from "../api/loansApi";
 import CircularLoader from "../components/CircularLoader";
 import NotFound from "../components/NotFound";
 import queryClient from "../config/queryClient";
 import { statusChecker } from "../utils/mappers";
-import { IReadOnly } from "../utils/types";
+import { ILoanActions, IReadOnly } from "../utils/types";
 import { AssetResponseDto, CategoryResponseDto, LoanResponseDto, UpdateAssetDto, UpdateLoanDto } from "../__generated__/api-types";
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
@@ -34,29 +34,29 @@ export default function Loan() {
     const navigate = useNavigate()
 
     const [id] = useState(Number(useParams().id))
-    const [readOnly, setReadOnly] = useState<IReadOnly>(location.state as IReadOnly);
+    const [loanActions] = useState<ILoanActions>(location.state as ILoanActions);
     const [stopDate, setStopDate] = useState<Date | null>(new Date())
-    //const [form, setForm] = useState<UpdateLoanDto>()
 
     // Queries
     const { isLoading, isSuccess, isError, error, data } = useQuery<LoanResponseDto, Error>(["loan", id], () => getLoanByIdFn(id))
-    const categoriesQuery = useQuery<CategoryResponseDto[], Error>(["categories"], getCategoriesFn)
+
 
     //Mutations
     const extendLoan = useMutation((dto: UpdateLoanDto) => putLoanFn(id, dto), {
-        onError: () => openAlertBar("Loan can not be extended.", false),
+        onError: () => openAlertBar("Loan cannot be extended", false),
         onSuccess: () => {
             queryClient.invalidateQueries(["loan", id])
             openAlertBar("Loan is sucessfully extended.", true)
         }
     });
-    const updateAsset = useMutation((dto: UpdateAssetDto) => putAssetByIdFn(id, dto), {
-        onError: () => {
-            openAlertBar("Cannot update asset, asset is Unavailable.", false)
-        },
+    const deleteLoan = useMutation(() => deleteLoanFn(id), {
+        onError: () => openAlertBar("Cannot delete loan, an error occurred.", false),
         onSuccess: () => {
-            queryClient.invalidateQueries(["assets"])
-            openAlertBar("Asset successfully updated.", true)
+            queryClient.invalidateQueries(["loans"])
+            openAlertBar("Loan is successfully handed in.", true)
+            setTimeout(() => {
+                navigate(-1)
+            }, 1500)
         }
     });
 
@@ -77,13 +77,21 @@ export default function Loan() {
 
 
     useEffect(() => {
-        console.log(data)
         if (data && data.intervalStop) {
-            //setForm({ intervalStop: data.intervalStop })
-            setStopDate(new Date(data.intervalStop))
-           
+            setStopDate(new Date(data.intervalStop))           
         }
-    }, [categoriesQuery.data, location, data, readOnly])
+        
+    }, [location, data])
+
+    useEffect(() => {
+        if (loanActions.extendLoan) {
+            setOpenExtendLoan(true)
+        }
+        if (loanActions.handInLoan) {
+            setOpenHandInLoan(true)
+        }
+
+    }, [])
 
     //AlertComponent handling (if reused, this must be pasted in parent component)
     const [open, setOpen] = useState(false);
@@ -106,8 +114,6 @@ export default function Loan() {
     const handleDateChange = (newValue: Date | null) => {
         if(newValue) {
             setStopDate(newValue)
-            //setForm({intervalStop: newValue.toISOString()});
-
         }
     };
     const handleExtendLoan = () => {
@@ -117,10 +123,15 @@ export default function Loan() {
         setOpenExtendLoan(false)
     }
 
+    const [openHandInLoan, setOpenHandInLoan] = useState(false);
+    const handleHandInLoan = () => {
+        deleteLoan.mutate()
+        setOpenHandInLoan(false)
+    }
     return <>
-        {isLoading && categoriesQuery.isLoading
+        {isLoading 
             ? <CircularLoader />
-            : isError && axios.isAxiosError(error) && categoriesQuery.isError
+            : isError && axios.isAxiosError(error) 
                 ? <NotFound message={error?.response?.data} />
                 : isSuccess
                     && data !== undefined
@@ -142,7 +153,7 @@ export default function Loan() {
                                 <Tooltip title="Extend loan"><IconButton size="large" onClick={() => setOpenExtendLoan(true)} aria-label="edit"> <MoreTimeIcon /></IconButton></Tooltip>
                             </Grid>
                             <Grid item>
-                                <Tooltip title="Hand in loan"><IconButton size="large" onClick={() => setOpenExtendLoan(true)} aria-label="edit"> <TaskAltIcon /></IconButton></Tooltip>
+                                <Tooltip title="Hand in loan"><IconButton size="large" onClick={() => setOpenHandInLoan(true)} aria-label="edit"> <TaskAltIcon /></IconButton></Tooltip>
                             </Grid>
                         </Grid>
 
@@ -328,8 +339,20 @@ export default function Loan() {
                                 <Button onClick={() => handleExtendLoan()}>Save</Button>
                             </DialogActions>
                         </Dialog>
+                        <Dialog  open={openHandInLoan} onClose={() => setOpenHandInLoan(false)}>
+                            <DialogTitle>Hand in loan</DialogTitle>
+                            <DialogContent>
+                                <DialogContentText>
+                                    Are you sure you want to hand in the loan?
+                                </DialogContentText>
+                            </DialogContent>
+                            <DialogActions>
+                                <Button onClick={() => setOpenHandInLoan(false)}>Cancel</Button>
+                                <Button onClick={() => handleHandInLoan()}>Confirm</Button>
+                            </DialogActions>
+                        </Dialog>
                     </>
-                    : <><p>An error has occured, manually refresh page!</p></>
+                    : <CircularLoader />
         }
         <AlertBar open={open} handleClose={handleClose} message={alertBarMsg} success={success} />
     </>

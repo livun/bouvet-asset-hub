@@ -13,4 +13,4 @@ export const StatusArray = ["Registered", "Available", "Discontinued"]
 
 export type testType = {category: true, status: true}
 export interface IReadOnly {isReadOnly: boolean}
-export interface IReadOnlyExplicit {category: true, status: true}
+export interface ILoanActions{extendLoan: boolean, handInLoan: boolean}

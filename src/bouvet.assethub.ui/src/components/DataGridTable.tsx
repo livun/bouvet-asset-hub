@@ -18,7 +18,7 @@ export default function DataGridTable<T extends Object>(props: TableProps<T>) {
     const [changeStatus, setChangeStatus] = useState(false);
     const [updateAssetsCommand, setUpdateAssetsCommand] = useState<UpdateAssetsByIdCommand>({})
     
-    const [pageSize, setPageSize] = useState<number>(10);
+    const [pageSize, setPageSize] = useState<number>(30);
     const [gridColDef, status] = formatGridColumnsDefinition(rows[0], pathname)
 
     const handleChange = () => {

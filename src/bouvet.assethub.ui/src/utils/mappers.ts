@@ -23,7 +23,7 @@ export const statusMapper : any = {
     3:  "Discontinued"
 }
 
-export const statusChecker = (value: string) => {
+export const statusChecker = (value?: string | Number) => {
     const number =  Number(value)
 switch (number) {
     case 0:
