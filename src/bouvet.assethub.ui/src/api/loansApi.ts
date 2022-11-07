@@ -23,6 +23,6 @@ export const putLoanFn = async (id: number, dto: UpdateLoanDto) => {
   return await putItem<UpdateLoanDto, LoanResponseDto>(`/loans/${id}`, dto, regularHeaders)
 };
 
-export const deleteLoandFn = async (id: number) => {
+export const deleteLoanFn = async (id: number) => {
   return await deleteItem<LoanResponseDto>(`/loans/${id}`, regularHeaders)
 };

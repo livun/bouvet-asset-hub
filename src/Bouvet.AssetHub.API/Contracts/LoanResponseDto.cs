@@ -6,7 +6,7 @@ namespace Bouvet.AssetHub.API.Contracts
     {
         public int Id { get; set; }
         public DateTime IntervalStart { get; set; }
-        public DateTime IntervalStop { get; set; }
+        public DateTime? IntervalStop { get; set; }
         public Boolean IntervalIsLongterm { get; set; }
 
         public int AssignedToValue { get; set; }

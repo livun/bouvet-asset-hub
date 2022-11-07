@@ -3,7 +3,7 @@ import axios from "axios";
 import { getLoanHistoryFn,  } from "../api/loanHistoryApi";
 import CircularLoader from "../components/CircularLoader";
 import NotFound from "../components/NotFound";
-import DataGridTable from "../components/Table";
+import DataGridTable from "../components/DataGridTable";
 import { LoanHistoryResponseDto, LoanResponseDto } from "../__generated__/api-types";
 
 export default function LoanHistory () {

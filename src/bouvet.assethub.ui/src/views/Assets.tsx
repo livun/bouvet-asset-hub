@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { getAssetsFn } from "../api/assetsApi";
 import CircularLoader from "../components/CircularLoader";
 import NotFound from "../components/NotFound";
-import DataGridTable from "../components/Table";
+import DataGridTable from "../components/DataGridTable";
 import apiClient from "../config/apiClient";
 import { AssetResponseDto } from "../__generated__/api-types";
 

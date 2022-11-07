@@ -20,7 +20,7 @@ export const putAssetByIdFn = async (id: number, dto: UpdateAssetDto) => {
   return await putItem<UpdateAssetDto, AssetResponseDto>(`/assets/${id}`, dto, regularHeaders)
 };
 
-export const deleteAssetByIdFn = async (id: number) => {
+export const deleteAssetFn = async (id: number) => {
   return await deleteItem<AssetResponseDto>(`/assets/${id}`, regularHeaders)
 };
 

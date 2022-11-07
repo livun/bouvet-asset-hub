@@ -19,40 +19,23 @@ export async function get<TResponse>(url: string, headers?: any) {
 }
 
 export async function postItem<TRequest, TResponse>(url: string, body: TRequest, headers: any) {
-    const content = JSON.stringify(body);
     const response = await apiClient.post<TResponse>(
         url, 
-        content, 
+        body, 
         { headers: headers},
     );
     return response.data
 }
 
 export async function putItem<TRequest, TResponse>(url: string, body: TRequest, headers: any) {
-    const content = JSON.stringify(body);
-    console.log(content)
     const response = await apiClient.put<TResponse>(
         url, 
-        content, 
+        body, 
         { headers: headers},
     );
     return response.data
 }
 
-// export async function putItem<TRequest, TResponse>(url: string, body: TRequest, headers: any) {
-//     const content = JSON.stringify(body);
-//     console.log(content)
-//     const response = await apiClient<TResponse>( {
-//         method: "PUT",
-//         url: url,
-//         body: content,
-//         config: { headers: {
-//             'Content-Type': 'application/json',
-//             'Accept': 'application/json'
-//         }},
-//     );
-//     return response.data
-// }
 
 export async function deleteItem<TResponse>(url: string, headers: any) {
     const response = await apiClient.delete<TResponse>(
