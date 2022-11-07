@@ -12,7 +12,8 @@ export const lookupKeysMapper : any = {
 export const routeMapper : any = {
     '/assets': 'Assets',
     '/loans': 'Loans',
-    '/loanhistory': 'Loan History'
+    '/loanhistory': 'Loan History',
+    '/categories': 'Categories'
 
 }
 

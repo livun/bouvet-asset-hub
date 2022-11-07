@@ -1,9 +1,10 @@
 import { GridColDef } from "@mui/x-data-grid";
+import { TableButtonsColumnForAssets } from "../components/TableButtonsColumnForAssets";
+import { TableButtonsColumnForLoans } from "../components/TableButtonsColumnForLoans";
 import { StatusEnum } from "./enums";
 import { lookupKeysMapper, statusChecker, statusMapper } from "./mappers";
 import { capitalizeAndSplit } from "./regex";
-import { TableButtonsColumnForAssets } from "../components/TableButtonsColumnForAssets";
-import { TableButtonsColumnForLoans } from "../components/TableButtonsColumnForLoans";
+
 
 
 export const formatHeaderKeys = (key: string) => {
@@ -76,7 +77,7 @@ function formatId(key: string, object: any) {
             headerName: formatHeaderKeys(key),
             headerAlign: "left",
             align: "left",
-            flex: 0.5,
+            flex: 0.3,
             type: 'string'
         }
         return col
@@ -176,6 +177,7 @@ export function formatGridColumnsDefinition(data: object, pathname: string): [Gr
         returnStatus = status
         columns.push(col)
     }
+   
     return [columns, returnStatus];
 
 }

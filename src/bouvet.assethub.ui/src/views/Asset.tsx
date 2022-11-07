@@ -88,7 +88,7 @@ export default function Asset() {
                     && form !== undefined
                     ?
                     <>
-                        <Grid container width={430} height={50} marginBottom={4}>
+                        <Grid container width={400} height={50} marginBottom={4} sx={{borderBottom:"1px solid grey", marginLeft:2}}>
                             <Grid item flexGrow={1}>
                                 <Tooltip title="Go back">
                                     <IconButton size="large" onClick={() => navigate(-1)} aria-label="go back">

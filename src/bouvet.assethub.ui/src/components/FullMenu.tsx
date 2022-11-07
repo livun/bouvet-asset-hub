@@ -23,6 +23,7 @@ import CloseIcon from '@mui/icons-material/Close';
 const drawerWidth = 240;
 
 const pages = ['Assets', 'Loans', 'LoanHistory']
+const other = ['Categories']
 const actions = ["Scan"]
 
 interface AppBarProps extends MuiAppBarProps {
@@ -115,6 +116,19 @@ export default function FullMenu(prop: { open: boolean, handleOpen: () => void }
 								</ListItemButton>
 							</ListItem>
 						</Link>
+					))}
+				</List>
+				<Divider />
+
+				<List>
+					{other.map((page, index) => (
+						<Link key={index} to={`/${page.toLocaleLowerCase()}`} style={{ color: 'inherit', textDecoration: 'none' }}>
+						<ListItem key={index} disablePadding>
+							<ListItemButton>
+								<ListItemText primary={capitalizeAndSplit(page)} />
+							</ListItemButton>
+						</ListItem>
+					</Link>
 					))}
 				</List>
 				<Divider />

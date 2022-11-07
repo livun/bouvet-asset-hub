@@ -5,10 +5,10 @@ import { useLocation } from "react-router-dom";
 import { getAssetsFn, postAssetsFn, putAssetsFn } from "../api/assetsApi";
 import queryClient from "../config/queryClient";
 import { routeMapper, statusChecker, statusMapper } from "../utils/mappers";
-import { AssetResponseDto, CategoryResponseDto, CreateAssetCommand, CreateLoanCommand, Status, UpdateAssetsByIdCommand } from "../__generated__/api-types";
+import { AssetResponseDto, CategoryResponseDto, CreateAssetCommand, CreateCategoryCommand, CreateLoanCommand, Status, UpdateAssetsByIdCommand } from "../__generated__/api-types";
 import AlertBar from "./AlertBar";
 import AddIcon from '@mui/icons-material/Add';
-import { getCategoriesFn } from "../api/categoriesApi";
+import { getCategoriesFn, postCategoriesFn } from "../api/categoriesApi";
 import CircularLoader from "./CircularLoader";
 import { postLoansFn } from "../api/loansApi";
 import { StatusEnum } from "../utils/enums";
@@ -23,6 +23,7 @@ export default function TableToolbar(props: { changeStatus: boolean, updateAsset
     const [newStatusString, setNewStatusString] = useState("")
     const [assetForm, setAssetForm] = useState<CreateAssetCommand>({})
     const [loanForm, setLoanForm] = useState<CreateLoanCommand>({...assetForm, intervalStart: today})
+    const [categoryForm, setCategoryForm] = useState<CreateCategoryCommand>({})
 
     // Queries
     const assetsQuery = useQuery<AssetResponseDto[], Error>(["assets"], getAssetsFn, {
@@ -51,6 +52,17 @@ export default function TableToolbar(props: { changeStatus: boolean, updateAsset
             setLoanForm({...assetForm, intervalStart: today})
             setOpenAddLoan(false)
             openAlertBar("Loan is added.", true)
+        }
+    });
+    const addCategory = useMutation(() => postCategoriesFn(categoryForm), {
+        onError: () => {
+            openAlertBar("Cannot add category.", false)
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries(["categories"])
+            setCategoryForm({})
+            setOpenAddCategory(false)
+            openAlertBar("Category is added.", true)
         }
     });
     const updateAssets = useMutation((dto: UpdateAssetsByIdCommand) => putAssetsFn(dto), {
@@ -93,12 +105,17 @@ export default function TableToolbar(props: { changeStatus: boolean, updateAsset
     // Dialogs
     const [openAddAsset, setOpenAddAsset] = useState(false);
     const [openAddLoan, setOpenAddLoan] = useState(false);
+    const [openAddCategory, setOpenAddCategory] = useState(false)
+    
     const handleOpenDialogs = () => {
         if (location.pathname === "/assets") {
             setOpenAddAsset(true)
         }
         if (location.pathname === "/loans") {
             setOpenAddLoan(true)
+        }
+        if (location.pathname === "/categories") {
+            setOpenAddCategory(true)
         }
     }
     const handleStartDateChange = (newValue: string | null) => {
@@ -255,6 +272,28 @@ export default function TableToolbar(props: { changeStatus: boolean, updateAsset
                 <DialogActions>
                     <Button onClick={() => setOpenAddLoan(false)}>Cancel</Button>
                     <Button onClick={() => addLoan.mutate()}>Save</Button>
+                </DialogActions>
+            </Dialog>
+            : <CircularLoader />}
+            {assetsQuery !== undefined
+            ?
+            <Dialog open={openAddCategory} onClose={() => setOpenAddCategory(false)}>
+                <DialogTitle>Add category</DialogTitle>
+                <DialogContent>
+                    <Stack spacing={3} paddingTop={2} width={400} component="form" autoComplete="off">
+                        
+                        <TextField
+                            fullWidth
+                            label="Name"
+                            value={categoryForm.name}
+                            onChange={(event) => setCategoryForm({name: event.target.value})}
+                        >  
+                        </TextField>
+                    </Stack>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={() => setOpenAddCategory(false)}>Cancel</Button>
+                    <Button onClick={() => addCategory.mutate()}>Save</Button>
                 </DialogActions>
             </Dialog>
             : <CircularLoader />}

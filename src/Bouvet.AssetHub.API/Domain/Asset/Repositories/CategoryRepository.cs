@@ -31,7 +31,7 @@ namespace Bouvet.AssetHub.API.Domain.Asset.Repositories
             catch (UniqueConstraintException ex)
             {
                 _logger.LogError(ex.Message);
-                return Option<CategoryEntity>.None;
+                return null;
             }
         }
 
@@ -55,7 +55,7 @@ namespace Bouvet.AssetHub.API.Domain.Asset.Repositories
                 await _context.SaveChangesAsync();
                 return category;
             }
-            return Option<CategoryEntity>.None;
+            return null;
 
 
         }
@@ -74,6 +74,14 @@ namespace Bouvet.AssetHub.API.Domain.Asset.Repositories
 
         public async Task<Option<CategoryEntity>> Update(CategoryEntity entity)
         {
+            var assets = await _context.Assets
+                .Include(a => a.Category)
+                .Where(a => a.Category.Id == entity.Id)
+                .ToListAsync();
+            if (assets.Any())
+            {
+                return null;
+            }
             var category = _context.Categories
                 .Where(a => a.Id == entity.Id)
                 .FirstOrDefault();
@@ -83,7 +91,7 @@ namespace Bouvet.AssetHub.API.Domain.Asset.Repositories
                 await _context.SaveChangesAsync();
                 return category;
             }
-            return Option<CategoryEntity>.None;
+            return null;
         }
     }
 }
