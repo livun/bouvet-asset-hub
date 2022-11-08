@@ -157,8 +157,7 @@ function getColumnsFor(key: string, object: any) {
 
 
 // Maps through object type and adds the column definitions to the array of column definitions.
-export function formatGridColumnsDefinition(data: object, pathname: string): [GridColDef[], number] {
-    let returnStatus = 0;
+export function formatGridColumnsDefinition(data: object, pathname: string): GridColDef[] {
     const columns: GridColDef[] = []
     const fieldEntries = Object.entries(data);
     fieldEntries.map(([key, val]) => {
@@ -168,16 +167,14 @@ export function formatGridColumnsDefinition(data: object, pathname: string): [Gr
     })
 
     if (pathname === "/assets") {
-        const { col, status } = TableButtonsColumnForAssets()
-        returnStatus = status
+        const col = TableButtonsColumnForAssets()
         columns.push(col)
     }
     if (pathname === "/loans") {
-        const { col, status } = TableButtonsColumnForLoans()
-        returnStatus = status
+        const { col } = TableButtonsColumnForLoans()
         columns.push(col)
     }
    
-    return [columns, returnStatus];
+    return  columns;
 
 }

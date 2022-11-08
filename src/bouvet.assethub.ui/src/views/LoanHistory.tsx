@@ -9,8 +9,6 @@ import { LoanHistoryResponseDto, LoanResponseDto } from "../__generated__/api-ty
 export default function LoanHistory () {
     const { isLoading, isSuccess, isError, error, data} = useQuery<LoanHistoryResponseDto[], Error>(["loanHistory"], getLoanHistoryFn)
 
-
-   
     return <>
     { isLoading 
     ? <CircularLoader /> 

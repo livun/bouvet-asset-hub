@@ -12,15 +12,12 @@ export default function DataGridTable<T extends Object>(props: TableProps<T>) {
     const { rows, headerName } = props
     const location = useLocation();
     const pathname = location.pathname
-
     const [selectedIds, setSelectedIds] = useState<GridRowId[]>()
     const [selectionModel, setSelectionModel] = useState(selectedIds);
     const [changeStatus, setChangeStatus] = useState(false);
     const [updateAssetsIds, setUpdateAssetsIds] = useState<number[]>([])
-    const [updateAssetsCommand, setUpdateAssetsCommand] = useState<UpdateAssetsByIdCommand>({})
-
     const [pageSize, setPageSize] = useState<number>(30);
-    const [gridColDef, status] = formatGridColumnsDefinition(rows[0], pathname)
+    const gridColDef = formatGridColumnsDefinition(rows[0], pathname)
 
     const handleChange = () => {
         if (selectedIds !== undefined && selectedIds?.length > 0) {
@@ -37,13 +34,8 @@ export default function DataGridTable<T extends Object>(props: TableProps<T>) {
             setUpdateAssetsIds([])
             setChangeStatus(false)
         }
-        if (status === 200) {
-            openAlertBar("Asset was successfully deleted", true)
-        }
-        if (status === 404) {
-            openAlertBar("Asset could not be deleted, used in loan!", false)
-        }
-    }, [selectedIds, pathname, status])
+       
+    }, [selectedIds, pathname])
 
     // Handle the SelectionModel (GridRowId[])
     const removeSelectedModel = () => {
@@ -57,23 +49,6 @@ export default function DataGridTable<T extends Object>(props: TableProps<T>) {
             setSelectionModel([])
         }
     }
-
-    //AlertComponent (if reused, this must be pasted in parent component)
-    const [open, setOpen] = useState(false);
-    const [alertBarMsg, setAlertBarMsg] = useState("")
-    const [success, setSuccess] = useState(false)
-    const openAlertBar = (msg: string, isSuccess: boolean) => {
-        setAlertBarMsg(msg)
-        setOpen(true);
-        setSuccess(isSuccess)
-    };
-    const handleClose = (event?: React.SyntheticEvent | Event, reason?: string) => {
-        if (reason === 'clickaway') {
-            return;
-        }
-        setOpen(false);
-    };
-
     return <>
         {pathname !== undefined
             ? <div style={{ display: "flex", height: "100%" }}>
@@ -107,6 +82,6 @@ export default function DataGridTable<T extends Object>(props: TableProps<T>) {
             </div> 
             : <CircularLoader />
         }
-        <AlertBar open={open} handleClose={handleClose} message={alertBarMsg} success={success} />
+        {/* <AlertBar open={open} handleClose={handleClose} message={alertBarMsg} success={success} /> */}
     </>
 };

@@ -16,6 +16,7 @@ import { Tooltip } from "@mui/material";
 import { AssetResponseDto, UpdateCategoryDto } from "../__generated__/api-types2";
 import TableToolbar from "../components/TableToolbar"
 import { getAssetsByCategoryFn } from "../api/assetsApi"
+import SpeedDialAddItemsMenu from "../components/SpeedDialAddItemsMenu"
 
 export default function Categories() {
     const [pageSize, setPageSize] = useState<number>(30);
@@ -201,5 +202,6 @@ export default function Categories() {
             </DialogActions>
         </Dialog>
         <AlertBar open={open} handleClose={handleClose} message={alertBarMsg} success={success} />
+        <SpeedDialAddItemsMenu />
     </>
 }
