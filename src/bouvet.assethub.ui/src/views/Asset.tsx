@@ -1,4 +1,4 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, Grid, IconButton, MenuItem, Stack, TextField, Tooltip } from "@mui/material";
+import { Button, Dialog, DialogActions, DialogContent, DialogContentText, Grid, IconButton, MenuItem, Stack, TextField, Tooltip, Typography } from "@mui/material";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -16,6 +16,8 @@ import SaveIcon from '@mui/icons-material/Save';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import AlertBar from "../components/AlertBar";
 import queryClient from "../config/queryClient";
+import { removeFirstCharacter } from "../utils/regex";
+import SpeedDialAddItemsMenu from "../components/SpeedDialAddItemsMenu";
 
 export default function Asset() {
     const location = useLocation()
@@ -98,7 +100,25 @@ export default function Asset() {
                     && form !== undefined
                     ?
                     <>
-                        <Grid container width={400} height={50} marginBottom={4} sx={{borderBottom:"1px solid grey", marginLeft:2}}>
+                        <Grid container width={400} height={50} alignItems="center"
+                            sx={{
+                                borderRadius: "4px 4px 0 0", 
+                                borderLeft:"0.5px solid rgba(0, 0, 0, 0.12)", 
+                                borderRight:"0.5px solid rgba(0, 0, 0, 0.12)", 
+                                borderTop:"0.5px solid rgba(0, 0, 0, 0.12)", 
+                                marginLeft:2, px: 2}}>
+                                    <Grid item>
+                                    <Typography variant="h5">
+                                        Asset
+                                    </Typography>
+                                    </Grid>
+                                    
+                        </Grid>
+                        <Grid container width={400} height={50} marginBottom={4} 
+                            sx={{
+                                borderRadius: "0 0 4px 4px", 
+                                border:"0.5px solid rgba(0, 0, 0, 0.12)", 
+                                marginLeft:2}}>
                             <Grid item flexGrow={1}>
                                 <Tooltip title="Go back">
                                     <IconButton size="large" onClick={() => navigate(-1)} aria-label="go back">
@@ -234,5 +254,6 @@ export default function Asset() {
             </DialogActions>
         </Dialog>
         <AlertBar open={open} handleClose={handleClose} message={alertBarMsg} success={success} />
+        <SpeedDialAddItemsMenu />
     </>
 }

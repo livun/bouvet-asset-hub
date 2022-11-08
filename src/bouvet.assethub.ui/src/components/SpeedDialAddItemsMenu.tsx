@@ -1,7 +1,5 @@
-import SaveIcon from '@mui/icons-material/Save';
-import { useLocation } from 'react-router-dom';
 import queryClient from '../config/queryClient';
-import { SpeedDial, SpeedDialAction, SpeedDialIcon, Button, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, FormControlLabel, Grid, IconButton, InputLabel, MenuItem, Select, SelectChangeEvent, Stack, Switch, TextField, Tooltip, Typography } from "@mui/material";
+import { SpeedDial, SpeedDialAction, SpeedDialIcon, Button, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, FormControlLabel, Grid, IconButton, InputLabel, MenuItem, Select, SelectChangeEvent, Stack, Switch, TextField, Tooltip, Typography, makeStyles, Theme, createStyles, styled, TooltipProps } from "@mui/material";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { getAssetsFn, postAssetsFn, putAssetsFn } from "../api/assetsApi";
@@ -12,16 +10,15 @@ import { getCategoriesFn, postCategoriesFn } from "../api/categoriesApi";
 import CircularLoader from "./CircularLoader";
 import { StatusEnum } from "../utils/enums";
 import { DesktopDatePicker } from "@mui/x-date-pickers";
-import { TableToolbarProps } from "../utils/props";
 import { postLoansFn } from '../api/loansApi';
 import CategoryIcon from '@mui/icons-material/Category';
-import LibraryAddIcon from '@mui/icons-material/LibraryAdd';
 import CalendarMonthSharpIcon from '@mui/icons-material/CalendarMonthSharp';
-import ViewCompactSharpIcon from '@mui/icons-material/ViewCompactSharp';
+import DashboardCustomizeSharpIcon from '@mui/icons-material/DashboardCustomizeSharp';
+import { useNavigate } from 'react-router-dom';
 
-import GridViewSharpIcon from '@mui/icons-material/GridViewSharp';
 
 export default function SpeedDialAddItemsMenu() {
+    const navigate = useNavigate()
     const today = new Date().toISOString()
     const [assetForm, setAssetForm] = useState<CreateAssetCommand>({})
     const [loanForm, setLoanForm] = useState<CreateLoanCommand>({ ...assetForm, intervalStart: today })
@@ -31,9 +28,9 @@ export default function SpeedDialAddItemsMenu() {
     const [openAddCategory, setOpenAddCategory] = useState(false)
 
     const actions = [
-        { icon: <CategoryIcon />, name: 'Add category', event: () => setOpenAddCategory(true) },
         { icon: <CalendarMonthSharpIcon />, name: 'Add loan', event: () => setOpenAddLoan(true) },
-        { icon: <GridViewSharpIcon />, name: 'Add asset', event: () => setOpenAddAsset(true) },
+        { icon: <CategoryIcon  />, name: 'Add category', event: () => setOpenAddCategory(true) },
+        { icon: <DashboardCustomizeSharpIcon  />, name: 'Add asset', event: () => setOpenAddAsset(true) },
     ];
 
     // Queries
@@ -52,9 +49,11 @@ export default function SpeedDialAddItemsMenu() {
         onSuccess: () => {
             queryClient.invalidateQueries(["assets"])
             setAssetForm({})
-            setOpenAddAsset(false)
+            setOpenAddAsset(false)       
             openAlertBar("Asset is added.", true)
-        }
+            setTimeout(() => {
+                navigate(`/assets`)
+            }, 1500)        }
     });
     const addLoan = useMutation(() => postLoansFn(loanForm), {
         onError: () => {
@@ -65,6 +64,9 @@ export default function SpeedDialAddItemsMenu() {
             setLoanForm({ ...assetForm, intervalStart: today })
             setOpenAddLoan(false)
             openAlertBar("Loan is added.", true)
+            setTimeout(() => {
+                navigate(`/loans`)
+            }, 1500)
         }
     });
     const addCategory = useMutation(() => postCategoriesFn(categoryForm), {
@@ -76,6 +78,10 @@ export default function SpeedDialAddItemsMenu() {
             setCategoryForm({})
             setOpenAddCategory(false)
             openAlertBar("Category is added.", true)
+            setTimeout(() => {
+                navigate(`/categories`)
+            }, 1500)
+            
         }
     });
 
@@ -109,10 +115,11 @@ export default function SpeedDialAddItemsMenu() {
         }
     };
 
+
     return <>
         <SpeedDial
             ariaLabel="SpeedDial basic example"
-            sx={{ position: 'absolute', bottom: 16, right: 16 }}
+            sx={{ position: 'absolute', bottom: 20, right: 20, }}
             icon={<SpeedDialIcon />}
         >
             {actions.map((action) => (
@@ -120,7 +127,10 @@ export default function SpeedDialAddItemsMenu() {
                     key={action.name}
                     icon={action.icon}
                     tooltipTitle={action.name}
+                    tooltipOpen
                     onClick={action.event}
+                    
+
                 />
             ))}
         </SpeedDial>

@@ -8,7 +8,8 @@ import { QueryClientProvider } from '@tanstack/react-query';
 import queryClient from './config/queryClient';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-
+import { createTheme, ThemeProvider } from '@mui/material';
+import { theme } from './config/theme';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -17,9 +18,11 @@ root.render(
   <React.StrictMode>
   <QueryClientProvider client={queryClient}>
     <BrowserRouter>
+    <ThemeProvider theme={theme}>
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <App />
       </LocalizationProvider>
+      </ThemeProvider>
     </BrowserRouter>
   </QueryClientProvider>
   </React.StrictMode>

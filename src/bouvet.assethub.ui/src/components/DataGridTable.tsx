@@ -49,6 +49,23 @@ export default function DataGridTable<T extends Object>(props: TableProps<T>) {
             setSelectionModel([])
         }
     }
+
+    // //AlertComponent (if reused, this must be pasted in parent component)
+    // const [open, setOpen] = useState(false);
+    // const [alertBarMsg, setAlertBarMsg] = useState("")
+    // const [success, setSuccess] = useState(false)
+    // const openAlertBar = (msg: string, isSuccess: boolean) => {
+    //     setAlertBarMsg(msg)
+    //     setOpen(true);
+    //     setSuccess(isSuccess)
+    // };
+    // const handleClose = (event?: React.SyntheticEvent | Event, reason?: string) => {
+    //     if (reason === 'clickaway') {
+    //         return;
+    //     }
+    //     setOpen(false);
+    // };
+
     return <>
         {pathname !== undefined
             ? <div style={{ display: "flex", height: "100%" }}>

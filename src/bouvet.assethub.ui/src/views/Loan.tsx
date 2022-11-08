@@ -1,4 +1,4 @@
-import { Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid, IconButton, InputAdornment, MenuItem, Stack, TextField, Tooltip } from "@mui/material";
+import { Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid, IconButton, InputAdornment, MenuItem, Stack, TextField, Tooltip, Typography } from "@mui/material";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -16,6 +16,7 @@ import ClearIcon from '@mui/icons-material/Clear';
 import MoreTimeIcon from '@mui/icons-material/MoreTime';
 import TaskAltIcon from '@mui/icons-material/TaskAlt';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
+import SpeedDialAddItemsMenu from "../components/SpeedDialAddItemsMenu";
 
 
 export default function Loan() {
@@ -125,8 +126,25 @@ export default function Loan() {
                     && stopDate !== null
                     ?
                     <>
-                        <Grid container width={400} height={50} marginBottom={4} sx={{borderBottom:"1px solid grey", marginLeft:2}}>
-                            <Grid item flexGrow={1}>
+                    <Grid container width={400} height={50} alignItems="center"
+                            sx={{
+                                borderRadius: "4px 4px 0 0", 
+                                borderLeft:"0.5px solid rgba(0, 0, 0, 0.12)", 
+                                borderRight:"0.5px solid rgba(0, 0, 0, 0.12)", 
+                                borderTop:"0.5px solid rgba(0, 0, 0, 0.12)", 
+                                marginLeft:2, px: 2}}>
+                                    <Grid item>
+                                    <Typography variant="h5">
+                                        Loan
+                                    </Typography>
+                                    </Grid>
+                                    
+                        </Grid>
+                        <Grid container width={400} height={50} marginBottom={4} 
+                            sx={{
+                                borderRadius: "0 0 4px 4px", 
+                                border:"0.5px solid rgba(0, 0, 0, 0.12)", 
+                                marginLeft:2}}>                            <Grid item flexGrow={1}>
                                 <IconButton size="large" onClick={() => navigate(-1)} aria-label="go back">
                                     <ArrowBackIcon />
                                 </IconButton>
@@ -336,5 +354,6 @@ export default function Loan() {
                     : <CircularLoader />
         }
         <AlertBar open={open} handleClose={handleClose} message={alertBarMsg} success={success} />
+        <SpeedDialAddItemsMenu />
     </>
 }

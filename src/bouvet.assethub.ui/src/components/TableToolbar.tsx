@@ -7,6 +7,7 @@ import queryClient from "../config/queryClient";
 import {  Status, UpdateAssetsByIdCommand } from "../__generated__/api-types";
 import AlertBar from "./AlertBar";
 import { TableToolbarProps } from "../utils/props";
+import { headerIcons } from "../utils/mappers";
 
 export default function TableToolbar(props: TableToolbarProps) {
 
@@ -48,15 +49,30 @@ export default function TableToolbar(props: TableToolbarProps) {
         }
         setOpen(false);
     };
+    
 
     return <>
         <Box sx={{ borderBottom: 1, borderColor: 'divider', p: 1 }}>
             <Grid container alignItems="center" sx={{ paddingTop: 0.5 }}>
-                <Grid item flexGrow={1} paddingRight={2}>
-                    <Typography variant='h4'>
-                        {headerName}
-                    </ Typography>
+                <Grid item flexGrow={1}>
+
+
+                <Grid container alignItems="center">
+                <Grid item sx={{paddingTop: 0.5}}>
+                                    
+                {headerIcons[headerName]}
+
+                        </Grid>
+                        <Grid item paddingLeft={2}>
+                            <Typography variant='h4'>
+                            {headerName}
+                            </ Typography>
+                        </Grid>
+                        
+
+                    </Grid>
                 </Grid>
+
                 <Grid item>
                     {pathname === "/assets" && changeStatus === true ?
                         <Grid container justifyContent="flex-end" spacing={1} >
