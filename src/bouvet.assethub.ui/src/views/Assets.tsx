@@ -21,7 +21,7 @@ export default function Assets() {
         :  isError && axios.isAxiosError(error)
         ? <NotFound message={error?.response?.data} />  
         : isSuccess 
-        ? <DataGridTable<AssetResponseDto> rows={data} />
+        ? <DataGridTable<AssetResponseDto> rows={data} headerName="Assets" />
         : <></>
         }
     </>   

@@ -1,6 +1,6 @@
 import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, FormControlLabel, Grid, IconButton, InputLabel, MenuItem, Select, SelectChangeEvent, Stack, Switch, TextField, Tooltip, Typography } from "@mui/material";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { getAssetsFn, postAssetsFn, putAssetsFn } from "../api/assetsApi";
 import queryClient from "../config/queryClient";
@@ -13,17 +13,19 @@ import CircularLoader from "./CircularLoader";
 import { postLoansFn } from "../api/loansApi";
 import { StatusEnum } from "../utils/enums";
 import { DesktopDatePicker } from "@mui/x-date-pickers";
+import { TableToolbarProps } from "../utils/props";
 
+export default function TableToolbar(props: TableToolbarProps) {
 
-export default function TableToolbar(props: { changeStatus: boolean, updateAssetsCommand: UpdateAssetsByIdCommand, removeSelectedModel: () => void }) {
     const today = new Date().toISOString()
-    const { changeStatus, updateAssetsCommand, removeSelectedModel } = props
+    const { changeStatus, updateAssetsIds, removeSelectedModel, headerName } = props
     const location = useLocation();
     const pathname = location.pathname
     const [newStatusString, setNewStatusString] = useState("")
     const [assetForm, setAssetForm] = useState<CreateAssetCommand>({})
-    const [loanForm, setLoanForm] = useState<CreateLoanCommand>({...assetForm, intervalStart: today})
+    const [loanForm, setLoanForm] = useState<CreateLoanCommand>({ ...assetForm, intervalStart: today })
     const [categoryForm, setCategoryForm] = useState<CreateCategoryCommand>({})
+
 
     // Queries
     const assetsQuery = useQuery<AssetResponseDto[], Error>(["assets"], getAssetsFn, {
@@ -49,7 +51,7 @@ export default function TableToolbar(props: { changeStatus: boolean, updateAsset
         },
         onSuccess: () => {
             queryClient.invalidateQueries(["loans"])
-            setLoanForm({...assetForm, intervalStart: today})
+            setLoanForm({ ...assetForm, intervalStart: today })
             setOpenAddLoan(false)
             openAlertBar("Loan is added.", true)
         }
@@ -77,9 +79,7 @@ export default function TableToolbar(props: { changeStatus: boolean, updateAsset
     });
 
     const handleUpdateStatus = () => {
-        const dto: UpdateAssetsByIdCommand = updateAssetsCommand
-        const newStatus: Status = Number(newStatusString) as Status
-        dto.status = newStatus
+        const dto: UpdateAssetsByIdCommand = { ids: updateAssetsIds, status: Number(newStatusString) as Status }
         updateAssets.mutate(dto);
         setNewStatusString("")
     }
@@ -101,37 +101,37 @@ export default function TableToolbar(props: { changeStatus: boolean, updateAsset
         setOpen(false);
     };
 
-
     // Dialogs
     const [openAddAsset, setOpenAddAsset] = useState(false);
     const [openAddLoan, setOpenAddLoan] = useState(false);
     const [openAddCategory, setOpenAddCategory] = useState(false)
-    
+
     const handleOpenDialogs = () => {
-        if (location.pathname === "/assets") {
-            setOpenAddAsset(true)
-        }
-        if (location.pathname === "/loans") {
-            setOpenAddLoan(true)
-        }
-        if (location.pathname === "/categories") {
-            setOpenAddCategory(true)
+        switch (headerName) {
+            case "Assets":
+                setOpenAddAsset(true)
+                break
+            case "Assets by Category":
+                setOpenAddAsset(true)
+                break
+            case "Loans":
+                setOpenAddLoan(true)
+                break
+            case "Categories":
+                setOpenAddCategory(true)
+                break
         }
     }
     const handleStartDateChange = (newValue: string | null) => {
-        if(newValue) {
-            console.log("startdate:", newValue)
-            setLoanForm({...loanForm, intervalStart: newValue})
+        if (newValue) {
+            setLoanForm({ ...loanForm, intervalStart: newValue })
         }
     };
     const handleStopDateChange = (newValue: string | null) => {
-        if(newValue) {
-            console.log("startDate : " , newValue)
-            console.log(typeof(newValue))
-            setLoanForm({...loanForm, intervalStop: newValue})
+        if (newValue) {
+            setLoanForm({ ...loanForm, intervalStop: newValue })
         }
     };
-   
 
     return <>
         <Box sx={{ borderBottom: 1, borderColor: 'divider', p: 1 }}>
@@ -140,8 +140,7 @@ export default function TableToolbar(props: { changeStatus: boolean, updateAsset
                     <Grid container alignItems="center">
                         <Grid item paddingRight={2}>
                             <Typography variant='h4'>
-                                {routeMapper[pathname]}
-
+                                {headerName}
                             </ Typography>
                         </Grid>
                         <Grid item>
@@ -215,8 +214,7 @@ export default function TableToolbar(props: { changeStatus: boolean, updateAsset
             </Dialog>
             : <CircularLoader />}
         {assetsQuery !== undefined
-            ?
-            <Dialog open={openAddLoan} onClose={() => setOpenAddLoan(false)}>
+            ? <Dialog open={openAddLoan} onClose={() => setOpenAddLoan(false)}>
                 <DialogTitle>Add loan</DialogTitle>
                 <DialogContent>
                     <Stack spacing={3} paddingTop={2} width={400} component="form" autoComplete="off">
@@ -225,17 +223,18 @@ export default function TableToolbar(props: { changeStatus: boolean, updateAsset
                             label="Start date"
                             value={loanForm.intervalStart}
                             minDate={new Date().toISOString()}
-                            onChange={handleStartDateChange} 
+                            onChange={handleStartDateChange}
                             renderInput={(params) => <TextField {...params} />}
                         />
-                        {!loanForm.intervalIsLongterm ? <DesktopDatePicker
-                            inputFormat="DD/MM/YYYY"
-                            value={loanForm.intervalStop}
-                            label="Stop date"
-                            minDate={loanForm.intervalStart}
-                            onChange={handleStopDateChange}
-                            renderInput={(params) => <TextField {...params} />}
-                        /> : <></>}
+                        {!loanForm.intervalIsLongterm
+                            ? <DesktopDatePicker
+                                inputFormat="DD/MM/YYYY"
+                                value={loanForm.intervalStop}
+                                label="Stop date"
+                                minDate={loanForm.intervalStart}
+                                onChange={handleStopDateChange}
+                                renderInput={(params) => <TextField {...params} />} /> 
+                            : <></>}
                         <FormControlLabel control={
                             <Switch
                                 checked={loanForm.intervalIsLongterm}
@@ -275,19 +274,17 @@ export default function TableToolbar(props: { changeStatus: boolean, updateAsset
                 </DialogActions>
             </Dialog>
             : <CircularLoader />}
-            {assetsQuery !== undefined
-            ?
-            <Dialog open={openAddCategory} onClose={() => setOpenAddCategory(false)}>
+        {assetsQuery !== undefined
+            ? <Dialog open={openAddCategory} onClose={() => setOpenAddCategory(false)}>
                 <DialogTitle>Add category</DialogTitle>
                 <DialogContent>
                     <Stack spacing={3} paddingTop={2} width={400} component="form" autoComplete="off">
-                        
                         <TextField
                             fullWidth
                             label="Name"
                             value={categoryForm.name}
-                            onChange={(event) => setCategoryForm({name: event.target.value})}
-                        >  
+                            onChange={(event) => setCategoryForm({ name: event.target.value })}
+                        >
                         </TextField>
                     </Stack>
                 </DialogContent>
@@ -299,6 +296,4 @@ export default function TableToolbar(props: { changeStatus: boolean, updateAsset
             : <CircularLoader />}
         <AlertBar open={open} handleClose={handleClose} message={alertBarMsg} success={success} />
     </>
-
-
 }

@@ -16,7 +16,7 @@ export default function Loans () {
         :  isError && axios.isAxiosError(error)
         ? <NotFound message={error?.response?.data} />  
         : isSuccess 
-        ? <DataGridTable<LoanHistoryResponseDto> rows={data} />
+        ? <DataGridTable<LoanHistoryResponseDto> rows={data} headerName="Loans" />
         : <></>
         }
     </>   

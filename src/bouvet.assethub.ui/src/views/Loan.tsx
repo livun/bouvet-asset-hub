@@ -138,7 +138,6 @@ export default function Loan() {
                                 <Tooltip title="Hand in loan"><IconButton size="large" onClick={() => setOpenHandInLoan(true)} aria-label="edit"> <TaskAltIcon /></IconButton></Tooltip>
                             </Grid>
                         </Grid>
-
                         <Stack marginLeft={2} spacing={3} width={400} height={400} component="form" autoComplete="off">
                             <Grid container  >
                                 <Grid item xs={5}>
