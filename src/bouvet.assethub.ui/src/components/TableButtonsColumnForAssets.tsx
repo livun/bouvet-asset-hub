@@ -1,4 +1,4 @@
-import { GridActionsCellItem, GridColDef, GridRowParams } from "@mui/x-data-grid";
+import { GridActionsCellItem, GridRowParams } from "@mui/x-data-grid";
 import { useLocation, useNavigate } from "react-router-dom";
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';

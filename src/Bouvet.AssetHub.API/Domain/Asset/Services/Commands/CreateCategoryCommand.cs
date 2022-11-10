@@ -4,8 +4,5 @@ using MediatR;
 
 namespace Bouvet.AssetHub.API.Domain.Asset.Services.Commands
 {
-    public class CreateCategoryCommand : IRequest<Option<CategoryResponseDto>>
-    {
-        public string Name { get; set; } = "";
-    }
+    public record CreateCategoryCommand (string Name) : IRequest<Option<CategoryResponseDto>>;
 }

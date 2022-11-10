@@ -4,18 +4,18 @@ import { useState } from "react";
 import { useLocation } from "react-router-dom";
 import { putAssetsFn } from "../api/assetsApi";
 import queryClient from "../config/queryClient";
-import { Status, UpdateAssetsByIdCommand } from "../__generated__/api-types";
 import AlertBar from "./AlertBar";
 import { TableToolbarProps } from "../utils/props";
 import { headerIcons } from "../utils/mappers";
+import { Status, UpdateAssetsByIdDto } from "../_generated/api-types";
 
 export default function TableToolbar(props: TableToolbarProps) {
     const { changeStatus, updateAssetsIds, removeSelectedModel, headerName } = props
     const location = useLocation();
     const pathname = location.pathname
-    const [newStatusString, setNewStatusString] = useState("")
+    const [newStatus, setNewStatus] = useState<Status>()
 
-    const updateAssets = useMutation((dto: UpdateAssetsByIdCommand) => putAssetsFn(dto), {
+    const updateAssets = useMutation((dto: UpdateAssetsByIdDto) => putAssetsFn(dto), {
         onError: () => {
             openAlertBar("Cannot update status, asset is Unavailable.", false)
         },
@@ -27,9 +27,9 @@ export default function TableToolbar(props: TableToolbarProps) {
     });
 
     const handleUpdateStatus = () => {
-        const dto: UpdateAssetsByIdCommand = { ids: updateAssetsIds, status: Number(newStatusString) as Status }
+        const dto: UpdateAssetsByIdDto = { ids: updateAssetsIds, status: newStatus }
         updateAssets.mutate(dto);
-        setNewStatusString("")
+        setNewStatus(undefined)
     }
 
     //AlertComponent handling (if reused, this must be pasted in parent component)
@@ -73,13 +73,13 @@ export default function TableToolbar(props: TableToolbarProps) {
                                     <Select
                                         size='small'
                                         sx={{ height: "38px" }}
-                                        value={newStatusString}
+                                        value={newStatus}
                                         label="Status"
-                                        onChange={(event: SelectChangeEvent) => setNewStatusString(event.target.value)}
+                                        onChange={(event: SelectChangeEvent) => setNewStatus(Status[event.target.value as Status])}
                                     >
-                                        <MenuItem value={0}>Registered</MenuItem>
-                                        <MenuItem value={1}>Available</MenuItem>
-                                        <MenuItem value={3}>Discontinued</MenuItem>
+                                        <MenuItem value={Status.Registered}>{Status.Registered}</MenuItem>
+                                        <MenuItem value={Status.Available}>{Status.Available}</MenuItem>
+                                        <MenuItem value={Status.Discontinued}>{Status.Discontinued}</MenuItem>
                                     </Select>
                                 </FormControl>
                             </Grid>

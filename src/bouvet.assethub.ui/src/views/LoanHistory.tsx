@@ -4,7 +4,7 @@ import { getLoanHistoryFn,  } from "../api/loanHistoryApi";
 import CircularLoader from "../components/CircularLoader";
 import NotFound from "../components/NotFound";
 import DataGridTable from "../components/DataGridTable";
-import { LoanHistoryResponseDto, LoanResponseDto } from "../__generated__/api-types";
+import { LoanHistoryResponseDto, LoanResponseDto } from "../_generated/api-types";
 
 export default function LoanHistory () {
     const { isLoading, isSuccess, isError, error, data} = useQuery<LoanHistoryResponseDto[], Error>(["loanHistory"], getLoanHistoryFn)

@@ -7,9 +7,7 @@ import { deleteAssetFn, getAssetByIdFn, putAssetByIdFn } from "../api/assetsApi"
 import { getCategoriesFn } from "../api/categoriesApi";
 import CircularLoader from "../components/CircularLoader";
 import NotFound from "../components/NotFound";
-import { statusChecker } from "../utils/mappers";
 import { IAssetActions } from "../utils/interfaces";
-import { AssetResponseDto, CategoryResponseDto, UpdateAssetDto } from "../__generated__/api-types";
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import SaveIcon from '@mui/icons-material/Save';
@@ -17,6 +15,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import AlertBar from "../components/AlertBar";
 import queryClient from "../config/queryClient";
 import SpeedDialAddItemsMenu from "../components/SpeedDialAddItemsMenu";
+import { AssetResponseDto, CategoryResponseDto, Status, UpdateAssetDto } from "../_generated/api-types";
 
 export default function Asset() {
     const location = useLocation()
@@ -59,8 +58,9 @@ export default function Asset() {
 
     useEffect(() => {
         if (data) {
+            console.log("status is", data.status)
             setForm({ status: data.status, categoryId: data.categoryId })
-            if (!assetActions.isReadOnly && data.status === 2) {
+            if (!assetActions.isReadOnly && data.status === Status.Unavailable) {
                 openAlertBar("Asset is Unavailable and cannot be edited.", false)
                 setAssetActions({ ...assetActions, isReadOnly: true })
             }
@@ -123,11 +123,11 @@ export default function Asset() {
                                 </Tooltip>
                             </Grid>
                             <Grid item> {assetActions.isReadOnly
-                                ? <Tooltip title="Edit"><IconButton disabled={data.status === 2} size="large" onClick={() => setAssetActions({ ...assetActions, isReadOnly: false })} aria-label="edit"> <EditIcon /></IconButton></Tooltip>
+                                ? <Tooltip title="Edit"><IconButton disabled={data.status === Status.Unavailable} size="large" onClick={() => setAssetActions({ ...assetActions, isReadOnly: false })} aria-label="edit"> <EditIcon /></IconButton></Tooltip>
                                 : <Tooltip title="Save"><IconButton size="large" onClick={() => updateAsset.mutate(form)} aria-label="save"> <SaveIcon /></IconButton></Tooltip>}
                             </ Grid>
                             <Grid item>
-                                <Tooltip title="Delete"><IconButton disabled={data.status === 2} size="large" onClick={() => setOpenConfirmDelete(true)} aria-label="edit"> <DeleteIcon /></IconButton></Tooltip>
+                                <Tooltip title="Delete"><IconButton disabled={data.status === Status.Unavailable} size="large" onClick={() => setOpenConfirmDelete(true)} aria-label="edit"> <DeleteIcon /></IconButton></Tooltip>
                             </Grid>
                         </Grid>
                         <Stack marginLeft={2} spacing={3} width={400} height={400} component="form" autoComplete="off">
@@ -184,7 +184,7 @@ export default function Asset() {
                                     <TextField
                                         fullWidth
                                         select
-                                        value={form?.categoryId}
+                                        value={form.categoryId}
                                         variant="standard"
                                         onChange={(event) => setForm({ ...form, categoryId: Number(event?.target.value) })}
                                         InputProps={{
@@ -212,17 +212,17 @@ export default function Asset() {
                                     <TextField
                                         fullWidth
                                         select
-                                        value={Number(form.status)}
+                                        value={form.status}
                                         variant="standard"
-                                        onChange={(event) => setForm({ ...form, status: statusChecker(event.target.value) })}
+                                        onChange={(event) => setForm({ ...form, status: Status[event.target.value as Status]})}
                                         InputProps={{
                                             readOnly: assetActions.isReadOnly
                                         }}
                                     >
-                                        <MenuItem value={0}>Registered</MenuItem>
-                                        <MenuItem value={1}>Available</MenuItem>
-                                        <MenuItem disabled value={2}>Unavailable</MenuItem>
-                                        <MenuItem value={3}>Discontinued</MenuItem>
+                                        <MenuItem value={Status.Registered}>{Status.Registered}</MenuItem>
+                                        <MenuItem value={Status.Available}>{Status.Available}</MenuItem>
+                                        <MenuItem disabled value={Status.Unavailable}>{Status.Unavailable}</MenuItem>
+                                        <MenuItem value={Status.Discontinued}>{Status.Discontinued}</MenuItem>
                                     </TextField>
                                 </Grid>
                             </Grid>

@@ -1,9 +1,7 @@
 import { styled } from '@mui/material/styles';
 import { ReactNode } from 'react';
 
-
 const drawerWidth = 240;
-
 const Body = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })<{
     open?: boolean;
   }>(({ theme, open }) => ({

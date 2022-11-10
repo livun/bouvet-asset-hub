@@ -4,7 +4,7 @@ import { getLoansFn } from "../api/loansApi";
 import CircularLoader from "../components/CircularLoader";
 import NotFound from "../components/NotFound";
 import DataGridTable from "../components/DataGridTable";
-import { LoanResponseDto } from "../__generated__/api-types";
+import { LoanResponseDto } from "../_generated/api-types";
 import SpeedDialAddItemsMenu from "../components/SpeedDialAddItemsMenu";
 
 export default function Loans () {

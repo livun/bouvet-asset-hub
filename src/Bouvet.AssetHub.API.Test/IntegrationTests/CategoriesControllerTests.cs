@@ -95,7 +95,7 @@ namespace Bouvet.AssetHub.API.Tests
         public async Task PostCategory_Ok_200()
         {
             // Arrange 
-            var dto = new CreateCategoryCommand { Name = "Keyboard" };
+            var dto = new CreateCategoryCommand ("Keyboard" );
             var json = JsonSerializer.Serialize(dto);
 
             // Act
@@ -114,17 +114,30 @@ namespace Bouvet.AssetHub.API.Tests
             var json = SerializeHelper.Serialize(dto);
            
             // Act 
-            var result = await _httpClient.PutAsync($"api/categories/1", new StringContent(json, Encoding.UTF8, "application/json"));
-            var category = SerializeHelper.Deserialize<CategoryResponseDto>(await result.Content.ReadAsStringAsync());
-            
+            var result = await _httpClient.PutAsync($"api/categories/5", new StringContent(json, Encoding.UTF8, "application/json"));
+            var category = SerializeHelper.Deserialize<CategoryResponseDto>( await result.Content.ReadAsStringAsync());
+
             // Assert
             result.StatusCode.ShouldBe(HttpStatusCode.OK);
             category.Name.ShouldBe("Developer MAC");
 
         }
-       
-      
-        
+        [Fact]
+        public async Task PutCategoryById_BadRequest_400()
+        {
+            // Arrange
+            var dto = new UpdateCategoryDto("Developer MAC");
+            var json = SerializeHelper.Serialize(dto);
+
+            // Act 
+            var result = await _httpClient.PutAsync($"api/categories/1", new StringContent(json, Encoding.UTF8, "application/json"));
+    
+            // Assert
+            result.StatusCode.ShouldBe(HttpStatusCode.BadRequest);
+
+        }
+
+
         [Fact]
         public async Task DeleteCategoryById_Ok_200()
         {

@@ -16,38 +16,38 @@ export interface AssetResponseDto {
   serialNumberValue?: number;
   /** @format int32 */
   categoryId?: number;
-  categoryName?: string | null;
+  categoryName?: string;
   status?: Status;
 }
 
 export interface CategoryResponseDto {
   /** @format int32 */
   id?: number;
-  name?: string | null;
+  name?: string;
 }
 
-export interface CreateAssetCommand {
+export interface CreateAssetDto {
   /** @format int32 */
-  serialNumberValue?: number;
+  serialNumber?: number;
   /** @format int32 */
   categoryId?: number;
 }
 
-export interface CreateCategoryCommand {
-  name?: string | null;
+export interface CreateCategoryDto {
+  name?: string;
 }
 
-export interface CreateLoanCommand {
+export interface CreateLoanDto {
   /** @format date-time */
   intervalStart?: string;
   /** @format date-time */
-  intervalStop?: string;
+  intervalStop?: string | null;
   intervalIsLongterm?: boolean;
   /** @format int32 */
   assignedToValue?: number;
   /** @format int32 */
   assetId?: number;
-  bsdReference?: string | null;
+  bsdReference?: string;
 }
 
 export interface LoanHistoryResponseDto {
@@ -78,12 +78,16 @@ export interface LoanResponseDto {
   /** @format int32 */
   assetId?: number;
   assetStatus?: Status;
-  assetCategoryName?: string | null;
-  bsdReference?: string | null;
+  assetCategoryName?: string;
+  bsdReference?: string;
 }
 
-/** @format int32 */
-export type Status = 0 | 1 | 2 | 3;
+export enum Status {
+  Registered = "Registered",
+  Available = "Available",
+  Unavailable = "Unavailable",
+  Discontinued = "Discontinued",
+}
 
 export interface UpdateAssetDto {
   status?: Status;
@@ -91,13 +95,13 @@ export interface UpdateAssetDto {
   categoryId?: number;
 }
 
-export interface UpdateAssetsByIdCommand {
-  ids?: number[] | null;
+export interface UpdateAssetsByIdDto {
+  ids?: number[];
   status?: Status;
 }
 
 export interface UpdateCategoryDto {
-  name?: string | null;
+  name?: string;
 }
 
 export interface UpdateLoanDto {

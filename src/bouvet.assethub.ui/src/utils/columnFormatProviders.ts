@@ -1,5 +1,4 @@
 import { GridColDef } from "@mui/x-data-grid";
-import { StatusEnum } from "./enums";
 import { IFormatInput, IFormatOutput } from "./interfaces";
 import { lookupKeysMapper } from "./mappers";
 import { capitalizeAndSplit } from "./regex";
@@ -88,22 +87,6 @@ function formatCatId({key} : IFormatInput) : IFormatOutput {
     return {filter, value}
 }
 
-function formatStatus({key} : IFormatInput) : IFormatOutput {
-    const filter = () => key.toLocaleLowerCase().includes("status")
-    const value = () => {
-        const col: GridColDef = {
-            field: key,
-            headerName: formatHeaderKeys(key),
-            headerAlign: "left",
-            align: "left",
-            flex: 1,
-            valueGetter: ({ value }) => StatusEnum[value],
-        }
-        return col
-    }
-    return {filter, value}
-}
-
 function formatDate({key} : IFormatInput) : IFormatOutput {
     const filter = () => ["intervalstart", "intervalstop", "returndate"].includes(key.toLocaleLowerCase())
     const value = () => {
@@ -136,5 +119,5 @@ function formatGeneral({key} : IFormatInput) : IFormatOutput {
     return {filter, value}
 }
 
-export const columnFormatProviders = [formatCatId, formatSerialNumber, formatId, formatBooleans, formatDate, formatStatus, formatString, formatGeneral]
+export const columnFormatProviders = [formatCatId, formatSerialNumber, formatId, formatBooleans, formatDate, formatString, formatGeneral]
  

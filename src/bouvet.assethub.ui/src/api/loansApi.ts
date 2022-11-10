@@ -1,5 +1,5 @@
 import apiClient from "../config/apiClient";
-import { LoanResponseDto, CreateLoanCommand, UpdateLoanDto} from "../__generated__/api-types";
+import { CreateLoanDto, LoanResponseDto, UpdateLoanDto } from "../_generated/api-types";
 import { deleteItem, get, postItem, putItem, regularHeaders } from "./genericAxios";
 
 
@@ -15,8 +15,8 @@ export const getLoanByEmployeeNumberFn = async (number: number) => {
 export const getLoanByAssetIdFn = async (id: number) => {
   return await get<LoanResponseDto>(`/assets/${id}/loans`)
 };
-export const postLoansFn = async (dto: CreateLoanCommand) => {
-  return await postItem<CreateLoanCommand, LoanResponseDto>(`/loans`, dto, regularHeaders)
+export const postLoansFn = async (dto: CreateLoanDto) => {
+  return await postItem<CreateLoanDto, LoanResponseDto>(`/loans`, dto, regularHeaders)
 };
 
 export const putLoanFn = async (id: number, dto: UpdateLoanDto) => {

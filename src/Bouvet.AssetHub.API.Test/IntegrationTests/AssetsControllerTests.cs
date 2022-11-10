@@ -47,7 +47,8 @@ namespace Bouvet.AssetHub.API.Tests
         public async Task PostAssets_Ok_200()
         {
             // Arrange 
-            var dto = new CreateAssetCommand { SerialNumberValue = 43215689, CategoryId = 1 };
+            
+            var dto = new CreateAssetDto ( 43215689, 1 );
             var json = JsonSerializer.Serialize(dto);
             
             // Act
@@ -61,7 +62,7 @@ namespace Bouvet.AssetHub.API.Tests
         public async Task PostAssets_BadRequest_400()
         {
             // Arrange
-            var dto = new CreateAssetCommand { SerialNumberValue = 123456789, CategoryId = 0 };
+            var dto = new CreateAssetDto ( 123456789, 0 );
             var json = JsonSerializer.Serialize(dto);
             
             // Act
@@ -75,7 +76,7 @@ namespace Bouvet.AssetHub.API.Tests
         public async Task PutAssets_Ok_200()
         {
             // Arrange
-            var dto = new UpdateAssetsByIdCommand { Ids = new List<int> { 1, 2 }, Status = Status.Available };
+            var dto = new UpdateAssetsByIdDto ( new List<int> { 1, 2 },Status.Available ) ;
             var json = SerializeHelper.Serialize(dto);
            
             // Act 

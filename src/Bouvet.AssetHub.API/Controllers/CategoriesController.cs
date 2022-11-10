@@ -45,9 +45,9 @@ namespace Bouvet.AssetHub.API.Controllers
 
         // POST /categories
         [HttpPost]
-        public async Task<ActionResult<CategoryResponseDto>> AddCategoryAsync(CreateCategoryCommand dto)
+        public async Task<ActionResult<CategoryResponseDto>> AddCategoryAsync(CreateCategoryDto dto)
         {
-            var result = await _mediator.Send(dto);
+            var result = await _mediator.Send(new CreateCategoryCommand(dto.Name));
             return new ActionResultHelper<CategoryResponseDto>().OkOrBadRequest(result, "Could not add category!");
         }
 
@@ -62,10 +62,10 @@ namespace Bouvet.AssetHub.API.Controllers
         // PUT /categories/1
         [Route("{id}")]
         [HttpPut]
-        public async Task<ActionResult<CategoryResponseDto>> UpdateAssetAsync(UpdateCategoryDto dto, int id)
+        public async Task<ActionResult<CategoryResponseDto>> UpdateCategoryAsync(UpdateCategoryDto dto, int id)
         {
             var result = await _mediator.Send(new UpdateCategoryCommand(id, dto.Name));
-            return new ActionResultHelper<CategoryResponseDto>().OkOrNotFound(result, "Cannot update category!");
+            return new ActionResultHelper<CategoryResponseDto>().OkOrBadRequest(result, "Cannot update category!");
         }
 
 
