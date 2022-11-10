@@ -1,11 +1,9 @@
 ﻿using AutoMapper;
-using Bouvet.AssetHub.API.Contracts;
-using Bouvet.AssetHub.API.Domain.Asset.Models;
-using Bouvet.AssetHub.API.Domain.Asset.Services.Commands;
-using Bouvet.AssetHub.API.Domain.Asset.Services.Queries;
 using Bouvet.AssetHub.API.Helpers;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Bouvet.AssetHub.Contracts.Dtos;
+using Bouvet.AssetHub.Contracts.Queries;
 
 namespace Bouvet.AssetHub.API.Controllers
 {
@@ -15,13 +13,13 @@ namespace Bouvet.AssetHub.API.Controllers
     {
         private readonly IMediator _mediator;
         private readonly ILogger<AssetsController> _logger;
-        private readonly IMapper _mapper;
+
 
         public AssetsController(IMediator mediator, ILogger<AssetsController> logger, IMapper mapper)
         {
             _mediator = mediator;
             _logger = logger;
-            _mapper = mapper;
+  
         }
 
         // GET /assets
@@ -44,7 +42,7 @@ namespace Bouvet.AssetHub.API.Controllers
         [HttpPut]
         public async Task<ActionResult<List<AssetResponseDto>>> UpdateAssetByIdAsync(UpdateAssetsByIdDto dto)
         {
-            var result = await _mediator.Send(new UpdateAssetsByIdCommand (dto.Ids, dto.Status));
+            var result = await _mediator.Send(new UpdateAssetsByIdCommand(dto.Ids, dto.Status));
             return new ActionResultHelper<List<AssetResponseDto>>().OkOrNotFound(result, "Cannot update assets!");
         }
 
@@ -88,10 +86,10 @@ namespace Bouvet.AssetHub.API.Controllers
 
         }
 
-       
+
 
 
     }
- 
+
 
 }

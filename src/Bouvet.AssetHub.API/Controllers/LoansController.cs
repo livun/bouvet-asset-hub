@@ -4,6 +4,7 @@ using Bouvet.AssetHub.API.Contracts;
 using Bouvet.AssetHub.API.Domain.Asset.Services.Queries;
 using Bouvet.AssetHub.API.Domain.Loan.Services.Commands;
 using Bouvet.AssetHub.API.Helpers;
+using Bouvet.AssetHub.Contracts.Commands;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

@@ -36,4 +36,13 @@
 	<InternalsVisibleTo Include="Bouvet.AssetHub.API.Tests" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Bouvet.AssetHub.Contracts\Bouvet.AssetHub.Contracts.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Data\" />
+    <Folder Include="Domain\" />
+  </ItemGroup>
+
 </Project>
