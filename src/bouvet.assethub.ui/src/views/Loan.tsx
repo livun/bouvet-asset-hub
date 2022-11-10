@@ -114,6 +114,11 @@ export default function Loan() {
         deleteLoan.mutate()
         setOpenHandInLoan(false)
     }
+
+
+    useEffect(() => {
+        console.log("stopdate: " + data?.intervalStop)
+    })
     return <>
         {isLoading 
             ? <CircularLoader />
@@ -209,7 +214,7 @@ export default function Loan() {
                                 <Grid item xs={7}>
                                     <TextField
                                         fullWidth
-                                        value={new Date(data.intervalStop).toLocaleDateString()}
+                                        value={data.intervalStop ? new Date(data.intervalStop).toLocaleDateString() : ""}
                                         variant="standard"
                                         InputProps={{
                                             readOnly: true,
