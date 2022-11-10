@@ -74,7 +74,7 @@ namespace Bouvet.AssetHub.API.Tests
         public async Task PostLoan_Ok_200()
         {
             // Arrange 
-            var dto = new CreateLoanCommand { IntervalStart = DateTime.Today, IntervalStop = DateTime.Today.AddDays(4), IntervalIsLongterm = false, AssignedToValue = 1, AssetId = 1 };
+            var dto = new CreateLoanDto(DateTime.Today, DateTime.Today.AddDays(4), false, 1, 1, "");
             var json = JsonSerializer.Serialize(dto);
 
             // Act

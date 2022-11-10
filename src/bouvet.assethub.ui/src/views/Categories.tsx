@@ -7,17 +7,16 @@ import AlertBar from "../components/AlertBar"
 import CircularLoader from "../components/CircularLoader"
 import DataGridTable from "../components/DataGridTable"
 import NotFound from "../components/NotFound"
-import { CategoryResponseDto } from "../__generated__/api-types"
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import queryClient from "../config/queryClient";
 import { useEffect, useState } from "react";
 import { Tooltip } from "@mui/material";
-import { AssetResponseDto, UpdateCategoryDto } from "../__generated__/api-types2";
 import TableToolbar from "../components/TableToolbar"
 import { getAssetsByCategoryFn } from "../api/assetsApi"
 import SpeedDialAddItemsMenu from "../components/SpeedDialAddItemsMenu"
 import React from "react"
+import { AssetResponseDto, CategoryResponseDto, UpdateCategoryDto } from "../_generated/api-types"
 
 export default function Categories() {
     const [pageSize, setPageSize] = useState<number>(30);

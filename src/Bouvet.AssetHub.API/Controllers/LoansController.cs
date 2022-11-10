@@ -34,9 +34,9 @@ namespace Bouvet.AssetHub.API.Controllers
 
         // POST /loans
         [HttpPost]
-        public async Task<ActionResult<LoanResponseDto>> AddLoanAsync(CreateLoanCommand dto)
+        public async Task<ActionResult<LoanResponseDto>> AddLoanAsync(CreateLoanDto dto)
         {
-            var result = await _mediator.Send(dto);
+            var result = await _mediator.Send(_mapper.Map<CreateLoanDto, CreateLoanCommand>(dto));
             return new ActionResultHelper<LoanResponseDto>().OkOrBadRequest(result, "Could not add loan!");    
 
         }

@@ -8,7 +8,6 @@ import CircularLoader from "../components/CircularLoader";
 import NotFound from "../components/NotFound";
 import queryClient from "../config/queryClient";
 import { ILoanActions,  } from "../utils/interfaces";
-import {  LoanResponseDto, UpdateLoanDto } from "../__generated__/api-types";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import AlertBar from "../components/AlertBar";
 import CheckIcon from '@mui/icons-material/Check';
@@ -17,6 +16,7 @@ import MoreTimeIcon from '@mui/icons-material/MoreTime';
 import TaskAltIcon from '@mui/icons-material/TaskAlt';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import SpeedDialAddItemsMenu from "../components/SpeedDialAddItemsMenu";
+import { LoanResponseDto, UpdateLoanDto } from "../_generated/api-types";
 
 
 export default function Loan() {
@@ -114,6 +114,11 @@ export default function Loan() {
         deleteLoan.mutate()
         setOpenHandInLoan(false)
     }
+
+
+    useEffect(() => {
+        console.log("stopdate: " + data?.intervalStop)
+    })
     return <>
         {isLoading 
             ? <CircularLoader />
@@ -209,7 +214,7 @@ export default function Loan() {
                                 <Grid item xs={7}>
                                     <TextField
                                         fullWidth
-                                        value={new Date(data.intervalStop).toLocaleDateString()}
+                                        value={data.intervalStop ? new Date(data.intervalStop).toLocaleDateString() : ""}
                                         variant="standard"
                                         InputProps={{
                                             readOnly: true,

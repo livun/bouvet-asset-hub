@@ -1,4 +1,6 @@
-﻿using Bouvet.AssetHub.API.Contracts;
+﻿using AutoMapper;
+using Bouvet.AssetHub.API.Contracts;
+using Bouvet.AssetHub.API.Domain.Asset.Models;
 using Bouvet.AssetHub.API.Domain.Asset.Services.Commands;
 using Bouvet.AssetHub.API.Domain.Asset.Services.Queries;
 using Bouvet.AssetHub.API.Helpers;
@@ -13,11 +15,13 @@ namespace Bouvet.AssetHub.API.Controllers
     {
         private readonly IMediator _mediator;
         private readonly ILogger<AssetsController> _logger;
+        private readonly IMapper _mapper;
 
-        public AssetsController(IMediator mediator, ILogger<AssetsController> logger)
+        public AssetsController(IMediator mediator, ILogger<AssetsController> logger, IMapper mapper)
         {
             _mediator = mediator;
             _logger = logger;
+            _mapper = mapper;
         }
 
         // GET /assets
@@ -30,17 +34,17 @@ namespace Bouvet.AssetHub.API.Controllers
 
         // POST /assets
         [HttpPost]
-        public async Task<ActionResult<AssetResponseDto>> AddAssetAsync(CreateAssetCommand dto)
+        public async Task<ActionResult<AssetResponseDto>> AddAssetAsync(CreateAssetDto dto)
         {
-            var result = await _mediator.Send(dto);
+            var result = await _mediator.Send(new CreateAssetCommand(dto.SerialNumber, dto.CategoryId));
             return new ActionResultHelper<AssetResponseDto>().OkOrBadRequest(result, "Could not add asset!");
 
         }
         // PUT /assets
         [HttpPut]
-        public async Task<ActionResult<List<AssetResponseDto>>> UpdateAssetByIdAsync(UpdateAssetsByIdCommand dto)
+        public async Task<ActionResult<List<AssetResponseDto>>> UpdateAssetByIdAsync(UpdateAssetsByIdDto dto)
         {
-            var result = await _mediator.Send(dto);
+            var result = await _mediator.Send(new UpdateAssetsByIdCommand (dto.Ids, dto.Status));
             return new ActionResultHelper<List<AssetResponseDto>>().OkOrNotFound(result, "Cannot update assets!");
         }
 

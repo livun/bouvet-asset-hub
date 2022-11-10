@@ -5,6 +5,7 @@ import { TableProps } from '../utils/props';
 import { formatGridColumnsDefinition } from '../utils/columnFormatter';
 import CircularLoader from './CircularLoader';
 import TableToolbar from './TableToolbar';
+import { Status } from '../_generated/api-types';
 
 export default function DataGridTable<T extends Object>(props: TableProps<T>) {
     const { rows, headerName } = props
@@ -64,7 +65,7 @@ export default function DataGridTable<T extends Object>(props: TableProps<T>) {
                             handleSelection(selectionModel)
                         }}
                         selectionModel={selectionModel}
-                        isRowSelectable={(params: GridRowParams) => params.row.status !== 2} // 2 is Unavailable
+                        isRowSelectable={(params: GridRowParams) => params.row.status !== Status.Unavailable} // 2 is Unavailable
                         components={{ Toolbar: TableToolbar }}
                         componentsProps={{
                             toolbar: {

@@ -3,12 +3,9 @@ import { SpeedDial, SpeedDialAction, SpeedDialIcon, Button, Dialog, DialogAction
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { getAssetsFn, postAssetsFn } from "../api/assetsApi";
-import { statusChecker } from "../utils/mappers";
-import { AssetResponseDto, CategoryResponseDto, CreateAssetCommand, CreateCategoryCommand, CreateLoanCommand, } from "../__generated__/api-types";
 import AlertBar from "./AlertBar";
 import { getCategoriesFn, postCategoriesFn } from "../api/categoriesApi";
 import CircularLoader from "./CircularLoader";
-import { StatusEnum } from "../utils/enums";
 import { DesktopDatePicker } from "@mui/x-date-pickers";
 import { postLoansFn } from '../api/loansApi';
 import CategoryIcon from '@mui/icons-material/Category';
@@ -16,14 +13,15 @@ import CalendarMonthSharpIcon from '@mui/icons-material/CalendarMonthSharp';
 import DashboardCustomizeSharpIcon from '@mui/icons-material/DashboardCustomizeSharp';
 import { useNavigate } from 'react-router-dom';
 import { IAssetActions, ILoanActions } from '../utils/interfaces';
+import { AssetResponseDto, CategoryResponseDto, CreateAssetDto, CreateCategoryDto, CreateLoanDto, Status } from '../_generated/api-types';
 
 
 export default function SpeedDialAddItemsMenu() {
     const navigate = useNavigate()
     const today = new Date().toISOString()
-    const [assetForm, setAssetForm] = useState<CreateAssetCommand>({})
-    const [loanForm, setLoanForm] = useState<CreateLoanCommand>({ ...assetForm, intervalStart: today })
-    const [categoryForm, setCategoryForm] = useState<CreateCategoryCommand>({})
+    const [assetForm, setAssetForm] = useState<CreateAssetDto>({})
+    const [loanForm, setLoanForm] = useState<CreateLoanDto>({ intervalStart: today })
+    const [categoryForm, setCategoryForm] = useState<CreateCategoryDto>({})
     const [openAddAsset, setOpenAddAsset] = useState(false);
     const [openAddLoan, setOpenAddLoan] = useState(false);
     const [openAddCategory, setOpenAddCategory] = useState(false)
@@ -38,7 +36,7 @@ export default function SpeedDialAddItemsMenu() {
 
     // Queries
     const assetsQuery = useQuery<AssetResponseDto[], Error>(["assets"], getAssetsFn, {
-        select: (assets) => assets.filter((asset) => asset.status !== 2 && asset.status !== 3),
+        select: (assets) => assets.filter((asset) => asset.status !== Status.Unavailable  && asset.status !== Status.Discontinued),
     })
     const categoriesQuery = useQuery<CategoryResponseDto[], Error>(["categories"], getCategoriesFn)
 
@@ -137,8 +135,8 @@ export default function SpeedDialAddItemsMenu() {
                             fullWidth
                             type="number"
                             label="Serial Number"
-                            value={assetForm.serialNumberValue}
-                            onChange={(event) => setAssetForm({ ...assetForm, serialNumberValue: Number(event?.target.value) })}
+                            value={assetForm.serialNumber}
+                            onChange={(event) => setAssetForm({ ...assetForm, serialNumber: Number(event?.target.value) })}
                         />
                         <TextField
                             fullWidth
@@ -205,7 +203,7 @@ export default function SpeedDialAddItemsMenu() {
                         >
                             {assetsQuery.data?.map((asset) => (
                                 <MenuItem key={asset.id} value={asset.id}>
-                                    {asset.id}, {asset.categoryName}, {StatusEnum[statusChecker(asset.status)]}
+                                    {asset.id}, {asset.categoryName}, {asset.status}
                                 </MenuItem>
                             ))}
                         </TextField>

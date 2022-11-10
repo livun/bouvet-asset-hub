@@ -1,4 +1,4 @@
-import { LoanHistoryResponseDto } from "../__generated__/api-types";
+import { LoanHistoryResponseDto } from "../_generated/api-types";
 import { get } from "./genericAxios";
 
 

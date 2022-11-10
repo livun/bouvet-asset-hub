@@ -4,9 +4,6 @@ using MediatR;
 
 namespace Bouvet.AssetHub.API.Domain.Asset.Services.Commands
 {
-    public class CreateAssetCommand : IRequest<Option<AssetResponseDto>>
-    {
-        public int SerialNumberValue { get; set; }
-        public int CategoryId { get; set; }
-    }
+    public record CreateAssetCommand (int SerialNumberValue, int CategoryId) : IRequest<Option<AssetResponseDto>>;
+
 }

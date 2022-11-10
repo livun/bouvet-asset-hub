@@ -1,4 +1,4 @@
-import { AssetResponseDto, CreateAssetCommand, UpdateAssetDto, UpdateAssetsByIdCommand } from "../__generated__/api-types";
+import { AssetResponseDto, CreateAssetDto, UpdateAssetDto, UpdateAssetsByIdDto } from "../_generated/api-types";
 import { deleteItem, get, postItem, putItem, regularHeaders } from "./genericAxios";
 
 
@@ -8,12 +8,12 @@ export const getAssetsFn = async () => {
 export const getAssetByIdFn = async (id: number) => {
   return await get<AssetResponseDto>(`/assets/${id}`)
 };
-export const postAssetsFn = async (dto: CreateAssetCommand) => {
-  return await postItem<CreateAssetCommand, AssetResponseDto>(`/assets`, dto, regularHeaders)
+export const postAssetsFn = async (dto: CreateAssetDto) => {
+  return await postItem<CreateAssetDto, AssetResponseDto>(`/assets`, dto, regularHeaders)
 };
 
-export const putAssetsFn = async (dto: UpdateAssetsByIdCommand) => {
-  return await putItem<UpdateAssetsByIdCommand, AssetResponseDto[]>(`/assets`, dto, regularHeaders)
+export const putAssetsFn = async (dto: UpdateAssetsByIdDto) => {
+  return await putItem<UpdateAssetsByIdDto, AssetResponseDto[]>(`/assets`, dto, regularHeaders)
 };
 
 export const putAssetByIdFn = async (id: number, dto: UpdateAssetDto) => {
