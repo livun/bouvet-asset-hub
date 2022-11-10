@@ -1,4 +1,4 @@
-import { CategoryResponseDto, CreateCategoryCommand, UpdateCategoryDto} from "../__generated__/api-types";
+import { CategoryResponseDto, CreateCategoryCommand, UpdateCategoryDto } from "../__generated__/api-types";
 import { deleteItem, get, postItem, putItem, regularHeaders } from "./genericAxios";
 
 

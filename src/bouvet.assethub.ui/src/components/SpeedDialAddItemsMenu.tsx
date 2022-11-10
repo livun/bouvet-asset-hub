@@ -1,10 +1,10 @@
 import queryClient from '../config/queryClient';
-import { SpeedDial, SpeedDialAction, SpeedDialIcon, Button, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, FormControlLabel, Grid, IconButton, InputLabel, MenuItem, Select, SelectChangeEvent, Stack, Switch, TextField, Tooltip, Typography, makeStyles, Theme, createStyles, styled, TooltipProps } from "@mui/material";
+import { SpeedDial, SpeedDialAction, SpeedDialIcon, Button, Dialog, DialogActions, DialogContent, DialogTitle, FormControlLabel, MenuItem, Stack, Switch, TextField} from "@mui/material";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
-import { getAssetsFn, postAssetsFn, putAssetsFn } from "../api/assetsApi";
-import { routeMapper, statusChecker, statusMapper } from "../utils/mappers";
-import { AssetResponseDto, CategoryResponseDto, CreateAssetCommand, CreateCategoryCommand, CreateLoanCommand, Status, UpdateAssetsByIdCommand } from "../__generated__/api-types";
+import { useState } from "react";
+import { getAssetsFn, postAssetsFn } from "../api/assetsApi";
+import { statusChecker } from "../utils/mappers";
+import { AssetResponseDto, CategoryResponseDto, CreateAssetCommand, CreateCategoryCommand, CreateLoanCommand, } from "../__generated__/api-types";
 import AlertBar from "./AlertBar";
 import { getCategoriesFn, postCategoriesFn } from "../api/categoriesApi";
 import CircularLoader from "./CircularLoader";
@@ -15,7 +15,7 @@ import CategoryIcon from '@mui/icons-material/Category';
 import CalendarMonthSharpIcon from '@mui/icons-material/CalendarMonthSharp';
 import DashboardCustomizeSharpIcon from '@mui/icons-material/DashboardCustomizeSharp';
 import { useNavigate } from 'react-router-dom';
-import { IAssetActions, ILoanActions } from '../utils/types';
+import { IAssetActions, ILoanActions } from '../utils/interfaces';
 
 
 export default function SpeedDialAddItemsMenu() {
@@ -27,15 +27,13 @@ export default function SpeedDialAddItemsMenu() {
     const [openAddAsset, setOpenAddAsset] = useState(false);
     const [openAddLoan, setOpenAddLoan] = useState(false);
     const [openAddCategory, setOpenAddCategory] = useState(false)
-    const assetActionFromView : IAssetActions = {isReadOnly: true, isDelete: false}
-    const loanActionsFromView : ILoanActions = {extendLoan: false, handInLoan: false }
-
-
+    const assetActionFromView: IAssetActions = { isReadOnly: true, isDelete: false }
+    const loanActionsFromView: ILoanActions = { extendLoan: false, handInLoan: false }
 
     const actions = [
         { icon: <CalendarMonthSharpIcon />, name: 'Add loan', event: () => setOpenAddLoan(true) },
-        { icon: <CategoryIcon  />, name: 'Add category', event: () => setOpenAddCategory(true) },
-        { icon: <DashboardCustomizeSharpIcon  />, name: 'Add asset', event: () => setOpenAddAsset(true) },
+        { icon: <CategoryIcon />, name: 'Add category', event: () => setOpenAddCategory(true) },
+        { icon: <DashboardCustomizeSharpIcon />, name: 'Add asset', event: () => setOpenAddAsset(true) },
     ];
 
     // Queries
@@ -44,26 +42,21 @@ export default function SpeedDialAddItemsMenu() {
     })
     const categoriesQuery = useQuery<CategoryResponseDto[], Error>(["categories"], getCategoriesFn)
 
-
     //Mutations
-
-    const addAsset = useMutation(() => postAssetsFn(assetForm), {        
+    const addAsset = useMutation(() => postAssetsFn(assetForm), {
         onError: () => {
             openAlertBar("Cannot add asset.", false)
         },
         onSuccess: (data) => {
             queryClient.invalidateQueries(["assets"])
             setAssetForm({})
-            setOpenAddAsset(false)       
+            setOpenAddAsset(false)
             openAlertBar("Asset is added.", true)
-                setTimeout(() => {
-                navigate(`/assets/${data.id}`, {state : assetActionFromView})
-            }, 1500)  }      
-        
-        // }
+            setTimeout(() => {
+                navigate(`/assets/${data.id}`, { state: assetActionFromView })
+            }, 1500)
+        }
     });
-
-  
     const addLoan = useMutation(() => postLoansFn(loanForm), {
         onError: () => {
             openAlertBar("Cannot add loan.", false)
@@ -74,7 +67,7 @@ export default function SpeedDialAddItemsMenu() {
             setOpenAddLoan(false)
             openAlertBar("Loan is added.", true)
             setTimeout(() => {
-                navigate(`/loans/${data.id}`, {state : loanActionsFromView})
+                navigate(`/loans/${data.id}`, { state: loanActionsFromView })
             }, 1500)
         }
     });
@@ -90,10 +83,8 @@ export default function SpeedDialAddItemsMenu() {
             setTimeout(() => {
                 navigate(`/categories`)
             }, 1500)
-            
         }
     });
-
 
     //AlertComponent handling (if reused, this must be pasted in parent component)
     const [open, setOpen] = useState(false);
@@ -103,7 +94,6 @@ export default function SpeedDialAddItemsMenu() {
         setAlertBarMsg(msg)
         setSuccess(isSuccess)
         setOpen(true);
-
     };
     const handleClose = (event?: React.SyntheticEvent | Event, reason?: string) => {
         if (reason === 'clickaway') {
@@ -111,8 +101,6 @@ export default function SpeedDialAddItemsMenu() {
         }
         setOpen(false);
     };
-
-
     const handleStartDateChange = (newValue: string | null) => {
         if (newValue) {
             setLoanForm({ ...loanForm, intervalStart: newValue })
@@ -123,7 +111,6 @@ export default function SpeedDialAddItemsMenu() {
             setLoanForm({ ...loanForm, intervalStop: newValue })
         }
     };
-
 
     return <>
         <SpeedDial
@@ -138,8 +125,6 @@ export default function SpeedDialAddItemsMenu() {
                     tooltipTitle={action.name}
                     tooltipOpen
                     onClick={action.event}
-                    
-
                 />
             ))}
         </SpeedDial>
@@ -186,6 +171,7 @@ export default function SpeedDialAddItemsMenu() {
                             label="Start date"
                             value={loanForm.intervalStart}
                             minDate={new Date().toISOString()}
+                            disableFuture
                             onChange={handleStartDateChange}
                             renderInput={(params) => <TextField {...params} />}
                         />

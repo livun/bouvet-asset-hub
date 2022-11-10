@@ -1,6 +1,6 @@
 import apiClient from "../config/apiClient";
 import { LoanResponseDto, CreateLoanCommand, UpdateLoanDto} from "../__generated__/api-types";
-import { deleteItem, formHeaders, get, postItem, putItem, regularHeaders } from "./genericAxios";
+import { deleteItem, get, postItem, putItem, regularHeaders } from "./genericAxios";
 
 
 export const getLoansFn = async () => {

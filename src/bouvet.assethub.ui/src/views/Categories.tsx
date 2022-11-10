@@ -17,6 +17,7 @@ import { AssetResponseDto, UpdateCategoryDto } from "../__generated__/api-types2
 import TableToolbar from "../components/TableToolbar"
 import { getAssetsByCategoryFn } from "../api/assetsApi"
 import SpeedDialAddItemsMenu from "../components/SpeedDialAddItemsMenu"
+import React from "react"
 
 export default function Categories() {
     const [pageSize, setPageSize] = useState<number>(30);
@@ -28,7 +29,7 @@ export default function Categories() {
     const [openConfirmDelete, setOpenConfirmDelete] = useState(false)
 
     useEffect(() => {
-        if(selectionModel) {
+        if (selectionModel) {
             setSelectedCategoryId(Number(selectionModel[0]))
         }
     }, [selectionModel])
@@ -39,7 +40,7 @@ export default function Categories() {
         onError: (() => openAlertBar("No assets on that category", false)),
         enabled: !!selectedCategoryId
     })
-    
+
     //Mutations
     const deleteCategory = useMutation((id: number) => deleteCategoryFn(id), {
         onError: () => openAlertBar("Could not delete category, because it is used", false),
@@ -185,17 +186,18 @@ export default function Categories() {
             </DialogActions>
         </Dialog>
         <Dialog open={openConfirmDelete} onClose={() => setOpenConfirmDelete(false)}
-        >  
+        >
             <DialogContent>
                 <DialogContentText id="alert-dialog-description">
-                {`Are you sure you want to delete category with id ${id}?` }           
+                    {`Are you sure you want to delete category with id ${id}?`}
                 </DialogContentText>
             </DialogContent>
             <DialogActions>
                 <Button onClick={() => setOpenConfirmDelete(false)}>No</Button>
                 <Button onClick={() => {
-                    deleteCategory.mutate(id) 
-                    setOpenConfirmDelete(false) }}
+                    deleteCategory.mutate(id)
+                    setOpenConfirmDelete(false)
+                }}
                     autoFocus>
                     yes
                 </Button>
