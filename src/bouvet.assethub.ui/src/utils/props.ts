@@ -8,23 +8,21 @@ export type TableProps<T extends Object> = {
 export type TableToolbarProps = {
     changeStatus: boolean,
     updateAssetsIds: number[],
-    removeSelectedModel: () => void 
+    removeSelectedModel: () => void
     headerName: string
-    
 }
 
 export interface DeleteObject {
-    confirmDelete : boolean,
+    confirmDelete: boolean,
     id: number
 }
 
 export interface TableButtons {
     col: any,
-    deleteObject : DeleteObject
+    deleteObject: DeleteObject
 }
 
 export interface ColumnsDefinition {
-    colDef : GridColDef[],
+    colDef: GridColDef[],
     deleteObject: DeleteObject
-    
 }

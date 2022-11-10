@@ -8,7 +8,7 @@ import { getCategoriesFn } from "../api/categoriesApi";
 import CircularLoader from "../components/CircularLoader";
 import NotFound from "../components/NotFound";
 import { statusChecker } from "../utils/mappers";
-import { IAssetActions, IReadOnly } from "../utils/types";
+import { IAssetActions } from "../utils/interfaces";
 import { AssetResponseDto, CategoryResponseDto, UpdateAssetDto } from "../__generated__/api-types";
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
@@ -16,20 +16,15 @@ import SaveIcon from '@mui/icons-material/Save';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import AlertBar from "../components/AlertBar";
 import queryClient from "../config/queryClient";
-import { removeFirstCharacter } from "../utils/regex";
 import SpeedDialAddItemsMenu from "../components/SpeedDialAddItemsMenu";
 
 export default function Asset() {
     const location = useLocation()
     const navigate = useNavigate()
-
     const [id] = useState(Number(useParams().id))
     const [assetActions, setAssetActions] = useState<IAssetActions>(location.state as IAssetActions);
-
-    //const [readOnly, setReadOnly] = useState<IReadOnly>(location.state as IReadOnly);
     const [form, setForm] = useState<UpdateAssetDto>()
     const [openConfirmDelete, setOpenConfirmDelete] = useState(false)
-
 
     // Queries
     const { isLoading, isSuccess, isError, error, data } = useQuery<AssetResponseDto, Error>(["asset", id], () => getAssetByIdFn(id))
@@ -67,7 +62,7 @@ export default function Asset() {
             setForm({ status: data.status, categoryId: data.categoryId })
             if (!assetActions.isReadOnly && data.status === 2) {
                 openAlertBar("Asset is Unavailable and cannot be edited.", false)
-                setAssetActions({...assetActions,  isReadOnly: true })
+                setAssetActions({ ...assetActions, isReadOnly: true })
             }
         }
     }, [categoriesQuery.data, location, data, assetActions])
@@ -88,8 +83,6 @@ export default function Asset() {
         setOpen(false);
     };
 
-   
-
     return <>
         {isLoading && categoriesQuery.isLoading
             ? <CircularLoader />
@@ -104,23 +97,24 @@ export default function Asset() {
                     <>
                         <Grid container width={400} height={50} alignItems="center"
                             sx={{
-                                borderRadius: "4px 4px 0 0", 
-                                borderLeft:"0.5px solid rgba(0, 0, 0, 0.12)", 
-                                borderRight:"0.5px solid rgba(0, 0, 0, 0.12)", 
-                                borderTop:"0.5px solid rgba(0, 0, 0, 0.12)", 
-                                marginLeft:2, px: 2}}>
-                                    <Grid item>
-                                    <Typography variant="h5">
-                                        Asset
-                                    </Typography>
-                                    </Grid>
-                                    
+                                borderRadius: "4px 4px 0 0",
+                                borderLeft: "0.5px solid rgba(0, 0, 0, 0.12)",
+                                borderRight: "0.5px solid rgba(0, 0, 0, 0.12)",
+                                borderTop: "0.5px solid rgba(0, 0, 0, 0.12)",
+                                marginLeft: 2, px: 2
+                            }}>
+                            <Grid item>
+                                <Typography variant="h5">
+                                    Asset
+                                </Typography>
+                            </Grid>
                         </Grid>
-                        <Grid container width={400} height={50} marginBottom={4} 
+                        <Grid container width={400} height={50} marginBottom={4}
                             sx={{
-                                borderRadius: "0 0 4px 4px", 
-                                border:"0.5px solid rgba(0, 0, 0, 0.12)", 
-                                marginLeft:2}}>
+                                borderRadius: "0 0 4px 4px",
+                                border: "0.5px solid rgba(0, 0, 0, 0.12)",
+                                marginLeft: 2
+                            }}>
                             <Grid item flexGrow={1}>
                                 <Tooltip title="Go back">
                                     <IconButton size="large" onClick={() => navigate(-1)} aria-label="go back">
@@ -129,14 +123,13 @@ export default function Asset() {
                                 </Tooltip>
                             </Grid>
                             <Grid item> {assetActions.isReadOnly
-                                ? <Tooltip title="Edit"><IconButton disabled={data.status === 2} size="large" onClick={() => setAssetActions({...assetActions, isReadOnly: false })} aria-label="edit"> <EditIcon /></IconButton></Tooltip>
+                                ? <Tooltip title="Edit"><IconButton disabled={data.status === 2} size="large" onClick={() => setAssetActions({ ...assetActions, isReadOnly: false })} aria-label="edit"> <EditIcon /></IconButton></Tooltip>
                                 : <Tooltip title="Save"><IconButton size="large" onClick={() => updateAsset.mutate(form)} aria-label="save"> <SaveIcon /></IconButton></Tooltip>}
                             </ Grid>
                             <Grid item>
                                 <Tooltip title="Delete"><IconButton disabled={data.status === 2} size="large" onClick={() => setOpenConfirmDelete(true)} aria-label="edit"> <DeleteIcon /></IconButton></Tooltip>
                             </Grid>
                         </Grid>
-
                         <Stack marginLeft={2} spacing={3} width={400} height={400} component="form" autoComplete="off">
                             <Grid container  >
                                 <Grid item xs={5}>
@@ -237,18 +230,18 @@ export default function Asset() {
                     </>
                     : <CircularLoader />
         }
-         <Dialog open={openConfirmDelete} onClose={() => setOpenConfirmDelete(false)}
-        >  
+        <Dialog open={openConfirmDelete} onClose={() => setOpenConfirmDelete(false)}
+        >
             <DialogContent>
                 <DialogContentText id="alert-dialog-description">
-                {`Are you sure you want to delete category with id ${id}?` }           
+                    {`Are you sure you want to delete category with id ${id}?`}
                 </DialogContentText>
             </DialogContent>
             <DialogActions>
                 <Button onClick={() => setOpenConfirmDelete(false)}>No</Button>
                 <Button onClick={() => {
-                    deleteAsset.mutate() 
-                    setOpenConfirmDelete(false) 
+                    deleteAsset.mutate()
+                    setOpenConfirmDelete(false)
                 }}
                     autoFocus>
                     yes

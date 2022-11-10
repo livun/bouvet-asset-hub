@@ -1,4 +1,4 @@
-import { Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid, IconButton, InputAdornment, MenuItem, Stack, TextField, Tooltip, Typography } from "@mui/material";
+import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid, IconButton, InputAdornment, Stack, TextField, Tooltip, Typography } from "@mui/material";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -7,7 +7,7 @@ import { deleteLoanFn, getLoanByIdFn, putLoanFn } from "../api/loansApi";
 import CircularLoader from "../components/CircularLoader";
 import NotFound from "../components/NotFound";
 import queryClient from "../config/queryClient";
-import { ILoanActions,  } from "../utils/types";
+import { ILoanActions,  } from "../utils/interfaces";
 import {  LoanResponseDto, UpdateLoanDto } from "../__generated__/api-types";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import AlertBar from "../components/AlertBar";

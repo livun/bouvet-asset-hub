@@ -7,7 +7,6 @@ import DataGridTable from "../components/DataGridTable";
 import { LoanResponseDto } from "../__generated__/api-types";
 import SpeedDialAddItemsMenu from "../components/SpeedDialAddItemsMenu";
 
-
 export default function Loans () {
     const { isLoading, isSuccess, isError, error, data} = useQuery<LoanResponseDto[], Error>(["loans"], getLoansFn)
 

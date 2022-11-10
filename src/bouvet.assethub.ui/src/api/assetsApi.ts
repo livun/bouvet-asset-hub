@@ -1,5 +1,5 @@
 import { AssetResponseDto, CreateAssetCommand, UpdateAssetDto, UpdateAssetsByIdCommand } from "../__generated__/api-types";
-import { deleteItem, formHeaders, get, postItem, putItem, regularHeaders } from "./genericAxios";
+import { deleteItem, get, postItem, putItem, regularHeaders } from "./genericAxios";
 
 
 export const getAssetsFn = async () => {
