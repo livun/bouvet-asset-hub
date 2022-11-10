@@ -1,4 +1,4 @@
-import { Grid, IconButton, MenuItem, Stack, TextField, Tooltip } from "@mui/material";
+import { Button, Dialog, DialogActions, DialogContent, DialogContentText, Grid, IconButton, MenuItem, Stack, TextField, Tooltip, Typography } from "@mui/material";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -8,7 +8,7 @@ import { getCategoriesFn } from "../api/categoriesApi";
 import CircularLoader from "../components/CircularLoader";
 import NotFound from "../components/NotFound";
 import { statusChecker } from "../utils/mappers";
-import { IReadOnly } from "../utils/types";
+import { IAssetActions, IReadOnly } from "../utils/types";
 import { AssetResponseDto, CategoryResponseDto, UpdateAssetDto } from "../__generated__/api-types";
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
@@ -16,17 +16,23 @@ import SaveIcon from '@mui/icons-material/Save';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import AlertBar from "../components/AlertBar";
 import queryClient from "../config/queryClient";
+import { removeFirstCharacter } from "../utils/regex";
+import SpeedDialAddItemsMenu from "../components/SpeedDialAddItemsMenu";
 
 export default function Asset() {
     const location = useLocation()
     const navigate = useNavigate()
 
     const [id] = useState(Number(useParams().id))
-    const [readOnly, setReadOnly] = useState<IReadOnly>(location.state as IReadOnly);
+    const [assetActions, setAssetActions] = useState<IAssetActions>(location.state as IAssetActions);
+
+    //const [readOnly, setReadOnly] = useState<IReadOnly>(location.state as IReadOnly);
     const [form, setForm] = useState<UpdateAssetDto>()
+    const [openConfirmDelete, setOpenConfirmDelete] = useState(false)
+
 
     // Queries
-    const { isLoading, isSuccess, isError, error, data } = useQuery<AssetResponseDto, Error>(["asset", id], () => getAssetByIdFn(id), {})
+    const { isLoading, isSuccess, isError, error, data } = useQuery<AssetResponseDto, Error>(["asset", id], () => getAssetByIdFn(id))
     const categoriesQuery = useQuery<CategoryResponseDto[], Error>(["categories"], getCategoriesFn)
 
     //Mutations
@@ -51,14 +57,20 @@ export default function Asset() {
     });
 
     useEffect(() => {
+        if (assetActions.isDelete) {
+            setOpenConfirmDelete(true)
+        }
+    }, [])
+
+    useEffect(() => {
         if (data) {
             setForm({ status: data.status, categoryId: data.categoryId })
-            if (!readOnly.isReadOnly && data.status === 2) {
+            if (!assetActions.isReadOnly && data.status === 2) {
                 openAlertBar("Asset is Unavailable and cannot be edited.", false)
-                setReadOnly({ isReadOnly: true })
+                setAssetActions({...assetActions,  isReadOnly: true })
             }
         }
-    }, [categoriesQuery.data, location, data, readOnly])
+    }, [categoriesQuery.data, location, data, assetActions])
 
     //AlertComponent handling (if reused, this must be pasted in parent component)
     const [open, setOpen] = useState(false);
@@ -76,6 +88,8 @@ export default function Asset() {
         setOpen(false);
     };
 
+   
+
     return <>
         {isLoading && categoriesQuery.isLoading
             ? <CircularLoader />
@@ -88,7 +102,25 @@ export default function Asset() {
                     && form !== undefined
                     ?
                     <>
-                        <Grid container width={430} height={50} marginBottom={4}>
+                        <Grid container width={400} height={50} alignItems="center"
+                            sx={{
+                                borderRadius: "4px 4px 0 0", 
+                                borderLeft:"0.5px solid rgba(0, 0, 0, 0.12)", 
+                                borderRight:"0.5px solid rgba(0, 0, 0, 0.12)", 
+                                borderTop:"0.5px solid rgba(0, 0, 0, 0.12)", 
+                                marginLeft:2, px: 2}}>
+                                    <Grid item>
+                                    <Typography variant="h5">
+                                        Asset
+                                    </Typography>
+                                    </Grid>
+                                    
+                        </Grid>
+                        <Grid container width={400} height={50} marginBottom={4} 
+                            sx={{
+                                borderRadius: "0 0 4px 4px", 
+                                border:"0.5px solid rgba(0, 0, 0, 0.12)", 
+                                marginLeft:2}}>
                             <Grid item flexGrow={1}>
                                 <Tooltip title="Go back">
                                     <IconButton size="large" onClick={() => navigate(-1)} aria-label="go back">
@@ -96,12 +128,12 @@ export default function Asset() {
                                     </IconButton>
                                 </Tooltip>
                             </Grid>
-                            <Grid item> {readOnly.isReadOnly
-                                ? <Tooltip title="Edit"><IconButton disabled={data.status === 2} size="large" onClick={() => setReadOnly({ isReadOnly: false })} aria-label="edit"> <EditIcon /></IconButton></Tooltip>
+                            <Grid item> {assetActions.isReadOnly
+                                ? <Tooltip title="Edit"><IconButton disabled={data.status === 2} size="large" onClick={() => setAssetActions({...assetActions, isReadOnly: false })} aria-label="edit"> <EditIcon /></IconButton></Tooltip>
                                 : <Tooltip title="Save"><IconButton size="large" onClick={() => updateAsset.mutate(form)} aria-label="save"> <SaveIcon /></IconButton></Tooltip>}
                             </ Grid>
                             <Grid item>
-                                <Tooltip title="Delete"><IconButton disabled={data.status === 2} size="large" onClick={() => deleteAsset.mutate()} aria-label="edit"> <DeleteIcon /></IconButton></Tooltip>
+                                <Tooltip title="Delete"><IconButton disabled={data.status === 2} size="large" onClick={() => setOpenConfirmDelete(true)} aria-label="edit"> <DeleteIcon /></IconButton></Tooltip>
                             </Grid>
                         </Grid>
 
@@ -163,7 +195,7 @@ export default function Asset() {
                                         variant="standard"
                                         onChange={(event) => setForm({ ...form, categoryId: Number(event?.target.value) })}
                                         InputProps={{
-                                            readOnly: readOnly.isReadOnly
+                                            readOnly: assetActions.isReadOnly
                                         }}
                                     >
                                         {categoriesQuery.data.map((cat) => (
@@ -191,7 +223,7 @@ export default function Asset() {
                                         variant="standard"
                                         onChange={(event) => setForm({ ...form, status: statusChecker(event.target.value) })}
                                         InputProps={{
-                                            readOnly: readOnly.isReadOnly
+                                            readOnly: assetActions.isReadOnly
                                         }}
                                     >
                                         <MenuItem value={0}>Registered</MenuItem>
@@ -205,6 +237,25 @@ export default function Asset() {
                     </>
                     : <CircularLoader />
         }
+         <Dialog open={openConfirmDelete} onClose={() => setOpenConfirmDelete(false)}
+        >  
+            <DialogContent>
+                <DialogContentText id="alert-dialog-description">
+                {`Are you sure you want to delete category with id ${id}?` }           
+                </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+                <Button onClick={() => setOpenConfirmDelete(false)}>No</Button>
+                <Button onClick={() => {
+                    deleteAsset.mutate() 
+                    setOpenConfirmDelete(false) 
+                }}
+                    autoFocus>
+                    yes
+                </Button>
+            </DialogActions>
+        </Dialog>
         <AlertBar open={open} handleClose={handleClose} message={alertBarMsg} success={success} />
+        <SpeedDialAddItemsMenu />
     </>
 }

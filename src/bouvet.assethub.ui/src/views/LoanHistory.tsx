@@ -9,15 +9,13 @@ import { LoanHistoryResponseDto, LoanResponseDto } from "../__generated__/api-ty
 export default function LoanHistory () {
     const { isLoading, isSuccess, isError, error, data} = useQuery<LoanHistoryResponseDto[], Error>(["loanHistory"], getLoanHistoryFn)
 
-
-   
     return <>
     { isLoading 
     ? <CircularLoader /> 
     :  isError && axios.isAxiosError(error)
     ? <NotFound message={error?.response?.data} />  
     : isSuccess 
-    ? <DataGridTable<LoanResponseDto> rows={data} />
+    ? <DataGridTable<LoanResponseDto> rows={data} headerName="Loan History"/>
     : <></>
     }
 </>   

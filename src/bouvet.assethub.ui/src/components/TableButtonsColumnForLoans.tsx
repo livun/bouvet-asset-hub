@@ -21,17 +21,6 @@ export function TableButtonsColumnForLoans () {
     const loanActionsFromExtend : ILoanActions = {extendLoan: true, handInLoan: false}
     const loanActionsFromHandIn : ILoanActions = {extendLoan: false, handInLoan: true}
     
-    const readOnlyFromEdit : IReadOnly = {isReadOnly: false}
-    const readOnlyFromView : IReadOnly = {isReadOnly: true}
-    
-    const deleteAsset = useMutation((id: number) => deleteAssetFn(id), {
-        onError:() => setStatus(404),
-        onSuccess:()=> {
-            queryClient.invalidateQueries(["assets"])
-            setStatus(200)     
-        }
-      });
-
     const col = {
         field: "actions",
         headerName: "Actions",

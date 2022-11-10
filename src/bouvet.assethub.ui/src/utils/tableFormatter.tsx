@@ -1,9 +1,10 @@
 import { GridColDef } from "@mui/x-data-grid";
+import { TableButtonsColumnForAssets } from "../components/TableButtonsColumnForAssets";
+import { TableButtonsColumnForLoans } from "../components/TableButtonsColumnForLoans";
 import { StatusEnum } from "./enums";
 import { lookupKeysMapper, statusChecker, statusMapper } from "./mappers";
 import { capitalizeAndSplit } from "./regex";
-import { TableButtonsColumnForAssets } from "../components/TableButtonsColumnForAssets";
-import { TableButtonsColumnForLoans } from "../components/TableButtonsColumnForLoans";
+
 
 
 export const formatHeaderKeys = (key: string) => {
@@ -76,7 +77,7 @@ function formatId(key: string, object: any) {
             headerName: formatHeaderKeys(key),
             headerAlign: "left",
             align: "left",
-            flex: 0.5,
+            flex: 0.3,
             type: 'string'
         }
         return col
@@ -156,8 +157,7 @@ function getColumnsFor(key: string, object: any) {
 
 
 // Maps through object type and adds the column definitions to the array of column definitions.
-export function formatGridColumnsDefinition(data: object, pathname: string): [GridColDef[], number] {
-    let returnStatus = 0;
+export function formatGridColumnsDefinition(data: object, pathname: string): GridColDef[] {
     const columns: GridColDef[] = []
     const fieldEntries = Object.entries(data);
     fieldEntries.map(([key, val]) => {
@@ -167,15 +167,14 @@ export function formatGridColumnsDefinition(data: object, pathname: string): [Gr
     })
 
     if (pathname === "/assets") {
-        const { col, status } = TableButtonsColumnForAssets()
-        returnStatus = status
+        const col = TableButtonsColumnForAssets()
         columns.push(col)
     }
     if (pathname === "/loans") {
-        const { col, status } = TableButtonsColumnForLoans()
-        returnStatus = status
+        const { col } = TableButtonsColumnForLoans()
         columns.push(col)
     }
-    return [columns, returnStatus];
+   
+    return  columns;
 
 }

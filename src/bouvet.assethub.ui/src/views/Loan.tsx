@@ -1,32 +1,22 @@
-import { Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid, IconButton, InputAdornment, MenuItem, Stack, TextField, Tooltip } from "@mui/material";
+import { Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid, IconButton, InputAdornment, MenuItem, Stack, TextField, Tooltip, Typography } from "@mui/material";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom"
-import { deleteAssetFn, getAssetByIdFn, putAssetByIdFn } from "../api/assetsApi";
-import { getCategoriesFn } from "../api/categoriesApi";
 import { deleteLoanFn, getLoanByIdFn, putLoanFn } from "../api/loansApi";
 import CircularLoader from "../components/CircularLoader";
 import NotFound from "../components/NotFound";
 import queryClient from "../config/queryClient";
-import { statusChecker } from "../utils/mappers";
-import { ILoanActions, IReadOnly } from "../utils/types";
-import { AssetResponseDto, CategoryResponseDto, LoanResponseDto, UpdateAssetDto, UpdateLoanDto } from "../__generated__/api-types";
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
-import SaveIcon from '@mui/icons-material/Save';
+import { ILoanActions,  } from "../utils/types";
+import {  LoanResponseDto, UpdateLoanDto } from "../__generated__/api-types";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import AlertBar from "../components/AlertBar";
-import DataGridTable from "../components/DataGridTable";
 import CheckIcon from '@mui/icons-material/Check';
 import ClearIcon from '@mui/icons-material/Clear';
 import MoreTimeIcon from '@mui/icons-material/MoreTime';
 import TaskAltIcon from '@mui/icons-material/TaskAlt';
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import SpeedDialAddItemsMenu from "../components/SpeedDialAddItemsMenu";
 
 
 export default function Loan() {
@@ -39,7 +29,6 @@ export default function Loan() {
 
     // Queries
     const { isLoading, isSuccess, isError, error, data } = useQuery<LoanResponseDto, Error>(["loan", id], () => getLoanByIdFn(id))
-
 
     //Mutations
     const extendLoan = useMutation((dto: UpdateLoanDto) => putLoanFn(id, dto), {
@@ -60,7 +49,6 @@ export default function Loan() {
         }
     });
 
-
     const isLongTerm = (): React.ReactNode => {
         if (data?.intervalIsLongterm === true) {
             return (
@@ -74,7 +62,6 @@ export default function Loan() {
             </InputAdornment>
         )
     }
-
 
     useEffect(() => {
         if (data && data.intervalStop) {
@@ -90,7 +77,6 @@ export default function Loan() {
         if (loanActions.handInLoan) {
             setOpenHandInLoan(true)
         }
-
     }, [])
 
     //AlertComponent handling (if reused, this must be pasted in parent component)
@@ -138,13 +124,27 @@ export default function Loan() {
                     && data.intervalStart !== undefined
                     && data.intervalStop !== undefined
                     && stopDate !== null
-                    //&& categoriesQuery.isSuccess
-                    //&& categoriesQuery.data !== undefined
-                    //&& form !== undefined
                     ?
                     <>
-                        <Grid container width={430} height={50} marginBottom={4}>
-                            <Grid item flexGrow={1}>
+                    <Grid container width={400} height={50} alignItems="center"
+                            sx={{
+                                borderRadius: "4px 4px 0 0", 
+                                borderLeft:"0.5px solid rgba(0, 0, 0, 0.12)", 
+                                borderRight:"0.5px solid rgba(0, 0, 0, 0.12)", 
+                                borderTop:"0.5px solid rgba(0, 0, 0, 0.12)", 
+                                marginLeft:2, px: 2}}>
+                                    <Grid item>
+                                    <Typography variant="h5">
+                                        Loan
+                                    </Typography>
+                                    </Grid>
+                                    
+                        </Grid>
+                        <Grid container width={400} height={50} marginBottom={4} 
+                            sx={{
+                                borderRadius: "0 0 4px 4px", 
+                                border:"0.5px solid rgba(0, 0, 0, 0.12)", 
+                                marginLeft:2}}>                            <Grid item flexGrow={1}>
                                 <IconButton size="large" onClick={() => navigate(-1)} aria-label="go back">
                                     <ArrowBackIcon />
                                 </IconButton>
@@ -156,7 +156,6 @@ export default function Loan() {
                                 <Tooltip title="Hand in loan"><IconButton size="large" onClick={() => setOpenHandInLoan(true)} aria-label="edit"> <TaskAltIcon /></IconButton></Tooltip>
                             </Grid>
                         </Grid>
-
                         <Stack marginLeft={2} spacing={3} width={400} height={400} component="form" autoComplete="off">
                             <Grid container  >
                                 <Grid item xs={5}>
@@ -355,5 +354,6 @@ export default function Loan() {
                     : <CircularLoader />
         }
         <AlertBar open={open} handleClose={handleClose} message={alertBarMsg} success={success} />
+        <SpeedDialAddItemsMenu />
     </>
 }

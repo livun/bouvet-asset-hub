@@ -9,6 +9,7 @@ import Loans from './views/Loans';
 import LoanHistory from './views/LoanHistory';
 import Asset from './views/Asset';
 import Loan from './views/Loan';
+import Categories from './views/Categories';
 
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
           <Route path='loanhistory' element={<Main open={open} child={<LoanHistory/>}/>} />
           <Route path='assets/:id' element={<Main open={open} child={<Asset />} />} />	
           <Route path='loans/:id' element={<Main open={open} child={<Loan />} />} />	
+          <Route path='categories' element={<Main open={open} child={<Categories />} />} />
         
         </Routes>
     </Box>

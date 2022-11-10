@@ -24,7 +24,7 @@ export const deleteAssetFn = async (id: number) => {
   return await deleteItem<AssetResponseDto>(`/assets/${id}`, regularHeaders)
 };
 
-export const getAssetsByCategory = async (id: number) => {
+export const getAssetsByCategoryFn = async (id: number) => {
   return await get<AssetResponseDto[]>(`/categories/${id}/assets`)
 };
 

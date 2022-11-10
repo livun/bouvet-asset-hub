@@ -8,24 +8,17 @@ import {  deleteAssetFn } from "../api/assetsApi";
 import queryClient from "../config/queryClient";
 import { useState } from "react";
 import { idText } from "typescript";
-import { IReadOnly } from "../utils/types";
+import { IAssetActions, IReadOnly } from "../utils/types";
 import { Tooltip } from "@mui/material";
 
 export function TableButtonsColumnForAssets () {
     const navigate = useNavigate();
     const location = useLocation();
     const [status, setStatus] = useState(0)
-    const readOnlyFromEdit : IReadOnly = {isReadOnly: false}
-    const readOnlyFromView : IReadOnly = {isReadOnly: true}
+    const assetActionFromEdit : IAssetActions = {isReadOnly: false, isDelete: false}
+    const assetActionFromView : IAssetActions = {isReadOnly: true, isDelete: false}
+    const assetActionFromDelete : IAssetActions = {isReadOnly: true, isDelete: true}
     
-    const deleteAsset = useMutation((id: number) => deleteAssetFn(id), {
-        onError:() => setStatus(404),
-        onSuccess:()=> {
-            queryClient.invalidateQueries(["assets"])
-            setStatus(200)     
-        }
-      });
-
     const col = {
         field: "actions",
         headerName: "Actions",
@@ -35,20 +28,20 @@ export function TableButtonsColumnForAssets () {
         getActions: (params: GridRowParams) => [
             <GridActionsCellItem
                 icon={<Tooltip title="Show"><VisibilityIcon /></Tooltip>}
-                onClick={() => navigate(`${location.pathname}/${params.id}`, {state : readOnlyFromView})}
+                onClick={() => navigate(`${location.pathname}/${params.id}`, {state : assetActionFromView})}
                 label="Show"
             ></ GridActionsCellItem>,
             <GridActionsCellItem
                 icon={<Tooltip title="Edit"><EditIcon /></Tooltip>}
-                onClick={() => navigate(`${location.pathname}/${params.id}`, {state : readOnlyFromEdit})}
+                onClick={() => navigate(`${location.pathname}/${params.id}`, {state : assetActionFromEdit})}
                 label="Edit"
             />,
             <GridActionsCellItem
                 icon={<Tooltip title="Delete"><DeleteIcon /></Tooltip>}
-                onClick={() => deleteAsset.mutate(Number(params.id))}
+                onClick={() => navigate(`${location.pathname}/${params.id}`, {state : assetActionFromDelete})}
                 label="Delete"
             /> 
         ]
     }
-    return {col, status}
+    return col
 }
