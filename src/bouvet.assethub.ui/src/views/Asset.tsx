@@ -32,7 +32,7 @@ export default function Asset() {
 
 
     // Queries
-    const { isLoading, isSuccess, isError, error, data } = useQuery<AssetResponseDto, Error>(["asset", id], () => getAssetByIdFn(id), {})
+    const { isLoading, isSuccess, isError, error, data } = useQuery<AssetResponseDto, Error>(["asset", id], () => getAssetByIdFn(id))
     const categoriesQuery = useQuery<CategoryResponseDto[], Error>(["categories"], getCategoriesFn)
 
     //Mutations
@@ -87,6 +87,8 @@ export default function Asset() {
         }
         setOpen(false);
     };
+
+   
 
     return <>
         {isLoading && categoriesQuery.isLoading

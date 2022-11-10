@@ -15,6 +15,7 @@ import CategoryIcon from '@mui/icons-material/Category';
 import CalendarMonthSharpIcon from '@mui/icons-material/CalendarMonthSharp';
 import DashboardCustomizeSharpIcon from '@mui/icons-material/DashboardCustomizeSharp';
 import { useNavigate } from 'react-router-dom';
+import { IAssetActions, ILoanActions } from '../utils/types';
 
 
 export default function SpeedDialAddItemsMenu() {
@@ -26,6 +27,10 @@ export default function SpeedDialAddItemsMenu() {
     const [openAddAsset, setOpenAddAsset] = useState(false);
     const [openAddLoan, setOpenAddLoan] = useState(false);
     const [openAddCategory, setOpenAddCategory] = useState(false)
+    const assetActionFromView : IAssetActions = {isReadOnly: true, isDelete: false}
+    const loanActionsFromView : ILoanActions = {extendLoan: false, handInLoan: false }
+
+
 
     const actions = [
         { icon: <CalendarMonthSharpIcon />, name: 'Add loan', event: () => setOpenAddLoan(true) },
@@ -42,30 +47,34 @@ export default function SpeedDialAddItemsMenu() {
 
     //Mutations
 
-    const addAsset = useMutation(() => postAssetsFn(assetForm), {
+    const addAsset = useMutation(() => postAssetsFn(assetForm), {        
         onError: () => {
             openAlertBar("Cannot add asset.", false)
         },
-        onSuccess: () => {
+        onSuccess: (data) => {
             queryClient.invalidateQueries(["assets"])
             setAssetForm({})
             setOpenAddAsset(false)       
             openAlertBar("Asset is added.", true)
-            setTimeout(() => {
-                navigate(`/assets`)
-            }, 1500)        }
+                setTimeout(() => {
+                navigate(`/assets/${data.id}`, {state : assetActionFromView})
+            }, 1500)  }      
+        
+        // }
     });
+
+  
     const addLoan = useMutation(() => postLoansFn(loanForm), {
         onError: () => {
             openAlertBar("Cannot add loan.", false)
         },
-        onSuccess: () => {
+        onSuccess: (data) => {
             queryClient.invalidateQueries(["loans"])
             setLoanForm({ ...assetForm, intervalStart: today })
             setOpenAddLoan(false)
             openAlertBar("Loan is added.", true)
             setTimeout(() => {
-                navigate(`/loans`)
+                navigate(`/loans/${data.id}`, {state : loanActionsFromView})
             }, 1500)
         }
     });
