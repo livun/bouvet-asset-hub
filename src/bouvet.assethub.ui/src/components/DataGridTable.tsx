@@ -65,7 +65,7 @@ export default function DataGridTable<T extends Object>(props: TableProps<T>) {
                             handleSelection(selectionModel)
                         }}
                         selectionModel={selectionModel}
-                        isRowSelectable={(params: GridRowParams) => params.row.status !== Status.Unavailable} // 2 is Unavailable
+                        isRowSelectable={(params: GridRowParams) => params.row.status !== Status.Unavailable}
                         components={{ Toolbar: TableToolbar }}
                         componentsProps={{
                             toolbar: {
