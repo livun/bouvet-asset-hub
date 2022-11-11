@@ -1,8 +1,5 @@
-﻿using Bouvet.AssetHub.API.Contracts;
-using Bouvet.AssetHub.API.Controllers;
-using Bouvet.AssetHub.API.Data;
-using Bouvet.AssetHub.API.Domain.Asset.Models;
-using Bouvet.AssetHub.API.Domain.Asset.Services.Commands;
+﻿using Bouvet.AssetHub.Contracts;
+using Bouvet.AssetHub.Contracts.Dtos;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Shouldly;
 using System.Net;

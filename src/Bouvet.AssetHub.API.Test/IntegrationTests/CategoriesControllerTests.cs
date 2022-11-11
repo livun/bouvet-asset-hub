@@ -1,9 +1,4 @@
-﻿using Bouvet.AssetHub.API.Contracts;
-using Bouvet.AssetHub.API.Controllers;
-using Bouvet.AssetHub.API.Data;
-using Bouvet.AssetHub.API.Domain.Asset.Models;
-using Bouvet.AssetHub.API.Domain.Asset.Services.Commands;
-using EmptyFiles;
+﻿using Bouvet.AssetHub.Contracts.Dtos;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Shouldly;
 using System.Net;
@@ -95,7 +90,7 @@ namespace Bouvet.AssetHub.API.Tests
         public async Task PostCategory_Ok_200()
         {
             // Arrange 
-            var dto = new CreateCategoryCommand ("Keyboard" );
+            var dto = new CreateCategoryDto ("Keyboard" );
             var json = JsonSerializer.Serialize(dto);
 
             // Act

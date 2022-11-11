@@ -1,10 +1,4 @@
-﻿using Bouvet.AssetHub.API.Contracts;
-using Bouvet.AssetHub.API.Controllers;
-using Bouvet.AssetHub.API.Data;
-using Bouvet.AssetHub.API.Domain.Asset.Models;
-using Bouvet.AssetHub.API.Domain.Asset.Services.Commands;
-using Bouvet.AssetHub.API.Domain.Loan.Services.Commands;
-using EmptyFiles;
+﻿using Bouvet.AssetHub.Contracts.Dtos;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Shouldly;
 using System.Net;
@@ -36,7 +30,7 @@ namespace Bouvet.AssetHub.API.Tests
         {
             // Arrange 
                 // Create loan
-            var dto = new CreateLoanCommand { IntervalStart = DateTime.Today, IntervalStop = DateTime.Today.AddDays(4), IntervalIsLongterm = false, AssignedToValue = 2, AssetId = 3 };
+            var dto = new CreateLoanDto( DateTime.Today, DateTime.Today.AddDays(4), false, 2, 3,"");
             var postJson = JsonSerializer.Serialize(dto);
             var response = await _httpClient.PostAsync($"api/loans", new StringContent(postJson, Encoding.UTF8, "application/json"));
             var loan = SerializeHelper.Deserialize<LoanResponseDto>(await response.Content.ReadAsStringAsync());

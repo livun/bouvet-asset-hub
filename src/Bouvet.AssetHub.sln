@@ -4,6 +4,12 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.3.32825.248
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bouvet.AssetHub.API", "Bouvet.AssetHub.API\Bouvet.AssetHub.API.csproj", "{41957E4C-C21B-4AE4-B2C3-073FEC53CC3A}"
+	ProjectSection(ProjectDependencies) = postProject
+		{47009A25-9C17-46E0-8570-D800C0FA1A40} = {47009A25-9C17-46E0-8570-D800C0FA1A40}
+		{7729A87C-5CFF-4DD6-ADC6-804A04834291} = {7729A87C-5CFF-4DD6-ADC6-804A04834291}
+		{B54DDB68-4977-4566-82EA-97DDF863E1C0} = {B54DDB68-4977-4566-82EA-97DDF863E1C0}
+		{E246B52F-42DF-442B-85BF-2093704B758C} = {E246B52F-42DF-442B-85BF-2093704B758C}
+	EndProjectSection
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{0D48775C-FBBF-4BF6-88C5-EFC5DDCB9A96}"
 EndProject
@@ -13,6 +19,28 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bouvet.AssetHub.API.Tests",
 	EndProjectSection
 EndProject
 Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "bouvet.assethub.ui", "bouvet.assethub.ui\bouvet.assethub.ui.esproj", "{593D8FF7-7316-4642-8BA0-14CFB55F442F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bouvet.AssetHub.Contracts", "Bouvet.AssetHub.Contracts\Bouvet.AssetHub.Contracts.csproj", "{B54DDB68-4977-4566-82EA-97DDF863E1C0}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bouvet.AssetHub.Handlers", "Bouvet.AssetHub.Handlers\Bouvet.AssetHub.Handlers.csproj", "{47009A25-9C17-46E0-8570-D800C0FA1A40}"
+	ProjectSection(ProjectDependencies) = postProject
+		{850942CF-2D98-4E5F-806B-32F17D2C627A} = {850942CF-2D98-4E5F-806B-32F17D2C627A}
+		{B54DDB68-4977-4566-82EA-97DDF863E1C0} = {B54DDB68-4977-4566-82EA-97DDF863E1C0}
+		{E246B52F-42DF-442B-85BF-2093704B758C} = {E246B52F-42DF-442B-85BF-2093704B758C}
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bouvet.AssetHub.Data", "Bouvet.AssetHub.Data\Bouvet.AssetHub.Data.csproj", "{7729A87C-5CFF-4DD6-ADC6-804A04834291}"
+	ProjectSection(ProjectDependencies) = postProject
+		{850942CF-2D98-4E5F-806B-32F17D2C627A} = {850942CF-2D98-4E5F-806B-32F17D2C627A}
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bouvet.AssetHub.Domain", "Bouvet.AssetHub.Domain\Bouvet.AssetHub.Domain.csproj", "{850942CF-2D98-4E5F-806B-32F17D2C627A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bouvet.AssetHub.Repositories", "Bouvet.AssetHub.Repositories\Bouvet.AssetHub.Repositories.csproj", "{E246B52F-42DF-442B-85BF-2093704B758C}"
+	ProjectSection(ProjectDependencies) = postProject
+		{7729A87C-5CFF-4DD6-ADC6-804A04834291} = {7729A87C-5CFF-4DD6-ADC6-804A04834291}
+		{850942CF-2D98-4E5F-806B-32F17D2C627A} = {850942CF-2D98-4E5F-806B-32F17D2C627A}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -38,6 +66,26 @@ Global
 		{593D8FF7-7316-4642-8BA0-14CFB55F442F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{593D8FF7-7316-4642-8BA0-14CFB55F442F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{593D8FF7-7316-4642-8BA0-14CFB55F442F}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{B54DDB68-4977-4566-82EA-97DDF863E1C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B54DDB68-4977-4566-82EA-97DDF863E1C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B54DDB68-4977-4566-82EA-97DDF863E1C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B54DDB68-4977-4566-82EA-97DDF863E1C0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{47009A25-9C17-46E0-8570-D800C0FA1A40}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{47009A25-9C17-46E0-8570-D800C0FA1A40}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{47009A25-9C17-46E0-8570-D800C0FA1A40}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{47009A25-9C17-46E0-8570-D800C0FA1A40}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7729A87C-5CFF-4DD6-ADC6-804A04834291}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7729A87C-5CFF-4DD6-ADC6-804A04834291}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7729A87C-5CFF-4DD6-ADC6-804A04834291}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7729A87C-5CFF-4DD6-ADC6-804A04834291}.Release|Any CPU.Build.0 = Release|Any CPU
+		{850942CF-2D98-4E5F-806B-32F17D2C627A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{850942CF-2D98-4E5F-806B-32F17D2C627A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{850942CF-2D98-4E5F-806B-32F17D2C627A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{850942CF-2D98-4E5F-806B-32F17D2C627A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E246B52F-42DF-442B-85BF-2093704B758C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E246B52F-42DF-442B-85BF-2093704B758C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E246B52F-42DF-442B-85BF-2093704B758C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E246B52F-42DF-442B-85BF-2093704B758C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

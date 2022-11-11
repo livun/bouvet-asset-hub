@@ -1,10 +1,6 @@
-﻿using Bouvet.AssetHub.API.Data;
-using Microsoft.AspNetCore.Hosting;
+﻿using Bouvet.AssetHub.Data;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Storage;
-using Microsoft.Extensions.Logging;
-using Microsoft.VisualStudio.TestPlatform.Utilities;
 
 namespace Bouvet.AssetHub.API.Tests
 {

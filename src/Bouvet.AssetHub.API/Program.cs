@@ -1,8 +1,7 @@
-using Bouvet.AssetHub.API.Data;
-using Bouvet.AssetHub.API.Domain.Asset.Interfaces;
-using Bouvet.AssetHub.API.Domain.Asset.Repositories;
-using Bouvet.AssetHub.API.Domain.Loan.Interfaces;
 using Bouvet.AssetHub.API.Domain.Loan.Repositories;
+using Bouvet.AssetHub.Data;
+using Bouvet.AssetHub.Repositories;
+using Bouvet.AssetHub.Repositories.Interfaces;
 using MediatR;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
@@ -38,11 +37,13 @@ builder.Services.AddControllers().AddJsonOptions(options =>
 });
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen( options =>
+builder.Services.AddSwaggerGen(options =>
 {
     options.SupportNonNullableReferenceTypes();
 });
-builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+var assemblyHandlers = AppDomain.CurrentDomain.Load("Bouvet.AssetHub.Handlers");
+
+builder.Services.AddAutoMapper(assemblyHandlers);
 
 builder.Services.AddDbContext<DataContext>(options =>
 {
@@ -56,8 +57,10 @@ builder.Services.AddDbContext<DataContext>(options =>
     //var connectionString = builder.Configuration.GetConnectionString("DataContext");
     options.UseSqlServer(connection);
 });
-//var assembly = AppDomain.CurrentDomain.Load("Bouvet.AssetHub.Domain");
-builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
+var assemblyContracts = AppDomain.CurrentDomain.Load("Bouvet.AssetHub.Contracts");
+builder.Services.AddMediatR(assemblyContracts, assemblyHandlers);
+
+//builder.Services.AddMediatR(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
 
