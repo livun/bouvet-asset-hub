@@ -1,13 +1,7 @@
-﻿using Bouvet.AssetHub.API.Domain;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
+﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Bouvet.AssetHub.API.Domain.Employee.Models
+namespace Bouvet.AssetHub.Domain.Models
 {
 
     public class EmployeeEntity : Entity
@@ -17,7 +11,7 @@ namespace Bouvet.AssetHub.API.Domain.Employee.Models
     }
 
     [Owned]
-    public class EmployeeNumber 
+    public class EmployeeNumber
     {
         public EmployeeNumber()
         {

@@ -1,7 +1,7 @@
-﻿using Bouvet.AssetHub.API.Domain.Asset.Models;
+﻿using Bouvet.AssetHub.Domain.Models;
 using System.Linq.Expressions;
 
-namespace Bouvet.AssetHub.API.Helpers
+namespace Bouvet.AssetHub.Handlers.Helpers
 {
 
     public static class AssetPredicates

@@ -1,10 +1,8 @@
-﻿
-using AutoMapper;
-using Bouvet.AssetHub.API.Contracts;
-using Bouvet.AssetHub.API.Domain.Asset.Services.Queries;
-using Bouvet.AssetHub.API.Domain.Loan.Services.Commands;
+﻿using AutoMapper;
 using Bouvet.AssetHub.API.Helpers;
 using Bouvet.AssetHub.Contracts.Commands;
+using Bouvet.AssetHub.Contracts.Dtos;
+using Bouvet.AssetHub.Contracts.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

@@ -1,14 +1,15 @@
-﻿using Bouvet.AssetHub.API.Domain.Asset.Models;
-using Bouvet.AssetHub.API.Domain.Employee.Models;
-using Bouvet.AssetHub.API.Domain.Loan.Models;
+﻿using Bouvet.AssetHub.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 
 
-namespace Bouvet.AssetHub.API.Data
+namespace Bouvet.AssetHub.Data
 {
     public class DataContext : DbContext
     {
-        public DataContext(DbContextOptions<DataContext> options) : base(options) { }
+        public DataContext(DbContextOptions<DataContext> options) : base(options) 
+        {
+            Database.EnsureCreated();
+        }
         public DbSet<AssetEntity> Assets => Set<AssetEntity>();
         public DbSet<LoanEntity> Loans => Set<LoanEntity>();
         public DbSet<EmployeeEntity> Employees => Set<EmployeeEntity>();

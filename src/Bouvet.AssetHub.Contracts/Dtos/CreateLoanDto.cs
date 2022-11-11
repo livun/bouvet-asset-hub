@@ -6,6 +6,6 @@
         bool IntervalIsLongterm,
         int AssignedToValue,
         int AssetId,
-        string BsdReference
+        string? BsdReference
         );
 }

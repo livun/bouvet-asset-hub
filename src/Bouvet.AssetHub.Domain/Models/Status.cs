@@ -1,4 +1,4 @@
-﻿namespace Bouvet.AssetHub.API.Domain.Asset.Models
+﻿namespace Bouvet.AssetHub.Domain.Models
 {
     public enum Status
     {

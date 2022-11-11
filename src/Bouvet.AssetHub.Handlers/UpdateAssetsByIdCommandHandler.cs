@@ -1,10 +1,9 @@
 ﻿using AutoMapper;
-using Bouvet.AssetHub.API.Contracts;
-using Bouvet.AssetHub.API.Domain.Asset.Interfaces;
-using Bouvet.AssetHub.API.Domain.Asset.Models;
-using Bouvet.AssetHub.API.Domain.Asset.Services.Commands;
-using Bouvet.AssetHub.API.Domain.Loan.Interfaces;
 using Bouvet.AssetHub.API.Helpers;
+using Bouvet.AssetHub.Contracts.Commands;
+using Bouvet.AssetHub.Contracts.Dtos;
+using Bouvet.AssetHub.Domain.Models;
+using Bouvet.AssetHub.Repositories.Interfaces;
 using LanguageExt;
 using MediatR;
 
@@ -34,7 +33,7 @@ namespace Bouvet.AssetHub.Handlers
                 {
                     continue;
                 }
-                var asset = await _repository.UpdateAssetStatus(id, request.Status);
+                var asset = await _repository.UpdateAssetStatus(id, (Domain.Models.Status)request.Status);
 
                 if (asset.IsSome)
                 {

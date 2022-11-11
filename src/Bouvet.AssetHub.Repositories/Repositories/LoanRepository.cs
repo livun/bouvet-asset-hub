@@ -1,12 +1,10 @@
-﻿using AutoMapper;
-using Bouvet.AssetHub.API.Data;
-using Bouvet.AssetHub.API.Domain.Asset.Models;
-using Bouvet.AssetHub.API.Domain.Employee.Models;
-using Bouvet.AssetHub.API.Domain.Loan.Interfaces;
-using Bouvet.AssetHub.API.Domain.Loan.Models;
+﻿using Bouvet.AssetHub.Data;
+using Bouvet.AssetHub.Domain.Models;
+using Bouvet.AssetHub.Repositories.Interfaces;
 using EntityFramework.Exceptions.Common;
 using LanguageExt;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System.Linq.Expressions;
 
 namespace Bouvet.AssetHub.API.Domain.Loan.Repositories
@@ -16,13 +14,11 @@ namespace Bouvet.AssetHub.API.Domain.Loan.Repositories
     {
         private readonly DataContext _context;
         private readonly ILogger _logger;
-        private readonly IMapper _mapper;
 
-        public LoanRepository(DataContext context, ILogger<LoanRepository> logger, IMapper mapper)
+        public LoanRepository(DataContext context, ILogger<LoanRepository> logger)
         {
             _context = context;
             _logger = logger;
-            _mapper = mapper;
 
         }
 

@@ -4,6 +4,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Bouvet.AssetHub.Contracts.Dtos;
 using Bouvet.AssetHub.Contracts.Queries;
+using Bouvet.AssetHub.Contracts.Commands;
 
 namespace Bouvet.AssetHub.API.Controllers
 {

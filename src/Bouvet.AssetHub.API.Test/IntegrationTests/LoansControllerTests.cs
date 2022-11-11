@@ -1,10 +1,4 @@
-﻿using Bouvet.AssetHub.API.Contracts;
-using Bouvet.AssetHub.API.Controllers;
-using Bouvet.AssetHub.API.Data;
-using Bouvet.AssetHub.API.Domain.Asset.Models;
-using Bouvet.AssetHub.API.Domain.Asset.Services.Commands;
-using Bouvet.AssetHub.API.Domain.Loan.Services.Commands;
-using EmptyFiles;
+﻿using Bouvet.AssetHub.Contracts.Dtos;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Shouldly;
 using System.Net;
@@ -94,6 +88,7 @@ namespace Bouvet.AssetHub.API.Tests
            
             // Act 
             var result = await _httpClient.PutAsync($"api/loans/2", new StringContent(json, Encoding.UTF8, "application/json"));
+            var test = await result.Content.ReadAsStringAsync();
             var loan = SerializeHelper.Deserialize<LoanResponseDto>(await result.Content.ReadAsStringAsync());
             
             // Assert
@@ -117,15 +112,6 @@ namespace Bouvet.AssetHub.API.Tests
             check.StatusCode.ShouldBe(HttpStatusCode.NotFound);
 
         }
-        //[Fact]
-        //public async Task DeleteAssetById_BadRequest_400()
-        //{
-        //    // Act
-        //    var result = await _httpClient.DeleteAsync($"api/categories/1");
-            
-        //    // Assert
-        //    result.StatusCode.ShouldBe(HttpStatusCode.BadRequest);
-        //}
 
     }
 }

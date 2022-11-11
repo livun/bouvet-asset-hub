@@ -1,8 +1,6 @@
-﻿using Bouvet.AssetHub.API.Domain.Asset.Models;
-using Bouvet.AssetHub.API.Domain.Employee.Models;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace Bouvet.AssetHub.API.Domain.Loan.Models
+namespace Bouvet.AssetHub.Domain.Models
 {
     public class LoanEntity : Entity
     {
@@ -16,7 +14,7 @@ namespace Bouvet.AssetHub.API.Domain.Loan.Models
         public Bsd? Bsd { get; set; }
     }
 
-    
 
-   
+
+
 }

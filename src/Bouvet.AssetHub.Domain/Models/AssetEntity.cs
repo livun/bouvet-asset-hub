@@ -1,12 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace Bouvet.AssetHub.API.Domain.Asset.Models
+namespace Bouvet.AssetHub.Domain.Models
 {
     public class AssetEntity : Entity
     {
@@ -20,7 +14,7 @@ namespace Bouvet.AssetHub.API.Domain.Asset.Models
         public CategoryEntity Category { get; set; } = new CategoryEntity();
     }
 
-    
-  
-    
+
+
+
 }

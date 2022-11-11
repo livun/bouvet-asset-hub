@@ -1,7 +1,7 @@
-﻿using Bouvet.AssetHub.API.Domain.Asset.Models;
+﻿using Bouvet.AssetHub.Domain.Models;
 using LanguageExt;
 
-namespace Bouvet.AssetHub.API.Domain.Asset.Interfaces
+namespace Bouvet.AssetHub.Repositories.Interfaces
 {
     public interface ICategoryRepository 
     {

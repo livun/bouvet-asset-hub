@@ -1,8 +1,6 @@
-﻿
-using AutoMapper;
-using Bouvet.AssetHub.API.Contracts;
-using Bouvet.AssetHub.API.Domain.Asset.Services.Queries;
-using Bouvet.AssetHub.API.Helpers;
+﻿using Bouvet.AssetHub.API.Helpers;
+using Bouvet.AssetHub.Contracts.Dtos;
+using Bouvet.AssetHub.Contracts.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,12 +11,10 @@ namespace Bouvet.AssetHub.API.Controllers
     public class LoanHistory : ControllerBase
     {
         private readonly IMediator _mediator;
-        private readonly IMapper _mapper;
 
-        public LoanHistory(IMediator mediator, IMapper mapper)
+        public LoanHistory(IMediator mediator)
         {
             _mediator = mediator;
-            _mapper = mapper;
          
         }
 

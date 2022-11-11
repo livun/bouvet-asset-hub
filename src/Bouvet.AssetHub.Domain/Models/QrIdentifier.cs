@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace Bouvet.AssetHub.API.Domain.Asset.Models
+namespace Bouvet.AssetHub.Domain.Models
 {
     [Owned]
     public class QrIdentifier

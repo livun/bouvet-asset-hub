@@ -1,16 +1,19 @@
-﻿using AutoMapper;
-using Bouvet.AssetHub.API.Contracts;
-using Bouvet.AssetHub.API.Domain.Asset.Models;
-using Bouvet.AssetHub.API.Domain.Asset.Services.Commands;
-using Bouvet.AssetHub.API.Domain.Loan.Models;
-using Bouvet.AssetHub.API.Domain.Loan.Services.Commands;
+﻿
+using AutoMapper;
+using AutoMapper.Extensions.EnumMapping;
+using Bouvet.AssetHub.Contracts.Commands;
+using Bouvet.AssetHub.Contracts.Dtos;
+using Bouvet.AssetHub.Domain.Models;
 
-namespace Bouvet.AssetHub.API.AutoMapper
+namespace Bouvet.AssetHub.Handlers.AutoMapper
 {
     public class MapperProfiles : Profile
     {
         public MapperProfiles()
         {
+
+            CreateMap<Status, Contracts.Status>()
+                .ConvertUsingEnumMapping().ReverseMap();
             CreateMap<AssetEntity, CreateAssetCommand>().ReverseMap();
             CreateMap<AssetEntity, AssetResponseDto>().ReverseMap();
             CreateMap<AssetEntity, UpdateAssetCommand>().ReverseMap();

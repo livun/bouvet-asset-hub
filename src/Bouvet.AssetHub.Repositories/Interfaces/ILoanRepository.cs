@@ -1,8 +1,8 @@
-﻿using Bouvet.AssetHub.API.Domain.Loan.Models;
+﻿using Bouvet.AssetHub.Domain.Models;
 using LanguageExt;
 using System.Linq.Expressions;
 
-namespace Bouvet.AssetHub.API.Domain.Loan.Interfaces
+namespace Bouvet.AssetHub.Repositories.Interfaces
 {
     public interface ILoanRepository
     {

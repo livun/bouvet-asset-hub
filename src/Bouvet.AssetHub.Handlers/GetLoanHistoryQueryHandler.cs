@@ -1,14 +1,13 @@
 ﻿using AutoMapper;
-using Bouvet.AssetHub.API.Contracts;
-using Bouvet.AssetHub.API.Domain.Loan.Interfaces;
-using Bouvet.AssetHub.API.Domain.Loan.Models;
+using Bouvet.AssetHub.Contracts.Dtos;
+using Bouvet.AssetHub.Contracts.Queries;
+using Bouvet.AssetHub.Domain.Models;
+using Bouvet.AssetHub.Repositories.Interfaces;
 using LanguageExt;
 using MediatR;
 
 namespace Bouvet.AssetHub.Handlers
 {
-
-
     public class GetLoanHistoryQueryHandler : IRequestHandler<GetLoanHistoryQuery, Option<List<LoanHistoryResponseDto>>>
     {
         private readonly ILoanHistoryRepository _repository;
@@ -32,9 +31,6 @@ namespace Bouvet.AssetHub.Handlers
             }
 
             return Option<List<LoanHistoryResponseDto>>.None;
-
-
-
 
         }
     }

@@ -1,11 +1,12 @@
-﻿using Bouvet.AssetHub.API.Data;
-using Bouvet.AssetHub.API.Domain.Asset.Interfaces;
-using Bouvet.AssetHub.API.Domain.Asset.Models;
+﻿using Bouvet.AssetHub.Data;
+using Bouvet.AssetHub.Domain.Models;
+using Bouvet.AssetHub.Repositories.Interfaces;
 using EntityFramework.Exceptions.Common;
 using LanguageExt;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
-namespace Bouvet.AssetHub.API.Domain.Asset.Repositories
+namespace Bouvet.AssetHub.Repositories
 {
     public class CategoryRepository : ICategoryRepository
     {
@@ -38,10 +39,11 @@ namespace Bouvet.AssetHub.API.Domain.Asset.Repositories
    
         public async Task<Option<CategoryEntity>> Delete(int id)
         {
+         
             var assets = await _context.Assets
-                .Include(a => a.Category)
-                .Where(a => a.Category.Id == id)
-                .ToListAsync();
+            .Include(a => a.Category)
+            .Where(a => a.Category.Id == id)
+            .ToListAsync();
             if (assets.Any())
             {
                 return null;
@@ -55,6 +57,9 @@ namespace Bouvet.AssetHub.API.Domain.Asset.Repositories
                 await _context.SaveChangesAsync();
                 return category;
             }
+    
+            
+            
             return null;
 
 

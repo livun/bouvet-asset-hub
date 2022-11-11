@@ -1,12 +1,13 @@
-﻿using Bouvet.AssetHub.API.Data;
-using Bouvet.AssetHub.API.Domain.Asset.Interfaces;
-using Bouvet.AssetHub.API.Domain.Asset.Models;
+﻿using Bouvet.AssetHub.Data;
+using Bouvet.AssetHub.Domain.Models;
+using Bouvet.AssetHub.Repositories.Interfaces;
 using EntityFramework.Exceptions.Common;
 using LanguageExt;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System.Linq.Expressions;
 
-namespace Bouvet.AssetHub.API.Domain.Asset.Repositories
+namespace Bouvet.AssetHub.Repositories
 {
     public class AssetRepository : IAssetRepository
     {
@@ -86,7 +87,7 @@ namespace Bouvet.AssetHub.API.Domain.Asset.Repositories
 
         }
       
-        public async Task<Option<List<AssetEntity>?>> GetAll()
+        public async Task<Option<List<AssetEntity>>> GetAll()
         {
            var assets = await _context.Assets
                 .Include(a => a.Category)

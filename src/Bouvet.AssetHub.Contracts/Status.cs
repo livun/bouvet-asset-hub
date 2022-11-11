@@ -1,4 +1,4 @@
-﻿namespace Bouvet.AssetHub.Contracts.Dtos
+﻿namespace Bouvet.AssetHub.Contracts
 {
     public enum Status
     {

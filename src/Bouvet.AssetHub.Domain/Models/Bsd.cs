@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 
-namespace Bouvet.AssetHub.API.Domain.Loan.Models
+namespace Bouvet.AssetHub.Domain.Models
 {
     [Owned]
     public class Bsd

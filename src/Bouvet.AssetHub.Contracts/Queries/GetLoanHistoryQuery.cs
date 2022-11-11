@@ -1,4 +1,4 @@
-﻿using Bouvet.AssetHub.API.Contracts;
+﻿using Bouvet.AssetHub.Contracts.Dtos;
 using LanguageExt;
 using MediatR;
 

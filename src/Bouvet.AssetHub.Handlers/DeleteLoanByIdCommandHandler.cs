@@ -1,9 +1,8 @@
 ﻿using AutoMapper;
-using Bouvet.AssetHub.API.Contracts;
-using Bouvet.AssetHub.API.Domain.Asset.Interfaces;
-using Bouvet.AssetHub.API.Domain.Asset.Models;
-using Bouvet.AssetHub.API.Domain.Loan.Interfaces;
-using Bouvet.AssetHub.API.Domain.Loan.Models;
+using Bouvet.AssetHub.Contracts.Commands;
+using Bouvet.AssetHub.Contracts.Dtos;
+using Bouvet.AssetHub.Domain.Models;
+using Bouvet.AssetHub.Repositories.Interfaces;
 using LanguageExt;
 using MediatR;
 
@@ -36,7 +35,7 @@ namespace Bouvet.AssetHub.Handlers
 
             var loanHistory = _mapper.Map<LoanEntity, LoanHistoryEntity>(loan.First());
             var result = await _historyRepository.Add(loanHistory);
-            var asset = await _assetRepository.UpdateAssetStatus(loan.First().Asset.Id, Status.Available);
+            var asset = await _assetRepository.UpdateAssetStatus(loan.First().Asset.Id, (Domain.Models.Status.Available));
 
             return result.IsSome && asset.IsSome ? _mapper.Map<LoanEntity, LoanResponseDto>(loan.First()) : null;
 

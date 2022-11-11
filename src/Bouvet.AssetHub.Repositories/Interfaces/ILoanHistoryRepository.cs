@@ -1,7 +1,7 @@
-﻿using Bouvet.AssetHub.API.Domain.Loan.Models;
+﻿using Bouvet.AssetHub.Domain.Models;
 using LanguageExt;
 
-namespace Bouvet.AssetHub.API.Domain.Loan.Interfaces
+namespace Bouvet.AssetHub.Repositories.Interfaces
 {
     public interface ILoanHistoryRepository
     {

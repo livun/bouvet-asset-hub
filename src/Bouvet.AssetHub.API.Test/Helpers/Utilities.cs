@@ -1,8 +1,5 @@
-﻿using Bouvet.AssetHub.API.Data;
-using Bouvet.AssetHub.API.Domain.Asset.Models;
-using Bouvet.AssetHub.API.Domain.Employee.Models;
-using Bouvet.AssetHub.API.Domain.Loan.Models;
-using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities;
+﻿using Bouvet.AssetHub.Data;
+using Bouvet.AssetHub.Domain.Models;
 
 namespace Bouvet.AssetHub.API.Tests
 {
