@@ -1,9 +1,14 @@
+# Entity Relationship Diagram
+
 ```mermaid
 erDiagram
-    Loan }o--|| Employee : has
-    Loan ||--|| Asset : has
-    Asset ||--|| LoanHistory : has
-    Employee ||--|| LoanHistory : has
-    Employee ||--o{ Notification : has    
+
+EMPLOYEE ||--o{ LOAN : places
+LOAN }o--|| ASSET : has
+EMPLOYEE ||--o{ LOANHISTORY : has
+LOANHISTORY }o--|| ASSET : has
+EMPLOYEE ||--o{ NOTIFICATIONS : receives
+
+      
 
 ```
