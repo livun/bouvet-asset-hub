@@ -1,4 +1,5 @@
 # Entity Relationship Diagram
+An asset can only be part of one Loan at the time, check if the restriction is correct
 
 ```mermaid
 erDiagram
