@@ -31,6 +31,8 @@ export interface CreateAssetDto {
   serialNumber?: number;
   /** @format int32 */
   categoryId?: number;
+  /** @format uuid */
+  qrIdentifier?: string;
 }
 
 export interface CreateCategoryDto {
@@ -41,13 +43,13 @@ export interface CreateLoanDto {
   /** @format date-time */
   intervalStart?: string;
   /** @format date-time */
-  intervalStop?: string | null;
+  intervalStop?: string;
   intervalIsLongterm?: boolean;
   /** @format int32 */
   assignedToValue?: number;
   /** @format int32 */
   assetId?: number;
-  bsdReference?: string;
+  bsdReference?: string | null;
 }
 
 export interface LoanHistoryResponseDto {
@@ -71,7 +73,7 @@ export interface LoanResponseDto {
   /** @format date-time */
   intervalStart?: string;
   /** @format date-time */
-  intervalStop?: string;
+  intervalStop?: string | null;
   intervalIsLongterm?: boolean;
   /** @format int32 */
   assignedToValue?: number;

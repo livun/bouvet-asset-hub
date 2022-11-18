@@ -23,6 +23,7 @@ namespace Bouvet.AssetHub.Handlers
 
         public async Task<Option<AssetResponseDto>> Handle(CreateAssetCommand request, CancellationToken cancellationToken)
         {
+
             var asset = await _repository.Get(AssetPredicates.BySerialNumber(request.SerialNumberValue));
             if (asset.IsNone || request.SerialNumberValue == 0)
             {

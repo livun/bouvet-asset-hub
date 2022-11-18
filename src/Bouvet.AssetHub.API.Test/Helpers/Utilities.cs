@@ -40,6 +40,7 @@ namespace Bouvet.AssetHub.API.Tests
                 {
                     Id = 1,
                     SerialNumber = new SerialNumber { Value = 123456789 },
+                    QrIdentifier = new QrIdentifier { Value = Guid.NewGuid()},
                     CategoryId = 1,
                     Category = category1
 
@@ -48,18 +49,21 @@ namespace Bouvet.AssetHub.API.Tests
                 {
                     Id = 2,
                     SerialNumber = new SerialNumber { Value = 987654321 },
+                    QrIdentifier = new QrIdentifier { Value = Guid.NewGuid()},
                     CategoryId = 2,
                     Category = category2
                 },
                 new AssetEntity
                 {
                     Id = 3,
+                    QrIdentifier = new QrIdentifier { Value = Guid.NewGuid() },
                     CategoryId = 3,
                     Category = category3
                 },
                 new AssetEntity
                 {
                     Id = 4,
+                    QrIdentifier = new QrIdentifier { Value = Guid.NewGuid()},
                     CategoryId = 3,
                     Category = category3
                  }
@@ -106,12 +110,14 @@ namespace Bouvet.AssetHub.API.Tests
             var asset5 = new AssetEntity
             {
                 Id = 5,
+                QrIdentifier = new QrIdentifier { Value = Guid.NewGuid() },
                 CategoryId = 6,
                 Category = category6
             };
             var asset6 = new AssetEntity
             {
                 Id = 6,
+                QrIdentifier = new QrIdentifier { Value = Guid.NewGuid() },
                 CategoryId = 7,
                 Category = category7
             };

@@ -21,7 +21,7 @@ const drawerWidth = 240;
 
 const pages = ['Assets', 'Loans', 'LoanHistory']
 const other = ['Categories']
-const actions = ["Scan"]
+const actions = ["Mobile", "QR"]
 
 interface AppBarProps extends MuiAppBarProps {
 	open?: boolean;
@@ -131,12 +131,15 @@ export default function FullMenu(prop: { open: boolean, handleOpen: () => void }
 				<Divider />
 
 				<List>
-					{actions.map((text, index) => (
+					{actions.map((action, index) => (
+						<Link key={index} to={`/${action.toLocaleLowerCase()}`} style={{ color: 'inherit', textDecoration: 'none' }}>
+
 						<ListItem key={index} disablePadding>
 							<ListItemButton>
-								<ListItemText primary={text} />
+								<ListItemText primary={(action)} />
 							</ListItemButton>
 						</ListItem>
+						</Link>
 					))}
 				</List>
 			</Drawer>

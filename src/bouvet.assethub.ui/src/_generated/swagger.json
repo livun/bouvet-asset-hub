@@ -943,6 +943,10 @@
           "categoryId": {
             "type": "integer",
             "format": "int32"
+          },
+          "qrIdentifier": {
+            "type": "string",
+            "format": "uuid"
           }
         },
         "additionalProperties": false
@@ -980,7 +984,8 @@
             "format": "int32"
           },
           "bsdReference": {
-            "type": "string"
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false

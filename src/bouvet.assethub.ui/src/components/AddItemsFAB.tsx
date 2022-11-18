@@ -1,4 +1,4 @@
-import queryClient from '../config/queryClient';Status
+import queryClient from '../config/queryClient';
 import { SpeedDial, SpeedDialAction, SpeedDialIcon, Button, Dialog, DialogActions, DialogContent, DialogTitle, FormControlLabel, MenuItem, Stack, Switch, TextField} from "@mui/material";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useState } from "react";
@@ -13,10 +13,11 @@ import CalendarMonthSharpIcon from '@mui/icons-material/CalendarMonthSharp';
 import DashboardCustomizeSharpIcon from '@mui/icons-material/DashboardCustomizeSharp';
 import { useNavigate } from 'react-router-dom';
 import { IAssetActions, ILoanActions } from '../utils/interfaces';
+import { v4 as uuidv4 } from 'uuid';
 import { AssetResponseDto, CategoryResponseDto, CreateAssetDto, CreateCategoryDto, CreateLoanDto, Status } from '../_generated/api-types';
 
 
-export default function SpeedDialAddItemsMenu() {
+export default function AddItemsFAB() {
     const navigate = useNavigate()
     const today = new Date().toISOString()
     const [assetForm, setAssetForm] = useState<CreateAssetDto>({})
@@ -61,7 +62,7 @@ export default function SpeedDialAddItemsMenu() {
         },
         onSuccess: (data) => {
             queryClient.invalidateQueries(["loans"])
-            setLoanForm({ ...assetForm, intervalStart: today })
+            setLoanForm({ ...loanForm, intervalStart: today })
             setOpenAddLoan(false)
             openAlertBar("Loan is added.", true)
             setTimeout(() => {
@@ -83,6 +84,11 @@ export default function SpeedDialAddItemsMenu() {
             }, 1500)
         }
     });
+
+    const handleAddAsset = () => {
+        setAssetForm({ ...assetForm, qrIdentifier: uuidv4() })
+        addAsset.mutate()
+    }
 
     //AlertComponent handling (if reused, this must be pasted in parent component)
     const [open, setOpen] = useState(false);
@@ -143,7 +149,7 @@ export default function SpeedDialAddItemsMenu() {
                             select
                             label="Category"
                             value={assetForm.categoryId}
-                            onChange={(event) => setAssetForm({ ...assetForm, categoryId: Number(event?.target.value) })}
+                            onChange={(event) => setAssetForm({ ...assetForm, categoryId: Number(event?.target.value), qrIdentifier: uuidv4() })}
                         >
                             {categoriesQuery.data?.map((cat) => (
                                 <MenuItem key={cat.id} value={cat.id}>
@@ -155,7 +161,7 @@ export default function SpeedDialAddItemsMenu() {
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={() => setOpenAddAsset(false)}>Cancel</Button>
-                    <Button onClick={() => addAsset.mutate()}>Save</Button>
+                    <Button onClick={() => handleAddAsset()}>Save</Button>
                 </DialogActions>
             </Dialog>
             : <CircularLoader />}

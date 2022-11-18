@@ -1,4 +1,7 @@
-﻿namespace Bouvet.AssetHub.Contracts.Dtos
+﻿using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
+using System.Text.Json.Serialization;
+
+namespace Bouvet.AssetHub.Contracts.Dtos
 {
     public class LoanResponseDto
     {
@@ -9,6 +12,9 @@
 
         public int AssignedToValue { get; set; }
         public int AssetId { get; set; }
+
+        
+        [JsonConverter(typeof(JsonStringEnumConverter))]
         public Status AssetStatus { get; set; }
         public string AssetCategoryName { get; set; } = "";
         public string BsdReference { get; set; } = "";

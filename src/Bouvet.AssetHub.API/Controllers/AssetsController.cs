@@ -35,7 +35,7 @@ namespace Bouvet.AssetHub.API.Controllers
         [HttpPost]
         public async Task<ActionResult<AssetResponseDto>> AddAssetAsync(CreateAssetDto dto)
         {
-            var result = await _mediator.Send(new CreateAssetCommand(dto.SerialNumber, dto.CategoryId));
+            var result = await _mediator.Send(new CreateAssetCommand(dto.SerialNumber, dto.CategoryId, dto.QrIdentifier));
             return new ActionResultHelper<AssetResponseDto>().OkOrBadRequest(result, "Could not add asset!");
 
         }

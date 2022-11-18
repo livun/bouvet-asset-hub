@@ -5,7 +5,7 @@ import CircularLoader from "../components/CircularLoader";
 import NotFound from "../components/NotFound";
 import DataGridTable from "../components/DataGridTable";
 import { LoanResponseDto } from "../_generated/api-types";
-import SpeedDialAddItemsMenu from "../components/SpeedDialAddItemsMenu";
+import AddItemsFAB from "../components/AddItemsFAB";
 
 export default function Loans () {
     const { isLoading, isSuccess, isError, error, data} = useQuery<LoanResponseDto[], Error>(["loans"], getLoansFn)
@@ -19,6 +19,6 @@ export default function Loans () {
         ? <DataGridTable<LoanResponseDto> rows={data} headerName="Loans" />
         : <></>
         }
-        <SpeedDialAddItemsMenu />
+        <AddItemsFAB />
     </>   
 }

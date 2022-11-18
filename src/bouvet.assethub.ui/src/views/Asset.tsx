@@ -14,8 +14,8 @@ import SaveIcon from '@mui/icons-material/Save';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import AlertBar from "../components/AlertBar";
 import queryClient from "../config/queryClient";
-import SpeedDialAddItemsMenu from "../components/SpeedDialAddItemsMenu";
 import { AssetResponseDto, CategoryResponseDto, Status, UpdateAssetDto } from "../_generated/api-types";
+import AddItemsFAB from "../components/AddItemsFAB";
 
 export default function Asset() {
     const location = useLocation()
@@ -249,6 +249,6 @@ export default function Asset() {
             </DialogActions>
         </Dialog>
         <AlertBar open={open} handleClose={handleClose} message={alertBarMsg} success={success} />
-        <SpeedDialAddItemsMenu />
+        <AddItemsFAB />
     </>
 }
