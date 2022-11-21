@@ -25,9 +25,6 @@ export default function MobileActions(prop: { assetId: number }) {
     const [assetForm, setAssetForm] = useState<UpdateAssetDto>({})
     const [stopDate, setStopDate] = useState<Date | null>(new Date())
 
-
-
-
     //queries
     const { isLoading, isSuccess, isError, error, data } = useQuery<AssetResponseDto, Error>(["asset", assetId], () => getAssetByIdFn(assetId))
 
@@ -325,7 +322,6 @@ export default function MobileActions(prop: { assetId: number }) {
                         label="Asset"
                         value={loanForm.assetId}
                     />
-
                     <TextField
                         fullWidth
                         label="BSD Reference"
