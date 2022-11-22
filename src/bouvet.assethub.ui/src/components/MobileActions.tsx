@@ -128,7 +128,7 @@ export default function MobileActions(prop: { assetId: number }) {
 
     return <>
         {isLoading ?? <CircularLoader />}
-        {isSuccess && data !== undefined ? <Grid container marginTop={3} spacing={2} direction="column" alignItems="center"  >
+        {isSuccess && data !== undefined ? <Grid container spacing={2} direction="column" alignItems="center"  >
             <Grid width={250} textAlign="center" item>
                 <GridViewSharpIcon color="primary" sx={{ fontSize: 150 }} />
             </Grid>

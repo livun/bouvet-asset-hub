@@ -1,6 +1,6 @@
 import { Box, Button, Grid, MenuItem, Stack, TextField } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { getAssetByGuidFn, getAssetByIdFn } from "../api/assetsApi";
 import MobileMenu from "../components/MobileMain";
 import QRScanner from "../components/QRScanner";
@@ -11,7 +11,9 @@ import MobileActions from "../components/MobileActions";
 
 
 export default function Mobile() {
-
+    const [scan, setScan] = useState(false)
+    const [register, setRegister] = useState(false)
+    const [buttons, setButtons] = useState(true)
 
     const [qrGuid, setQrGuid] = useState<string>()
     const handleQrGuid = (qrGuid: string) => {
@@ -48,12 +50,26 @@ export default function Mobile() {
 
         <MobileMenu open={false} />
 
-        <Box sx={{ marginTop: "60px", width: "100%", height: "90vh"}}>
+        {buttons ? <Box  sx={{ marginTop: "100px", width: "100%", height: "90vh",  backgroundColor:"pink"}}>
+            <Stack width={250} spacing={2} >
+            <Button variant="outlined">Scan</Button>
+        <Button variant="outlined">Register</Button>
+            </Stack>
+        
+        </Box> : <></>}
+
+
+        
+
+        {scan ? <Box sx={{ marginTop: "60px", width: "100%", height: "90vh"}}>
             {qrGuid === undefined ? <QRScanner handleQrGuid={handleQrGuid} /> : <></>}
-            {data?.id !== undefined ? <MobileActions assetId={data.id} /> : <></>}
-           
-            
-        </Box>
+            {data?.id !== undefined ? <MobileActions assetId={data.id} /> : <></>}   
+        </Box> : <></>}
+
+        {register ? <Box sx={{ marginTop: "60px", width: "100%", height: "90vh"}}>
+            {qrGuid === undefined ? <QRScanner handleQrGuid={handleQrGuid} /> : <></>}
+            {data?.id !== undefined ? <MobileActions assetId={data.id} /> : <></>}   
+        </Box> : <></>}
         <AlertBar open={open} handleClose={handleClose} message={alertBarMsg} success={success} />
 
     </>
