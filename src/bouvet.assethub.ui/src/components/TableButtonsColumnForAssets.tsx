@@ -10,7 +10,6 @@ import { IAssetActions } from "../utils/interfaces";
 export function TableButtonsColumnForAssets() {
     const navigate = useNavigate();
     const location = useLocation();
-    const [status, setStatus] = useState(0)
     const assetActionFromEdit: IAssetActions = { isReadOnly: false, isDelete: false }
     const assetActionFromView: IAssetActions = { isReadOnly: true, isDelete: false }
     const assetActionFromDelete: IAssetActions = { isReadOnly: true, isDelete: true }

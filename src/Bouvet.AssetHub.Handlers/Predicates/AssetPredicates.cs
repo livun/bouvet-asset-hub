@@ -10,9 +10,13 @@ namespace Bouvet.AssetHub.Handlers.Helpers
         {
             return (a => a.Id == id);
         }
-        public static Expression<Func<AssetEntity, bool>> BySerialNumber(int serialNumber)
+        public static Expression<Func<AssetEntity, bool>> BySerialNumber(string serialNumber)
         {
             return (a => a.SerialNumber.Value == serialNumber);
+        }
+        public static Expression<Func<AssetEntity, bool>> ByGuid(Guid guid)
+        {
+            return (a => a.QrIdentifier.Value == guid);
         }
     }
 

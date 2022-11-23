@@ -45,7 +45,7 @@ namespace Bouvet.AssetHub.API.Tests
         {
             // Arrange 
             
-            var dto = new CreateAssetDto ( 43215689, 1 );
+            var dto = new CreateAssetDto ( "43215689", 1, Guid.NewGuid() );
             var json = JsonSerializer.Serialize(dto);
             
             // Act
@@ -59,7 +59,7 @@ namespace Bouvet.AssetHub.API.Tests
         public async Task PostAssets_BadRequest_400()
         {
             // Arrange
-            var dto = new CreateAssetDto ( 123456789, 0 );
+            var dto = new CreateAssetDto ( "123456789", 0, Guid.NewGuid() );
             var json = JsonSerializer.Serialize(dto);
             
             // Act
@@ -94,7 +94,7 @@ namespace Bouvet.AssetHub.API.Tests
             // Assert
             result.StatusCode.ShouldBe(HttpStatusCode.OK);
             asset.ShouldNotBeNull();
-            asset.SerialNumberValue.ShouldBe(123456789);
+            asset.SerialNumberValue.ShouldBe("123456789");
             asset.Id.ShouldBe(1);
 
         }

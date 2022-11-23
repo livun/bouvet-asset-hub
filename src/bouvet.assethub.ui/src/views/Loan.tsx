@@ -1,7 +1,7 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid, IconButton, InputAdornment, Stack, TextField, Tooltip, Typography } from "@mui/material";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { SyntheticEvent, useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom"
 import { deleteLoanFn, getLoanByIdFn, putLoanFn } from "../api/loansApi";
 import CircularLoader from "../components/CircularLoader";
@@ -15,8 +15,8 @@ import ClearIcon from '@mui/icons-material/Clear';
 import MoreTimeIcon from '@mui/icons-material/MoreTime';
 import TaskAltIcon from '@mui/icons-material/TaskAlt';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
-import SpeedDialAddItemsMenu from "../components/SpeedDialAddItemsMenu";
 import { LoanResponseDto, UpdateLoanDto } from "../_generated/api-types";
+import AddItemsFAB from "../components/AddItemsFAB";
 
 
 export default function Loan() {
@@ -88,7 +88,7 @@ export default function Loan() {
         setSuccess(isSuccess)
         setOpen(true);
     };
-    const handleClose = (event?: React.SyntheticEvent | Event, reason?: string) => {
+    const handleClose = (event?: SyntheticEvent | Event, reason?: string) => {
         if (reason === 'clickaway') {
             return;
         }
@@ -359,6 +359,6 @@ export default function Loan() {
                     : <CircularLoader />
         }
         <AlertBar open={open} handleClose={handleClose} message={alertBarMsg} success={success} />
-        <SpeedDialAddItemsMenu />
+        <AddItemsFAB />
     </>
 }

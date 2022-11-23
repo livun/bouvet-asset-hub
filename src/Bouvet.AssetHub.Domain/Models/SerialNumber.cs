@@ -5,6 +5,6 @@ namespace Bouvet.AssetHub.Domain.Models
     [Owned]
     public class SerialNumber
     {
-        public int Value { get; set; } = 0;
+        public string Value { get; set; } = "";
     }
 }

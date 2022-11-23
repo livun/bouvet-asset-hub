@@ -8,6 +8,9 @@ export const getAssetsFn = async () => {
 export const getAssetByIdFn = async (id: number) => {
   return await get<AssetResponseDto>(`/assets/${id}`)
 };
+export const getAssetByGuidFn = async (guid: string) => {
+  return await get<AssetResponseDto>(`/assets/${guid}`)
+};
 export const postAssetsFn = async (dto: CreateAssetDto) => {
   return await postItem<CreateAssetDto, AssetResponseDto>(`/assets`, dto, regularHeaders)
 };

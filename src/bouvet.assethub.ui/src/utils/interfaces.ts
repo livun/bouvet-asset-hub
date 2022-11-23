@@ -14,3 +14,7 @@ export interface IFormatOutput {
     filter: () => boolean
     value: () => GridColDef | undefined
 }
+
+export interface IQrScannerProp {
+    handleQrGuid: (qrGuid: string) => void
+}

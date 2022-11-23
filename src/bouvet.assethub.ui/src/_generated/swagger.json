@@ -279,6 +279,46 @@
         }
       }
     },
+    "/api/assets/{guid}": {
+      "get": {
+        "tags": [
+          "Assets"
+        ],
+        "parameters": [
+          {
+            "name": "guid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/AssetResponseDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AssetResponseDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AssetResponseDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/assets/{id}/loans": {
       "get": {
         "tags": [
@@ -904,8 +944,7 @@
             "format": "int32"
           },
           "serialNumberValue": {
-            "type": "integer",
-            "format": "int32"
+            "type": "string"
           },
           "categoryId": {
             "type": "integer",
@@ -937,12 +976,15 @@
         "type": "object",
         "properties": {
           "serialNumber": {
-            "type": "integer",
-            "format": "int32"
+            "type": "string"
           },
           "categoryId": {
             "type": "integer",
             "format": "int32"
+          },
+          "qrIdentifier": {
+            "type": "string",
+            "format": "uuid"
           }
         },
         "additionalProperties": false
@@ -980,7 +1022,8 @@
             "format": "int32"
           },
           "bsdReference": {
-            "type": "string"
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false

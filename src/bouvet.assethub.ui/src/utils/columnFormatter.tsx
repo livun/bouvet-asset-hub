@@ -18,7 +18,7 @@ function getColumnsFor({key, object}: IFormatInput) {
 export function formatGridColumnsDefinition(data: object, pathname: string): GridColDef[] {
     const columns: GridColDef[] = []
     const fieldEntries = Object.entries(data);
-    fieldEntries.map(([key, object]) => {
+    fieldEntries.forEach(([key, object]) => {
         const column = getColumnsFor({key, object});
         if (typeof (column) === "object")
             columns.push(column);

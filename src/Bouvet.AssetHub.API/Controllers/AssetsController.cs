@@ -35,7 +35,7 @@ namespace Bouvet.AssetHub.API.Controllers
         [HttpPost]
         public async Task<ActionResult<AssetResponseDto>> AddAssetAsync(CreateAssetDto dto)
         {
-            var result = await _mediator.Send(new CreateAssetCommand(dto.SerialNumber, dto.CategoryId));
+            var result = await _mediator.Send(new CreateAssetCommand(dto.SerialNumber, dto.CategoryId, dto.QrIdentifier));
             return new ActionResultHelper<AssetResponseDto>().OkOrBadRequest(result, "Could not add asset!");
 
         }
@@ -48,15 +48,24 @@ namespace Bouvet.AssetHub.API.Controllers
         }
 
         // GET /assets/1
-        [Route("{id}")]
+        [Route("{id:int}")]
         [HttpGet]
         public async Task<ActionResult<AssetResponseDto>> GetAssetbyIdAsync(int id)
         {
-            var result = await _mediator.Send(new GetAssetByIdQuery(id));
+            var result = await _mediator.Send(new GetAssetByQuery(id, null));
             return new ActionResultHelper<AssetResponseDto>().OkOrNotFound(result, "Asset does not exist!");
 
         }
 
+        // GET /assets/1
+        [Route("{guid}")]
+        [HttpGet]
+        public async Task<ActionResult<AssetResponseDto>> GetAssetbyGuidAsync(Guid guid)
+        {
+            var result = await _mediator.Send(new GetAssetByQuery(null, guid));
+            return new ActionResultHelper<AssetResponseDto>().OkOrNotFound(result, "Asset does not exist!");
+
+        }
 
         // PUT /assets/1
         [Route("{id}")]

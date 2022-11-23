@@ -1,22 +1,20 @@
-import { Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid, Stack, TextField } from "@mui/material"
-import { DataGrid, GridActionsCellItem, GridRowParams, GridColDef, GridSelectionModel } from "@mui/x-data-grid"
-import { useMutation, useQuery } from "@tanstack/react-query"
+import { SyntheticEvent, useEffect, useState } from "react";
 import axios from "axios"
+import { useMutation, useQuery } from "@tanstack/react-query"
+import queryClient from "../config/queryClient";
+import { AssetResponseDto, CategoryResponseDto, UpdateCategoryDto } from "../_generated/api-types"
 import { deleteCategoryFn, getCategoriesFn, putCategoryFn } from "../api/categoriesApi"
+import { getAssetsByCategoryFn } from "../api/assetsApi"
+import { Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid, Stack, TextField, Tooltip} from "@mui/material"
+import { DataGrid, GridActionsCellItem, GridRowParams, GridColDef, GridSelectionModel } from "@mui/x-data-grid"
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 import AlertBar from "../components/AlertBar"
 import CircularLoader from "../components/CircularLoader"
 import DataGridTable from "../components/DataGridTable"
 import NotFound from "../components/NotFound"
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
-import queryClient from "../config/queryClient";
-import { useEffect, useState } from "react";
-import { Tooltip } from "@mui/material";
 import TableToolbar from "../components/TableToolbar"
-import { getAssetsByCategoryFn } from "../api/assetsApi"
-import SpeedDialAddItemsMenu from "../components/SpeedDialAddItemsMenu"
-import React from "react"
-import { AssetResponseDto, CategoryResponseDto, UpdateCategoryDto } from "../_generated/api-types"
+import AddItemsFAB from "../components/AddItemsFAB"
 
 export default function Categories() {
     const [pageSize, setPageSize] = useState<number>(30);
@@ -111,7 +109,7 @@ export default function Categories() {
         setSuccess(isSuccess)
         setOpen(true);
     };
-    const handleClose = (event?: React.SyntheticEvent | Event, reason?: string) => {
+    const handleClose = (event?: SyntheticEvent | Event, reason?: string) => {
         if (reason === 'clickaway') {
             return;
         }
@@ -203,6 +201,6 @@ export default function Categories() {
             </DialogActions>
         </Dialog>
         <AlertBar open={open} handleClose={handleClose} message={alertBarMsg} success={success} />
-        <SpeedDialAddItemsMenu />
+        <AddItemsFAB />
     </>
 }
