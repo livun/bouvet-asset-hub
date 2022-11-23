@@ -20,7 +20,7 @@ import { AssetResponseDto, CategoryResponseDto, CreateAssetDto, CreateCategoryDt
 export default function AddItemsFAB() {
     const navigate = useNavigate()
     const today = new Date().toISOString()
-    const [assetForm, setAssetForm] = useState<CreateAssetDto>({})
+    const [assetForm, setAssetForm] = useState<CreateAssetDto>({serialNumber:""})
     const [loanForm, setLoanForm] = useState<CreateLoanDto>({ intervalStart: today })
     const [categoryForm, setCategoryForm] = useState<CreateCategoryDto>({})
     const [openAddAsset, setOpenAddAsset] = useState(false);

@@ -11,7 +11,7 @@ import Asset from './views/Asset';
 import Loan from './views/Loan';
 import Categories from './views/Categories';
 import QRService from './utils/qr-service';
-import QRScanner from './components/QRScanner';
+import QRScanner from './components/mobile/QRScanner';
 import Mobile from './views/Mobile';
 import MobileMain from './components/MobileMain';
 

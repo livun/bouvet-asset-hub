@@ -1,14 +1,16 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, MenuItem, Stack, TextField } from "@mui/material";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
-import { postAssetsFn } from "../api/assetsApi";
-import { getCategoriesFn } from "../api/categoriesApi";
-import queryClient from "../config/queryClient";
-import Html5TsWrapper from "../Html5QrCodePlugin/Html5TsWrapper";
-import { CategoryResponseDto, CreateAssetDto } from "../_generated/api-types";
-import AlertBar from "./AlertBar";
+
+
 import { v4 as uuidv4 } from 'uuid';
 import { useNavigate } from "react-router-dom";
+import { getCategoriesFn } from "../../api/categoriesApi";
+import { CategoryResponseDto, CreateAssetDto } from "../../_generated/api-types";
+import { postAssetsFn } from "../../api/assetsApi";
+import queryClient from "../../config/queryClient";
+import Html5TsWrapper from "../../Html5QrCodePlugin/Html5TsWrapper";
+import AlertBar from "../AlertBar";
 
 
 export default function NewAssetMobile() {

@@ -2,9 +2,9 @@ import { Box, Button, Grid } from "@mui/material";
 import jsQR from "jsqr";
 import { useEffect, useRef, useState } from "react";
 import Webcam from "react-webcam";
-import { drawLine } from "../utils/drawLine";
-import { IQrScannerProp } from "../utils/interfaces";
-import CircularLoader from "./CircularLoader";
+import { drawLine } from "../../utils/drawLine";
+import { IQrScannerProp } from "../../utils/interfaces";
+import CircularLoader from "../CircularLoader";
 
 
 

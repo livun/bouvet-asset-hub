@@ -1,14 +1,14 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControlLabel, Grid, MenuItem, Stack, Switch, TextField } from "@mui/material";
-import { AssetResponseDto, CreateLoanDto, Status, UpdateAssetDto, UpdateLoanDto, LoanResponseDto } from "../_generated/api-types";
+import { AssetResponseDto, CreateLoanDto, Status, UpdateAssetDto, UpdateLoanDto, LoanResponseDto } from "../../_generated/api-types";
 import GridViewSharpIcon from '@mui/icons-material/GridViewSharp';
 import { DesktopDatePicker, MobileDatePicker } from "@mui/x-date-pickers";
 import { useState } from "react";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { deleteLoanFn, postLoansFn, getLoanByAssetIdFn, putLoanFn } from "../api/loansApi";
-import AlertBar from "./AlertBar";
-import queryClient from "../config/queryClient";
-import { getAssetByIdFn, putAssetByIdFn } from "../api/assetsApi";
-import CircularLoader from "./CircularLoader";
+import { deleteLoanFn, postLoansFn, getLoanByAssetIdFn, putLoanFn } from "../../api/loansApi";
+import AlertBar from "../AlertBar";
+import queryClient from "../../config/queryClient";
+import { getAssetByIdFn, putAssetByIdFn } from "../../api/assetsApi";
+import CircularLoader from "../CircularLoader";
 import { useNavigate } from "react-router-dom";
 
 export default function MobileActions(prop: { assetId: number }) {
