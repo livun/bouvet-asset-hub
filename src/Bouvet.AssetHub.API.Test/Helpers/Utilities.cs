@@ -39,7 +39,7 @@ namespace Bouvet.AssetHub.API.Tests
                 new AssetEntity
                 {
                     Id = 1,
-                    SerialNumber = new SerialNumber { Value = 123456789 },
+                    SerialNumber = new SerialNumber { Value = "123456789" },
                     QrIdentifier = new QrIdentifier { Value = Guid.NewGuid()},
                     CategoryId = 1,
                     Category = category1
@@ -48,7 +48,7 @@ namespace Bouvet.AssetHub.API.Tests
                 new AssetEntity
                 {
                     Id = 2,
-                    SerialNumber = new SerialNumber { Value = 987654321 },
+                    SerialNumber = new SerialNumber { Value = "987654321" },
                     QrIdentifier = new QrIdentifier { Value = Guid.NewGuid()},
                     CategoryId = 2,
                     Category = category2

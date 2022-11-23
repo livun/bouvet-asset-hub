@@ -277,9 +277,6 @@ export default function MobileActions(prop: { assetId: number }) {
             {data.status === Status.Unavailable && !loanQuery.data?.intervalIsLongterm ? <Grid width={250} item flexGrow={1} >
                 <Button fullWidth size="large" variant="outlined" onClick={() => setOpenExtendLoan(true)}>Extend loan</Button>
             </Grid> : <></>}
-            <Grid width={250} item marginTop={3} >
-                <Button fullWidth size="large" variant="outlined" onClick={() => navigate(0)}>New scan</Button>
-            </Grid>
 
         </Grid>
             : <></>}

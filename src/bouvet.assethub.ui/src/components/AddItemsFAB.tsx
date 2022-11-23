@@ -139,10 +139,10 @@ export default function AddItemsFAB() {
                     <Stack spacing={3} paddingTop={2} component="form" autoComplete="off" width={400} >
                         <TextField
                             fullWidth
-                            type="number"
+                            type="string"
                             label="Serial Number"
                             value={assetForm.serialNumber}
-                            onChange={(event) => setAssetForm({ ...assetForm, serialNumber: Number(event?.target.value) })}
+                            onChange={(event) => setAssetForm({ ...assetForm, serialNumber: event?.target.value })}
                         />
                         <TextField
                             fullWidth

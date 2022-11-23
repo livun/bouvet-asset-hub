@@ -25,7 +25,7 @@ namespace Bouvet.AssetHub.Handlers
         {
 
             var asset = await _repository.Get(AssetPredicates.BySerialNumber(request.SerialNumberValue));
-            if (asset.IsNone || request.SerialNumberValue == 0)
+            if (asset.IsNone || request.SerialNumberValue == "")
             {
                 var assetEntity = _mapper.Map<CreateAssetCommand, AssetEntity>(request);
                 return _mapper.Map<AssetEntity, AssetResponseDto>((await _repository.Add(assetEntity)).First());
