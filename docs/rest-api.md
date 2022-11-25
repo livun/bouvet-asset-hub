@@ -1,7 +1,7 @@
 # REST API
 
 
-| Endpoint | GET | POST | PUT | DELETE |
+| Resource | GET | POST | PUT | DELETE |
 |-|-|-|-|-|
 | /assets | Retrieve all assets | Create new asset | Update assets from list of id's | -
 | /assets/1 | Retrieve asset by Id | Error | Update asset by Id | Delete asset by Id|
