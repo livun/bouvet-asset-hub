@@ -1,7 +1,7 @@
 # REST API
 
 
-| Resource | GET | POST | PUT | DELETE |
+| Endpoint | GET | POST | PUT | DELETE |
 |-|-|-|-|-|
 | /assets | Retrieve all assets | Create new asset | Update assets from list of id's | -
 | /assets/1 | Retrieve asset by Id | Error | Update asset by Id | Delete asset by Id|
@@ -13,6 +13,6 @@
 | /loanhistory | Retrive all loanhistory | - | - | - 
 | /categories | Retrive all categories | Create new category | - | - 
 | /categories/1 | Retrive category by Id | - | Update category by Id | Delete category by Id
-| /categories/1/assets | Retrive assets by category | - | - | - 
+| /categories/1/assets | Retrieve assets by category | - | - | - 
 
 
