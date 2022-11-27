@@ -35,7 +35,7 @@ export default function NewAssetMobile() {
             setOpenAddAsset(false)
             setDecode(true);
         },
-        onSuccess: (data) => {
+        onSuccess: () => {
             queryClient.invalidateQueries(["assets"])
             setAssetForm({})
             setDecodedText("")
@@ -116,7 +116,7 @@ export default function NewAssetMobile() {
                             value={assetForm.categoryId}
                             onChange={(event) => setAssetForm({ ...assetForm, categoryId: Number(event?.target.value), qrIdentifier: uuidv4() })}
                         >
-                            {categoriesQuery.data?.map((cat) => (
+                            {categoriesQuery.data?.map((cat : CategoryResponseDto) => (
                                 <MenuItem key={cat.id} value={cat.id}>
                                     {cat.name}
                                 </MenuItem>

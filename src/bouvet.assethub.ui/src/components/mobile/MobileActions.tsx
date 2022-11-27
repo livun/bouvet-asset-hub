@@ -29,7 +29,7 @@ export default function MobileActions(prop: { assetId: number }) {
     const { isLoading, isSuccess, isError, error, data } = useQuery<AssetResponseDto, Error>(["asset", assetId], () => getAssetByIdFn(assetId))
 
     const loanQuery = useQuery<LoanResponseDto, Error>(["loan", assetId], () => getLoanByAssetIdFn(assetId), {
-        onSuccess: (data) => setLoanId(data.id),
+        onSuccess: (data: LoanResponseDto) => setLoanId(data.id),
         enabled: !!assetId
 
     })
@@ -38,7 +38,7 @@ export default function MobileActions(prop: { assetId: number }) {
         onError: () => {
             openAlertBar("Cannot add loan.", false)
         },
-        onSuccess: (data) => {
+        onSuccess: () => {
             queryClient.invalidateQueries(["asset", assetId])
             queryClient.invalidateQueries(["loan", assetId])
             setLoanForm({ ...loanForm, intervalStart: today })
