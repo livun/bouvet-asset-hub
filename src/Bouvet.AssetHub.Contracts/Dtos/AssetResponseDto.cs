@@ -2,7 +2,7 @@
 
 namespace Bouvet.AssetHub.Contracts.Dtos
 {
-    public class AssetResponseDto
+    public record AssetResponseDto
     {
         public int Id { get; set; }
         public string SerialNumberValue { get; set; } = "";

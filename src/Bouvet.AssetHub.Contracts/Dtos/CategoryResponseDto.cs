@@ -1,8 +1,4 @@
 ﻿namespace Bouvet.AssetHub.Contracts.Dtos
 {
-    public class CategoryResponseDto
-    {
-        public int Id { get; set; }
-        public string Name { get; set; } = "";
-    }
+    public record CategoryResponseDto (int Id, string Name);
 }

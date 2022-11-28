@@ -1,13 +1,12 @@
 ﻿namespace Bouvet.AssetHub.Contracts.Dtos
 {
-    public class LoanHistoryResponseDto
-    {
-        public int Id { get; set; }
-        public DateTime IntervalStart { get; set; }
-        public DateTime IntervalStop { get; set; }
-        public DateTime ReturnDate { get; set; }
-        public int BorrowerEmployeeNumberValue { get; set; }
-        public int AssetId { get; set; }
-
-    }
+    public record LoanHistoryResponseDto
+    (
+        int Id,
+         DateTime IntervalStart,
+         DateTime IntervalStop,
+         DateTime ReturnDate,
+         int BorrowerEmployeeNumberValue,
+         int AssetId
+    );
 }
