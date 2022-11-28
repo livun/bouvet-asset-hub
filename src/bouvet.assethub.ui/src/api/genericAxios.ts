@@ -1,6 +1,7 @@
 import apiClient from '../config/apiClient';
 
 export const regularHeaders = {
+    'Access-Control-Allow-Origin': '*',
     'Content-Type': 'application/json',
     Accept: 'application/json',
 }

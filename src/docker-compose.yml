@@ -1,16 +1,39 @@
 version: '3.4'
 
+
 services:
-   bouvet.assethub.api:
-        image: ${DOCKER_REGISTRY-}bouvetassethubapi
-        build:
-            context: .
-            dockerfile: Bouvet.AssetHub.API/Dockerfile
-        networks:
-            - asset-network 
+    database:
+        container_name: SqlServerDb
+        image: mcr.microsoft.com/mssql/server:2019-latest
+        user: root
         ports:
-            - "80"
-            - "3001:443"
-networks:
-    asset-network:
+            - "1434:1434"
+        volumes:
+            - sql-vol:/var/opt/mssql
+        environment:
+            - ACCEPT_EULA=Y
+            - SA_PASSWORD="@HUB20222"
+
+    bouvet.assethub.ui:
+        container_name: bouvetassethubui
+        image: bouvetassethubuiMulti
+        build:
+            context: ./bouvet.assethub.ui
+        ports:
+            - 3000:3000
+        stdin_open: true
+        volumes: 
+            - ./src:/app/src
+
+    bouvet.assethub.api:
+        container_name: bouvetassethubapi
+        image: bouvetassethubapiMulti
+        build:
+            context: ./bouvet.assethub.server
+            dockerfile: Bouvet.AssetHub.API/Dockerfile
+        depends_on:
+            - database
+
+volumes:
+    sql-vol:
         external: true
