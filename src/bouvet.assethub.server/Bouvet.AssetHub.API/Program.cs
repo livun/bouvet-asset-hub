@@ -48,15 +48,15 @@ builder.Services.AddAutoMapper(assemblyHandlers);
 
 builder.Services.AddDbContext<DataContext>(options =>
 {
-    var conStrBuilder = new SqlConnectionStringBuilder(
-        builder.Configuration.GetConnectionString("DataContext"));
-    conStrBuilder.Password = builder.Configuration["SqlPassword"];
-    conStrBuilder.UserID = builder.Configuration["SqlUser"];
-    var connection = conStrBuilder.ConnectionString;
+    // var conStrBuilder = new SqlConnectionStringBuilder(
+    //     builder.Configuration.GetConnectionString("DataContext"));
+    // conStrBuilder.Password = builder.Configuration["SqlPassword"];
+    // conStrBuilder.UserID = builder.Configuration["SqlUser"];
+    // var connectionString = conStrBuilder.ConnectionString;
 
 
-    //var connectionString = builder.Configuration.GetConnectionString("DataContext");
-    options.UseSqlServer(connection);
+    var connectionString = builder.Configuration.GetConnectionString("DataContext");
+    options.UseSqlServer(connectionString);
 });
 var assemblyContracts = AppDomain.CurrentDomain.Load("Bouvet.AssetHub.Contracts");
 builder.Services.AddMediatR(assemblyContracts, assemblyHandlers);
