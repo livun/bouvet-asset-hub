@@ -11,14 +11,14 @@ services:
             - sql-vol:/var/opt/mssql
         environment:
             - ACCEPT_EULA=Y
-            - SA_PASSWORD=${SA_PASSWORD}
+            - SA_PASSWORD=assethub1234@
         networks:
-        - asset-network
+        - assethub-network
 
 networks:
-    asset-network:
+    assethub-network:
         external: true
 
 volumes:
     sql-vol:
-        external: true
+        

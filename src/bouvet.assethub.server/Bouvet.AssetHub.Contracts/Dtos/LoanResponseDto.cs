@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace Bouvet.AssetHub.Contracts.Dtos
 {
-    public class LoanResponseDto
+    public record LoanResponseDto
     {
         public int Id { get; set; }
         public DateTime IntervalStart { get; set; }

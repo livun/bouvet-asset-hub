@@ -1,0 +1,16 @@
+version: '3.4'
+
+services:
+   bouvet.assethub.api:
+        image: ${DOCKER_REGISTRY-}bouvetassethubapivisualstudio
+        build:
+            context: .
+            dockerfile: Bouvet.AssetHub.API/Dockerfile
+        networks:
+            - src_assethub-network
+        ports:
+            - "80"
+            - "3001:443"
+networks:
+    src_assethub-network:
+        external: true

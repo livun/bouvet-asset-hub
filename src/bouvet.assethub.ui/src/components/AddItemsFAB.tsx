@@ -14,7 +14,7 @@ import DashboardCustomizeSharpIcon from '@mui/icons-material/DashboardCustomizeS
 import { useNavigate } from 'react-router-dom';
 import { IAssetActions, ILoanActions } from '../utils/interfaces';
 import { v4 as uuidv4 } from 'uuid';
-import { AssetResponseDto, CategoryResponseDto, CreateAssetDto, CreateCategoryDto, CreateLoanDto, Status } from '../_generated/api-types';
+import { AssetResponseDto, CategoryResponseDto, CreateAssetDto, CreateCategoryDto, CreateLoanDto, LoanResponseDto, Status } from '../_generated/api-types';
 
 
 export default function AddItemsFAB() {
@@ -37,7 +37,7 @@ export default function AddItemsFAB() {
 
     // Queries
     const assetsQuery = useQuery<AssetResponseDto[], Error>(["assets"], getAssetsFn, {
-        select: (assets) => assets.filter((asset) => asset.status !== Status.Unavailable  && asset.status !== Status.Discontinued),
+        select: (assets: AssetResponseDto[]) => assets.filter((asset) => asset.status !== Status.Unavailable  && asset.status !== Status.Discontinued),
     })
     const categoriesQuery = useQuery<CategoryResponseDto[], Error>(["categories"], getCategoriesFn)
 
@@ -46,7 +46,7 @@ export default function AddItemsFAB() {
         onError: () => {
             openAlertBar("Cannot add asset.", false)
         },
-        onSuccess: (data) => {
+        onSuccess: (data: AssetResponseDto) => {
             queryClient.invalidateQueries(["assets"])
             setAssetForm({})
             setOpenAddAsset(false)
@@ -60,7 +60,7 @@ export default function AddItemsFAB() {
         onError: () => {
             openAlertBar("Cannot add loan.", false)
         },
-        onSuccess: (data) => {
+        onSuccess: (data: LoanResponseDto) => {
             queryClient.invalidateQueries(["loans"])
             setLoanForm({ ...loanForm, intervalStart: today })
             setOpenAddLoan(false)
@@ -151,7 +151,7 @@ export default function AddItemsFAB() {
                             value={assetForm.categoryId}
                             onChange={(event) => setAssetForm({ ...assetForm, categoryId: Number(event?.target.value), qrIdentifier: uuidv4() })}
                         >
-                            {categoriesQuery.data?.map((cat) => (
+                            {categoriesQuery.data?.map((cat: CategoryResponseDto) => (
                                 <MenuItem key={cat.id} value={cat.id}>
                                     {cat.name}
                                 </MenuItem>
@@ -207,7 +207,7 @@ export default function AddItemsFAB() {
                             value={loanForm.assetId}
                             onChange={(event) => setLoanForm({ ...loanForm, assetId: Number(event?.target.value) })}
                         >
-                            {assetsQuery.data?.map((asset) => (
+                            {assetsQuery.data?.map((asset: AssetResponseDto) => (
                                 <MenuItem key={asset.id} value={asset.id}>
                                     {asset.id}, {asset.categoryName}, {asset.status}
                                 </MenuItem>
