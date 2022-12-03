@@ -5,6 +5,6 @@ namespace Bouvet.AssetHub.Domain.Models
     [Owned]
     public class QrIdentifier
     {
-        public Guid Value { get; set; } 
+        public Guid Value { get; set; }
     }
 }

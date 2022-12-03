@@ -21,7 +21,7 @@ const drawerWidth = 240;
 
 const pages = ['Assets', 'Loans', 'LoanHistory']
 const other = ['Categories']
-const actions = ["Mobile", "QR"]
+const actions = ["Mobile"]
 
 interface AppBarProps extends MuiAppBarProps {
 	open?: boolean;
@@ -63,26 +63,11 @@ export default function FullMenu(prop: { open: boolean, handleOpen: () => void }
 					>
 						<MenuIcon />
 					</IconButton>
-					<Typography variant="h6" noWrap component="div" flexGrow={1}>
-						<Link to={'/test'} style={{ color: 'inherit', textDecoration: 'none' }}>
-							Bouvet Asset Hub
+					{/* <Typography variant="h6" noWrap component="div" px={1}>
+						<Link to={'/login'} style={{ color: 'inherit', textDecoration: 'none' }}>
+							Login
 						</Link>
-					</Typography>
-					<Typography variant="h6" noWrap component="div" px={1}>
-						<Link to={'/test'} style={{ color: 'inherit', textDecoration: 'none' }}>
-							LINK
-						</Link>
-					</Typography>
-					<Typography variant="h6" noWrap component="div" px={1}>
-						<Link to={'/test'} style={{ color: 'inherit', textDecoration: 'none' }}>
-							LINK
-						</Link>
-					</Typography>
-					<Typography variant="h6" noWrap component="div" px={1} >
-						<Link to={'/test'} style={{ color: 'inherit', textDecoration: 'none' }}>
-							LINK
-						</Link>
-					</Typography>
+					</Typography> */}
 				</Toolbar>
 			</AppBar>
 			<Drawer
