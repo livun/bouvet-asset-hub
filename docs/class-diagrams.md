@@ -7,13 +7,14 @@ classDiagram
     Entity  <|-- LoanEntity
     Entity  <|-- EmployeeEntity
     Entity  <|-- LoanHistoryEntity
+    AssetEntity -- Status
+
     AssetEntity *-- SerialNumber
     AssetEntity *-- QrIdentifier
-    AssetEntity -- Status
     AssetEntity o-- CategoryEntity
+    LoanEntity *-- Bsd
     LoanEntity o-- AssetEntity
     LoanEntity *-- Interval
-    LoanEntity *-- Bsd
     EmployeeEntity *-- EmployeeNumber
     LoanHistoryEntity *-- Interval 
     LoanHistoryEntity o-- EmployeeEntity 

@@ -8,12 +8,9 @@ sequenceDiagram
     User ->> UI : Scan Serial Number
     Activate UI
         loop 
-            UI ->> UI : Do OCR and identify Serial Number
+            UI ->> UI : Scan barcode and identify Serial Number
         end
-            UI  ->>+ External API: Validate Serial Number
-   
-                External API --)- UI : Response (Validation, MetaDTO)
-                UI ->>+ API /assets: POST Asset (SerialNumber, MetaDTO, Category)
+                UI ->>+ API /assets: POST Asset (SerialNumber, Category)
     Deactivate UI
                     API /assets -)+ CreateAssetCommandHandler : CreateAssetCommand (DTO)
                         Note over CreateAssetCommandHandler, Asset Repository : Check if Asset already exist

@@ -5,15 +5,12 @@
 
 
 ### Create
-`Tag new  Assets`
-- As a user, I want to scan the serial number of an Asset, do an OCR and identify the serial number, then generate a QR code, which I can stick on the Asset, to make it easier to manage that Asset. 
-- As a user, I want to retrieve metadata about Asset from external system, to make the creating process more automatic.
-- As a user, I want to validate the Serial Number to the external system, to make sure the OCR identfied an actual Asset
+`Add new  Assets`
+-	As a user, I want to do a barcode scan the serial number of an asset, identify the serial number, then generate a QR code, print out a label, which I can stick on the asset, to make it easier to manage that asset. 
     - [Sequence: Tag Asset with Serial Number](./sequence-diagrams/tag-new-asset.md#tag-asset-with-serial-number)
-- As as user, I want to add  Assets without serial number, with generating a unique id and qr code and stick to asset, to make it easier to manage that asset. 
-    - [Sequence: Tag Asset without Serial Number](./sequence-diagrams/tag-new-asset.md#tag-asset-without-serial-number)
+-	As a user, I want to add assets without serial number, with generating a unique id and QR-code and stick to asset, to make it easier to manage that asset. 
 
-- ***remove later*** https://github.com/dymosoftware/dymo-connect-framework (print javascript)
+    - [Sequence: Tag Asset without Serial Number](./sequence-diagrams/tag-new-asset.md#tag-asset-without-serial-number)
 
 
 ### Overview/Dashboard (read)
@@ -59,7 +56,7 @@
 
 ### Loaning
 `Scan Asset and lend out to employee`
-- As a user, I want to scan the Asset, choose new loan and a time span and lend out to employee
+- As a user, I want to scan the Asset, choose new loan and a time span, and lend out to employee
 - As a user, I want to scan the Asset, choose *no time limit*, lend out to employe
 - As a user, when an Assey is lent out I want the system to send a notifcation to external system to mark the expense on employee, to reduce manual work
     - [Sequence: New Loan](./sequence-diagrams/loan-actions.md#new-loan)
@@ -67,11 +64,30 @@
 - As a user I want to extend time of loan, to meet employees needs if requested
     - [Sequence: Extend Loan](./sequence-diagrams/loan-actions.md#extend-loan)
 
+### Add new Loan
+`Add new loan manually from dashboard`
+- As a user, I want to add a new loan 
 
+
+
+### Extend Loan
+`Scan Asset and extend Loan`
+-	As a user, I want to scan the asset and extend the loan linked to that asset 
+
+`Extend loan from dashboard`
+-	As a user, I want to extend loan from table 
+-	As a user, I want to extend in loan from a single loan view
 ### Hand in Loan
-`Scan Asset and hand in Asset`
+`Scan Asset and hand in Asset/Loan`
 - As a user, I want to scan the Asset and remove Loan from Loans table, so that Loans table only have *active loans*
     - [Sequence: Hand in Loan](./sequence-diagrams/loan-actions.md#hand-in-loan)
+
+`Hand in loan from dashboard`
+-	As a user, I want to hand in loan from table 
+-	As a user, I want to hand in loan from a single loan view
+
+
+
 
 ### LoanHistory
 `Add Loan to history`
@@ -90,6 +106,7 @@
 - As a user, I want to scan an Asset and see the active loan connected to Asset, to get easy access on information
     - [Sequence: View one Loan from scan](./sequence-diagrams/read-loan.md#view-one-loan-from-scan)
 
+
 `View all Loans linked to employee`
 - As a  user, I want to look up employee numbers and get a list of Loans connected to this employee, to get an overview and easier manage employees Assets
     - [Sequence: View Loan by Employee](./sequence-diagrams/read-loan.md#view-loan-by-employee-id)
@@ -98,8 +115,22 @@
 - As a user, I want to see previous loans in a seperate table, so that I can removed them from Loans table, but I still have the opportunity to track history
     - [Sequence: View Loan History](./sequence-diagrams/read-loan.md#view-loan-history)
 
+## Epic: Other
+### Categories
+`Add new category`
+-	As a user, I want to add a new category
+
+
 ### Notifications 
 `Send notification`
 - As a user, I want there to be an automatic email sent out to the employee when it's time to return the asset
     - [Sequence: Notification](./sequence-diagrams/notification.md#notify-employee-when-loan-is-due-to-be-delivered)
 
+### Access Control
+`Authentication and Authorization`
+-	As a system, I want the users to be authenticated and authorized to access data and perform actions. 
+
+
+### External system
+`Notifying Xledger`
+-	As a system, I want there to be sent of an API call to the external system, Xledger when an employee is connected to a new asset, so that Xledger can automatically do cost accounting
