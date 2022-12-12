@@ -21,6 +21,7 @@ This application runs with `Docker Compose`.
 4. Open a terminal (e.g., Powershell)
 4. Write `docker` to verify it's installed. Proceed if it's installed.
 4. Copy this command into you terminal
+
 ```powershell
 docker volume create assethubcontext-vol
 ```
@@ -40,6 +41,7 @@ docker compose up -d
 ```powershell
 docker ps
 ```
+
 10. Now the application is up and running! But before proceeding to access the frontend at localhost:3000, you must check that the backend server uses allowed  certificates. To allow using self signed certificates, you must follow these steps:
 - First open [https://localhost:4000/swagger](https://localhost:4000/swagger). 
 - If this site is unavailable due to a certificate error message. You must allow a self signed certficate to access localhost. 
