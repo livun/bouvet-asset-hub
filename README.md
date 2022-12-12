@@ -17,9 +17,10 @@ This application runs with `Docker Compose`.
 1. Clone the repository
 1. Download Docker Desktop. Available [here](https://docs.docker.com/get-docker/).
 1. Run Docker Desktop
-1. Open a terminal (e.g., Powershell)
-1. Write `docker` to verify it's installed. Proceed if it's installed.
-1. Copy this command into you terminal
+- Make sure you port 3000, 4000, and 1433 is available!
+4. Open a terminal (e.g., Powershell)
+4. Write `docker` to verify it's installed. Proceed if it's installed.
+4. Copy this command into you terminal
 ```powershell
 docker volume create assethubcontext-vol
 ```
@@ -46,9 +47,9 @@ docker ps
 - In Chrome you will get an error message, where you can choose the Advanced option. [This image](https://i.stack.imgur.com/DoqzS.png) displays this option.
 - Proceed with clicking *Proceed to localhost*. 
 - Now you have allowed localhost to use self signed certificate and you get redirected to the Swagger page. Now you can proceed to the next step.
-10. Now go to [localhost:3000](http://localhost:3000), where you can access the UI. (Might take some time the first time it runs.)
+11. Now go to [localhost:3000](http://localhost:3000), where you can access the UI. (Might take some time the first time it runs.)
 - If everything is working correctly, there should be data in the *Assets* table, and in the *Categories* table.
-10. Run this command in the terminal from  `/src`, to stop and remove containers and networks created by `docker compose up`.
+12. Run this command in the terminal from  `/src`, to stop and remove containers and networks created by `docker compose up`.
 ```powershell
 docker compose down
 ```
