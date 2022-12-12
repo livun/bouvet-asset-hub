@@ -14,7 +14,7 @@ This application runs with `Docker Compose`.
 
 *Note:  The MSSQL Server `Docker Image` is not compatible with a MAC with Apple Silicon.*
 
-1. Fork the repository
+1. Clone the repository
 1. Download Docker Desktop. Available [here](https://docs.docker.com/get-docker/).
 1. Run Docker Desktop
 1. Open a terminal (e.g., Powershell)
