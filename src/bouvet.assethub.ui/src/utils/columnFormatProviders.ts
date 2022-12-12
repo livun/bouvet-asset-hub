@@ -118,6 +118,4 @@ function formatGeneral({key} : IFormatInput) : IFormatOutput {
     }
     return {filter, value}
 }
-
-export const columnFormatProviders = [formatCatId, formatSerialNumber, formatId, formatBooleans, formatDate, formatString, formatGeneral]
- 
+export const columnFormatProviders = [formatCatId, formatSerialNumber, formatId, formatBooleans, formatDate, formatString, formatGeneral] 

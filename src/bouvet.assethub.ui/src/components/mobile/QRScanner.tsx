@@ -1,13 +1,10 @@
-import { Box, Button, Grid } from "@mui/material";
+import { Box, Grid } from "@mui/material";
 import jsQR from "jsqr";
 import { useEffect, useRef, useState } from "react";
 import Webcam from "react-webcam";
 import { drawLine } from "../../utils/drawLine";
 import { IQrScannerProp } from "../../utils/interfaces";
 import CircularLoader from "../CircularLoader";
-
-
-
 
 export default function QRScanner(prop:  IQrScannerProp ) {
     const {handleQrGuid} = prop;
@@ -42,14 +39,10 @@ export default function QRScanner(prop:  IQrScannerProp ) {
             }
         }
         requestAnimationFrame(scan);
-
     }
-
     useEffect(() => {
         scan()
     }, []);
-
-
 
     return (<>
         <Box sx={{ m: 1, }} >
@@ -70,6 +63,5 @@ export default function QRScanner(prop:  IQrScannerProp ) {
         </Box>
 
     </>
-
     );
 }

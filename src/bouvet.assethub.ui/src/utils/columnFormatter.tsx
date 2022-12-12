@@ -35,5 +35,4 @@ export function formatGridColumnsDefinition(data: object, pathname: string): Gri
             break;
     }
     return  columns;
-
 }

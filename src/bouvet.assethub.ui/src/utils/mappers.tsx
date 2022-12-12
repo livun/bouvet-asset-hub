@@ -1,7 +1,5 @@
 import CalendarMonthSharpIcon from '@mui/icons-material/CalendarMonthSharp';
 import GridViewSharpIcon from '@mui/icons-material/GridViewSharp';
-import SquareSharpIcon from '@mui/icons-material/SquareSharp';
-import DashboardCustomizeSharpIcon from '@mui/icons-material/DashboardCustomizeSharp';
 import EventAvailableSharpIcon from '@mui/icons-material/EventAvailableSharp';
 import CategoryIcon from '@mui/icons-material/Category';
 
@@ -22,10 +20,7 @@ export const routeMapper : any = {
     '/loans': 'Loans',
     '/loanhistory': 'Loan History',
     '/categories': 'Categories'
-
 }
-
-
 export const headerIcons : any = {
     "Categories": <CategoryIcon fontSize='large'  />,
     "Loans": <CalendarMonthSharpIcon fontSize='large' />,

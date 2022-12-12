@@ -73,7 +73,6 @@ export default function DataGridTable<T extends Object>(props: TableProps<T>) {
                                 updateAssetsIds: updateAssetsIds,
                                 removeSelectedModel: removeSelectedModel,
                                 headerName: headerName
-
                             }
                         }}
                     />

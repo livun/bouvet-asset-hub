@@ -11,7 +11,6 @@ import Asset from './views/Asset';
 import Loan from './views/Loan';
 import Categories from './views/Categories';
 import Mobile from './views/Mobile';
-import QRService from './utils/qr-service';
 
 function App() {
 	const [open, setOpen] = useState(false);
