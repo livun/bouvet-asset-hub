@@ -40,13 +40,13 @@ docker compose up -d
 docker ps
 ```
 10. Now the application is up and running! But before proceeding to access the frontend at localhost:3000, you must check that the backend server uses allowed  certificates. To allow using self signed certificates, you must follow these steps:
-- First open [localhost:4000/swagger](https://localhost:4000/swagger). 
+- First open [https://localhost:4000/swagger](https://localhost:4000/swagger). 
 - If this site is unavailable due to a certificate error message. You must allow a self signed certficate to access localhost. 
 - This process is  different depending on browser, I recommend using Chrome in this case, if you don't have any previous experience with this. 
-- In Chrome you will get an error message, where you can choose the Advanced option [This image](https://i.stack.imgur.com/DoqzS.png) displays this option.
+- In Chrome you will get an error message, where you can choose the Advanced option. [This image](https://i.stack.imgur.com/DoqzS.png) displays this option.
 - Proceed with clicking *Proceed to localhost*. 
 - Now you have allowed localhost to use self signed certificate and you get redirected to the Swagger page. Now you can proceed to the next step.
-10. Now the application is up and running on [localhost:3000](http://localhost:3000). (Might take some time the first time it runs)
+10. Now go to [localhost:3000](http://localhost:3000), where you can access the UI. (Might take some time the first time it runs.)
 - If everything is working correctly, there should be data in the *Assets* table, and in the *Categories* table.
 10. Run this command in the terminal from  `/src`, to stop and remove containers and networks created by `docker compose up`.
 ```powershell
