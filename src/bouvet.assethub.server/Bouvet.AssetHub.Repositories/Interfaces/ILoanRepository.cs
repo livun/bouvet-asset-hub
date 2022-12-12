@@ -6,7 +6,6 @@ namespace Bouvet.AssetHub.Repositories.Interfaces
 {
     public interface ILoanRepository
     {
-        
         Task<Option<LoanEntity>> Get(Expression<Func<LoanEntity, bool>> predicate);
         Task<Option<List<LoanEntity>>> GetAll();
         Task<Option<List<LoanEntity>>> GetByEmployeeNumber(int id);

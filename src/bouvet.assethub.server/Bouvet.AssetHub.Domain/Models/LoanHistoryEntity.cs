@@ -10,8 +10,4 @@ namespace Bouvet.AssetHub.Domain.Models
         [Required]
         public AssetEntity Asset { get; set; } = new AssetEntity();
     }
-
-
-
-
 }

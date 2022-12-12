@@ -17,7 +17,6 @@ namespace Bouvet.AssetHub.API.Tests
 
         public AssetsControllerTests(CustomWebApplicationFactory factory, ITestOutputHelper output)
         {
-
             _factory = factory;
             _httpClient = factory.CreateClient(new WebApplicationFactoryClientOptions
             {
@@ -25,7 +24,6 @@ namespace Bouvet.AssetHub.API.Tests
             });
             _output = output;
         }
-
         [Fact]
         public async Task GetAssets_Ok_200()
         {
@@ -34,17 +32,14 @@ namespace Bouvet.AssetHub.API.Tests
             var json = await result.Content.ReadAsStringAsync();
             var assets = JsonSerializer.Deserialize<List<AssetResponseDto>>(json);
                        
-
             // Assert
             result.StatusCode.ShouldBe(HttpStatusCode.OK);
             assets.ShouldNotBeEmpty();
-
         }
         [Fact]
         public async Task PostAssets_Ok_200()
         {
             // Arrange 
-            
             var dto = new CreateAssetDto ( "43215689", 1, Guid.NewGuid() );
             var json = JsonSerializer.Serialize(dto);
             
@@ -53,7 +48,6 @@ namespace Bouvet.AssetHub.API.Tests
 
             // Assert
             result.StatusCode.ShouldBe(HttpStatusCode.OK);
-
         }
         [Fact]
         public async Task PostAssets_BadRequest_400()
@@ -67,7 +61,6 @@ namespace Bouvet.AssetHub.API.Tests
             
             // Assert
             result.StatusCode.ShouldBe(HttpStatusCode.BadRequest);
-
         }
         [Fact]
         public async Task PutAssets_Ok_200()
@@ -81,7 +74,6 @@ namespace Bouvet.AssetHub.API.Tests
             
             // Assert
             result.StatusCode.ShouldBe(HttpStatusCode.OK);
-
         }
         [Fact]
         public async Task GetAssetById_Ok_200()
@@ -96,7 +88,6 @@ namespace Bouvet.AssetHub.API.Tests
             asset.ShouldNotBeNull();
             asset.SerialNumberValue.ShouldBe("123456789");
             asset.Id.ShouldBe(1);
-
         }
         [Fact]
         public async Task GetAssetById_NotFound_404()
@@ -106,7 +97,6 @@ namespace Bouvet.AssetHub.API.Tests
 
             // Assert
             result.StatusCode.ShouldBe(HttpStatusCode.NotFound);
-
         }
         [Fact]
         public async Task PutAssetById_Ok_200()
@@ -124,8 +114,6 @@ namespace Bouvet.AssetHub.API.Tests
             asset.ShouldNotBeNull();
             asset.Status.ShouldBe(Status.Discontinued);
             asset.CategoryName.ShouldBe("Regular PC");
-
-
         }
         [Fact]
         public async Task PutAssetById_NotFound_404()
@@ -139,12 +127,10 @@ namespace Bouvet.AssetHub.API.Tests
             
             // Assert
             result.StatusCode.ShouldBe(HttpStatusCode.NotFound);
-
         }
         [Fact]
         public async Task DeleteAssetById_Ok_200()
         {
-            
             // Act
             var result = await _httpClient.DeleteAsync($"api/assets/2");
             var check = await _httpClient.GetAsync($"api/assets/2");
@@ -152,12 +138,10 @@ namespace Bouvet.AssetHub.API.Tests
             // Assert
             result.StatusCode.ShouldBe(HttpStatusCode.OK);
             check.StatusCode.ShouldBe(HttpStatusCode.NotFound);
-
         }
         [Fact]
         public async Task GetLoanByAssetId_Ok_200()
         {
-
             // Act
             var result = await _httpClient.GetAsync($"api/assets/5/loans");
             var json = await result.Content.ReadAsStringAsync();
@@ -166,7 +150,6 @@ namespace Bouvet.AssetHub.API.Tests
             // Assert
             result.StatusCode.ShouldBe(HttpStatusCode.OK);
             assets.ShouldNotBeNull();
-
         }
     }
 }

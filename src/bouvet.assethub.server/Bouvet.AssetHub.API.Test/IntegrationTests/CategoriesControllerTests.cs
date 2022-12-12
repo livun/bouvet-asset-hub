@@ -16,7 +16,6 @@ namespace Bouvet.AssetHub.API.Tests
 
         public CategoriesControllerTests(CustomWebApplicationFactory factory, ITestOutputHelper output)
         {
-
             _factory = factory;
             _httpClient = factory.CreateClient(new WebApplicationFactoryClientOptions
             {
@@ -37,7 +36,6 @@ namespace Bouvet.AssetHub.API.Tests
             // Assert
             result.StatusCode.ShouldBe(HttpStatusCode.OK);
             categories.ShouldNotBeEmpty();
-
         }
         [Fact]
         public async Task GetCategoryById_Ok_200()
@@ -50,8 +48,6 @@ namespace Bouvet.AssetHub.API.Tests
             // Assert
             result.StatusCode.ShouldBe(HttpStatusCode.OK);
             category.ShouldNotBeNull();
-          
-
         }
         [Fact]
         public async Task GetCategoryById_NotFound_404()
@@ -61,7 +57,6 @@ namespace Bouvet.AssetHub.API.Tests
 
             // Assert
             result.StatusCode.ShouldBe(HttpStatusCode.NotFound);
-
         }
         [Fact]
         public async Task GetAssetsByCategoryId_Ok_200()
@@ -74,7 +69,6 @@ namespace Bouvet.AssetHub.API.Tests
             // Assert
             result.StatusCode.ShouldBe(HttpStatusCode.OK);
             categories.ShouldNotBeEmpty();
-           
         }
         [Fact]
         public async Task GetAssetsByCategoryId_NotFound_404()
@@ -84,7 +78,6 @@ namespace Bouvet.AssetHub.API.Tests
             
             // Assert
             result.StatusCode.ShouldBe(HttpStatusCode.NotFound);
-
         }
         [Fact]
         public async Task PostCategory_Ok_200()
@@ -98,9 +91,7 @@ namespace Bouvet.AssetHub.API.Tests
 
             // Assert
             result.StatusCode.ShouldBe(HttpStatusCode.OK);
-
         }
-
         [Fact]
         public async Task PutCategoryById_Ok_200()
         {
@@ -115,7 +106,6 @@ namespace Bouvet.AssetHub.API.Tests
             // Assert
             result.StatusCode.ShouldBe(HttpStatusCode.OK);
             category.Name.ShouldBe("Developer MAC");
-
         }
         [Fact]
         public async Task PutCategoryById_BadRequest_400()
@@ -129,14 +119,10 @@ namespace Bouvet.AssetHub.API.Tests
     
             // Assert
             result.StatusCode.ShouldBe(HttpStatusCode.BadRequest);
-
         }
-
-
         [Fact]
         public async Task DeleteCategoryById_Ok_200()
-        {
-            
+        {   
             // Act
             var result = await _httpClient.DeleteAsync($"api/categories/5");
             var check = await _httpClient.GetAsync($"api/categories/5");
@@ -144,7 +130,6 @@ namespace Bouvet.AssetHub.API.Tests
             // Assert
             result.StatusCode.ShouldBe(HttpStatusCode.OK);
             check.StatusCode.ShouldBe(HttpStatusCode.NotFound);
-
         }
         [Fact]
         public async Task DeleteAssetById_BadRequest_400()
@@ -155,6 +140,5 @@ namespace Bouvet.AssetHub.API.Tests
             // Assert
             result.StatusCode.ShouldBe(HttpStatusCode.BadRequest);
         }
-
     }
 }

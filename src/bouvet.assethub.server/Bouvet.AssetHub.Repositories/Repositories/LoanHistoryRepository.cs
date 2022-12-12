@@ -18,7 +18,6 @@ namespace Bouvet.AssetHub.Repositories
         {
             _context = context;
             _logger = logger;
-
         }
 
         public async Task<Option<LoanHistoryEntity>> Add(LoanHistoryEntity loan)
@@ -27,7 +26,6 @@ namespace Bouvet.AssetHub.Repositories
             var employee = await _context.Employees
                 .Where(e => e.Id == loan.Borrower.Id)
                 .FirstOrDefaultAsync();
-
             if (employee is not null ) 
                 loan.Borrower = employee;
             
@@ -46,7 +44,6 @@ namespace Bouvet.AssetHub.Repositories
             {
                 await _context.SaveChangesAsync();
                 return loan;
-
             }
             catch (UniqueConstraintException ex)
             {
@@ -54,9 +51,6 @@ namespace Bouvet.AssetHub.Repositories
                 return Option<LoanHistoryEntity>.None;
             }
         }
-
-     
-
         public async Task<Option<List<LoanHistoryEntity>>> GetAll()
         {
             var loans = await _context.LoanHistory
@@ -65,7 +59,5 @@ namespace Bouvet.AssetHub.Repositories
                 .ToListAsync();
             return loans.Any() ? loans : null;
         }
-
-        
     }
 }

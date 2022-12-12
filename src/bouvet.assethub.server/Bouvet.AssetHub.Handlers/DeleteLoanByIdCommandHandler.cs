@@ -25,20 +25,16 @@ namespace Bouvet.AssetHub.Handlers
             _historyRepository = historyRepository;
             _assetRepository = assetRepository;
             _mapper = mapper;
-
         }
 
-        public async Task<Option<LoanResponseDto>> Handle(DeleteLoanByIdCommand request, CancellationToken cancellationToken)
+        public async Task<Option<LoanResponseDto>> Handle(DeleteLoanByIdCommand command, CancellationToken cancellationToken)
         {
-            var loan = await _loanRepository.Delete(request.Id);
+            var loan = await _loanRepository.Delete(command.Id);
             if (loan.IsNone) return null;
-
             var loanHistory = _mapper.Map<LoanEntity, LoanHistoryEntity>(loan.First());
             var result = await _historyRepository.Add(loanHistory);
             var asset = await _assetRepository.UpdateAssetStatus(loan.First().Asset.Id, (Domain.Models.Status.Available));
-
             return result.IsSome && asset.IsSome ? _mapper.Map<LoanEntity, LoanResponseDto>(loan.First()) : null;
-
         }
     }
 }

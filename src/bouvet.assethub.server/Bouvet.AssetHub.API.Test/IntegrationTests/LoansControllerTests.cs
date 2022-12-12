@@ -16,7 +16,6 @@ namespace Bouvet.AssetHub.API.Tests
 
         public LoansControllerTests(CustomWebApplicationFactory factory, ITestOutputHelper output)
         {
-
             _factory = factory;
             _httpClient = factory.CreateClient(new WebApplicationFactoryClientOptions
             {
@@ -36,7 +35,6 @@ namespace Bouvet.AssetHub.API.Tests
             // Assert
             result.StatusCode.ShouldBe(HttpStatusCode.OK);
             loans.ShouldNotBeEmpty();
-
         }
         [Fact]
         public async Task GetLoanById_Ok_200()
@@ -49,8 +47,6 @@ namespace Bouvet.AssetHub.API.Tests
             // Assert
             result.StatusCode.ShouldBe(HttpStatusCode.OK);
             loan.ShouldNotBeNull();
-          
-
         }
         [Fact]
         public async Task GetLoanById_NotFound_404()
@@ -60,10 +56,7 @@ namespace Bouvet.AssetHub.API.Tests
 
             // Assert
             result.StatusCode.ShouldBe(HttpStatusCode.NotFound);
-
         }
-
-
         [Fact]
         public async Task PostLoan_Ok_200()
         {
@@ -76,9 +69,7 @@ namespace Bouvet.AssetHub.API.Tests
 
             // Assert
             result.StatusCode.ShouldBe(HttpStatusCode.OK);
-
         }
-
         [Fact]
         public async Task PutLoanById_Ok_200()
         {
@@ -94,15 +85,10 @@ namespace Bouvet.AssetHub.API.Tests
             // Assert
             result.StatusCode.ShouldBe(HttpStatusCode.OK);
             loan.IntervalStop.ShouldBe(DateTime.Today.AddDays(14));
-
         }
-       
-      
-        
         [Fact]
         public async Task DeleteLoanById_Ok_200()
-        {
-            
+        {   
             // Act
             var result = await _httpClient.DeleteAsync($"api/loans/2");
             var check = await _httpClient.GetAsync($"api/loans/2");
@@ -110,8 +96,6 @@ namespace Bouvet.AssetHub.API.Tests
             // Assert
             result.StatusCode.ShouldBe(HttpStatusCode.OK);
             check.StatusCode.ShouldBe(HttpStatusCode.NotFound);
-
         }
-
     }
 }

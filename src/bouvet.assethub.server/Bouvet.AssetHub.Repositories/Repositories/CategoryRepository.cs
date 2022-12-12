@@ -19,7 +19,6 @@ namespace Bouvet.AssetHub.Repositories
             _logger = logger;
         }
 
-
         public async Task<Option<CategoryEntity>> Add(CategoryEntity category)
         {
             await _context.Categories.AddAsync(category);
@@ -27,7 +26,6 @@ namespace Bouvet.AssetHub.Repositories
             {
                 await _context.SaveChangesAsync();
                 return category;
-
             }
             catch (UniqueConstraintException ex)
             {
@@ -35,11 +33,9 @@ namespace Bouvet.AssetHub.Repositories
                 return null;
             }
         }
-
    
         public async Task<Option<CategoryEntity>> Delete(int id)
         {
-         
             var assets = await _context.Assets
             .Include(a => a.Category)
             .Where(a => a.Category.Id == id)
@@ -56,13 +52,8 @@ namespace Bouvet.AssetHub.Repositories
                 _context.Categories.Remove(category);
                 await _context.SaveChangesAsync();
                 return category;
-            }
-    
-            
-            
+            }        
             return null;
-
-
         }
 
         public async Task<Option<List<CategoryEntity>>> GetAll()

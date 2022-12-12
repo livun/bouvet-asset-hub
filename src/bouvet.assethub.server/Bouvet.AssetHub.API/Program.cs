@@ -14,9 +14,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Logging.ClearProviders();
 builder.Logging.AddConsole();
 
-// Enable cors
-// Add cors
-
+// Enable and add cors
 var MyCorsPolicy = "_myCorsPolicy";
 builder.Services.AddCors(options =>
 {
@@ -28,10 +26,9 @@ builder.Services.AddCors(options =>
             .WithMethods("PUT", "DELETE", "GET", "POST");
     });
 });
+
 // Add services to the container.
-
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
-
 builder.Services.AddControllers().AddJsonOptions(options => 
 {
     options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
@@ -43,27 +40,21 @@ builder.Services.AddSwaggerGen(options =>
     options.SupportNonNullableReferenceTypes();
 });
 var assemblyHandlers = AppDomain.CurrentDomain.Load("Bouvet.AssetHub.Handlers");
-
-builder.Services.AddAutoMapper(assemblyHandlers);
+builder.Services.AddAutoMapper(assemblyHandlers, Assembly.GetExecutingAssembly());
 
 builder.Services.AddDbContext<DataContext>(options =>
 {
+    // // Retrive connectionstring from User Secrets 
     // var conStrBuilder = new SqlConnectionStringBuilder(
     //     builder.Configuration.GetConnectionString("DataContext"));
     // conStrBuilder.Password = builder.Configuration["SqlPassword"];
     // conStrBuilder.UserID = builder.Configuration["SqlUser"];
     // var connectionString = conStrBuilder.ConnectionString;
-
-
     var connectionString = builder.Configuration.GetConnectionString("DataContext");
     options.UseSqlServer(connectionString);
 });
 var assemblyContracts = AppDomain.CurrentDomain.Load("Bouvet.AssetHub.Contracts");
 builder.Services.AddMediatR(assemblyContracts, assemblyHandlers);
-
-//builder.Services.AddMediatR(AppDomain.CurrentDomain.GetAssemblies());
-builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
-
 
 builder.Services.AddScoped<ILoanRepository, LoanRepository>();
 builder.Services.AddScoped<IAssetRepository, AssetRepository>();

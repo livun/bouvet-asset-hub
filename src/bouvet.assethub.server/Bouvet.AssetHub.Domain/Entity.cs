@@ -8,8 +8,6 @@ namespace Bouvet.AssetHub.Domain
 {
     public class Entity
     {
-
         public int Id { get; set; } = 0;
-
     }
 }

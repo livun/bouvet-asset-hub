@@ -72,7 +72,7 @@ function formatId({key} : IFormatInput) : IFormatOutput {
             headerName: formatHeaderKeys(key),
             headerAlign: "left",
             align: "left",
-            flex: 0.3,
+            flex: 0.5,
             type: 'string'
         }
         return col

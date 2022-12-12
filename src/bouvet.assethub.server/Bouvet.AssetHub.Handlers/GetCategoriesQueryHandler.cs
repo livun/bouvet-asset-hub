@@ -19,10 +19,8 @@ namespace Bouvet.AssetHub.Handlers
         {
             _repository = repository;
             _mapper = mapper;
-
         }
-
-        public async Task<Option<List<CategoryResponseDto>>> Handle(GetCategoriesQuery request, CancellationToken cancellationToken)
+        public async Task<Option<List<CategoryResponseDto>>> Handle(GetCategoriesQuery query, CancellationToken cancellationToken)
         {
 
             var result = await _repository.GetAll();
@@ -30,12 +28,7 @@ namespace Bouvet.AssetHub.Handlers
             {
                 return _mapper.Map<List<CategoryEntity>, List<CategoryResponseDto>>(result.First());
             }
-
             return Option<List<CategoryResponseDto>>.None;
-
-
-
-
         }
     }
 }

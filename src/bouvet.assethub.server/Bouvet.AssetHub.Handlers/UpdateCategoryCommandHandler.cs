@@ -20,19 +20,15 @@ namespace Bouvet.AssetHub.Handlers
 
         }
 
-        public async Task<Option<CategoryResponseDto>> Handle(UpdateCategoryCommand request, CancellationToken cancellationToken)
+        public async Task<Option<CategoryResponseDto>> Handle(UpdateCategoryCommand command, CancellationToken cancellationToken)
         {
-
-            var category = _mapper.Map<UpdateCategoryCommand, CategoryEntity>(request);
+            var category = _mapper.Map<UpdateCategoryCommand, CategoryEntity>(command);
             var result = await _repository.Update(category);
-
             if (result.IsSome)
             {
                 return _mapper.Map<CategoryEntity, CategoryResponseDto>(result.First());
             }
-
             return Option<CategoryResponseDto>.None;
-
         }
     }
 }

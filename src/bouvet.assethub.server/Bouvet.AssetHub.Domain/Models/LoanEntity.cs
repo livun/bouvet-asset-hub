@@ -15,8 +15,4 @@ namespace Bouvet.AssetHub.Domain.Models
         public AssetEntity Asset { get; set; } = new AssetEntity();
         public Bsd? Bsd { get; set; }
     }
-
-
-
-
 }

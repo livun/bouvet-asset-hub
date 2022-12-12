@@ -17,18 +17,15 @@ namespace Bouvet.AssetHub.Handlers
         {
             _repository = repository;
             _mapper = mapper;
-
         }
-
-        public async Task<Option<CategoryResponseDto>> Handle(DeleteCategoryCommand request, CancellationToken cancellationToken)
+        public async Task<Option<CategoryResponseDto>> Handle(DeleteCategoryCommand command, CancellationToken cancellationToken)
         {
-            var category = await _repository.Delete(request.Id);
+            var category = await _repository.Delete(command.Id);
             if (category.IsSome)
             {
                 return _mapper.Map<CategoryEntity, CategoryResponseDto>(category.First());
             }
             return Option<CategoryResponseDto>.None;
-
         }
     }
 }

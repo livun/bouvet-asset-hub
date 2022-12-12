@@ -13,6 +13,5 @@ namespace Bouvet.AssetHub.API.Helpers
         {
             return result.IsSome ? Ok(result.FirstOrDefault()) : BadRequest(msg);
         }
-
     }
 }

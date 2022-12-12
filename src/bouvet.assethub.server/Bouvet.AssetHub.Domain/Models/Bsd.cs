@@ -8,6 +8,5 @@ namespace Bouvet.AssetHub.Domain.Models
     {
         [Required]
         public string Reference { get; set; } = "None"; // if a request has been made through BSD, add reference 
-
     }
 }

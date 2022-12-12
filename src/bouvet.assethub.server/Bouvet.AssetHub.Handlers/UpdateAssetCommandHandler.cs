@@ -17,22 +17,17 @@ namespace Bouvet.AssetHub.Handlers
         {
             _repository = repository;
             _mapper = mapper;
-
         }
 
-        public async Task<Option<AssetResponseDto>> Handle(UpdateAssetCommand request, CancellationToken cancellationToken)
+        public async Task<Option<AssetResponseDto>> Handle(UpdateAssetCommand command, CancellationToken cancellationToken)
         {
-
-            var asset = _mapper.Map<UpdateAssetCommand, AssetEntity>(request);
+            var asset = _mapper.Map<UpdateAssetCommand, AssetEntity>(command);
             var result = await _repository.Update(asset);
-
             if (result.IsSome)
             {
                 return _mapper.Map<AssetEntity, AssetResponseDto>(result.First());
             }
-
             return Option<AssetResponseDto>.None;
-
         }
     }
 }

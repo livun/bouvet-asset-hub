@@ -17,16 +17,13 @@ namespace Bouvet.AssetHub.Handlers
         {
             _repository = repository;
             _mapper = mapper;
-
         }
 
-        public async Task<Option<LoanResponseDto>> Handle(UpdateLoanByIdCommand request, CancellationToken cancellationToken)
+        public async Task<Option<LoanResponseDto>> Handle(UpdateLoanByIdCommand command, CancellationToken cancellationToken)
         {
-            var loanEntity = _mapper.Map<UpdateLoanByIdCommand, LoanEntity>(request);
+            var loanEntity = _mapper.Map<UpdateLoanByIdCommand, LoanEntity>(command);
             var loan = await _repository.Update(loanEntity);
-
             return loan.IsSome ? _mapper.Map<LoanEntity, LoanResponseDto>(loan.First()) : null;
-
         }
     }
 }

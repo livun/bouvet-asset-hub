@@ -19,24 +19,15 @@ namespace Bouvet.AssetHub.Handlers
         {
             _repository = repository;
             _mapper = mapper;
-
         }
-
-        public async Task<Option<List<AssetResponseDto>>> Handle(GetAssetsQuery request, CancellationToken cancellationToken)
+        public async Task<Option<List<AssetResponseDto>>> Handle(GetAssetsQuery query, CancellationToken cancellationToken)
         {
-
             var result = await _repository.GetAll();
             if (result.IsSome)
             {
-
                 return _mapper.Map<List<AssetEntity>, List<AssetResponseDto>>(result.First());
             }
-
             return Option<List<AssetResponseDto>>.None;
-
-
-
-
         }
     }
 }

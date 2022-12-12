@@ -9,7 +9,6 @@ namespace Bouvet.AssetHub.Domain.Models
         [Required]
         public EmployeeNumber EmployeeNumber { get; set; } = new EmployeeNumber();
     }
-
     [Owned]
     public class EmployeeNumber
     {
@@ -18,6 +17,5 @@ namespace Bouvet.AssetHub.Domain.Models
             Value = 0;
         }
         public int Value { get; set; }
-
     }
 }
