@@ -17,7 +17,7 @@ This application runs with `Docker Compose`.
 1. Clone the repository
 1. Download Docker Desktop. Available [here](https://docs.docker.com/get-docker/).
 1. Run Docker Desktop
-- Make sure you port 3000, 4000, and 1433 is available!
+- Make sure ports: 3000, 4000, and 1433 is available!
 4. Open a terminal (e.g., Powershell)
 4. Write `docker` to verify it's installed. Proceed if it's installed.
 4. Copy this command into you terminal
