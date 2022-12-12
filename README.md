@@ -14,12 +14,14 @@ This application runs with `Docker Compose`.
 
 *Note:  The MSSQL Server `Docker Image` is not compatible with a MAC with Apple Silicon.*
 
-1. Fork the repository
+1. Clone the repository
 1. Download Docker Desktop. Available [here](https://docs.docker.com/get-docker/).
 1. Run Docker Desktop
-1. Open a terminal (e.g., Powershell)
-1. Write `docker` to verify it's installed. Proceed if it's installed.
-1. Copy this command into you terminal
+- Make sure ports: 3000, 4000, and 1433 is available!
+4. Open a terminal (e.g., Powershell)
+4. Write `docker` to verify it's installed. Proceed if it's installed.
+4. Copy this command into you terminal
+
 ```powershell
 docker volume create assethubcontext-vol
 ```
@@ -39,8 +41,17 @@ docker compose up -d
 ```powershell
 docker ps
 ```
-10. Now the application is up and running on [localhost:3000](http://localhost:3000). (Might take some time the first time it runs)
-10. Run this command in the terminal from  `/src`, to stop and remove containers and networks created by `docker compose up`.
+
+10. Now the application is up and running! But before proceeding to access the frontend at localhost:3000, you must check that the backend server uses allowed  certificates. To allow using self signed certificates, you must follow these steps:
+- First open [https://localhost:4000/swagger](https://localhost:4000/swagger). 
+- If this site is unavailable due to a certificate error message. You must allow a self signed certficate to access localhost. 
+- This process is  different depending on browser, I recommend using Chrome in this case, if you don't have any previous experience with this. 
+- In Chrome you will get an error message, where you can choose the Advanced option. [This image](https://i.stack.imgur.com/DoqzS.png) displays this option.
+- Proceed with clicking *Proceed to localhost*. 
+- Now you have allowed localhost to use self signed certificate and you get redirected to the Swagger page. Now you can proceed to the next step.
+11. Now go to [localhost:3000](http://localhost:3000), where you can access the UI. (Might take some time the first time it runs.)
+- If everything is working correctly, there should be data in the *Assets* table, and in the *Categories* table.
+12. Run this command in the terminal from  `/src`, to stop and remove containers and networks created by `docker compose up`.
 ```powershell
 docker compose down
 ```
