@@ -1,17 +1,13 @@
-import { Box, Button, Grid, IconButton, MenuItem, Stack, TextField, Tooltip } from "@mui/material";
+import { Box, Button, Grid, IconButton, Tooltip } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
-import { getAssetByGuidFn, getAssetByIdFn } from "../api/assetsApi";
+import { useState } from "react";
+import { getAssetByGuidFn } from "../api/assetsApi";
 import QRScanner from "../components/mobile/QRScanner";
-import { AssetResponseDto, Status } from "../_generated/api-types";
-import GridViewSharpIcon from '@mui/icons-material/GridViewSharp';
+import { AssetResponseDto } from "../_generated/api-types";
 import AlertBar from "../components/AlertBar";
 import MobileActions from "../components/mobile/MobileActions";
-import Html5TsWrapper from "../Html5QrCodePlugin/Html5TsWrapper";
 import { useNavigate } from "react-router-dom";
-import QrCodeScannerIcon from '@mui/icons-material/QrCodeScanner';
 import QrCode2Icon from '@mui/icons-material/QrCode2';
-import AddBoxIcon from '@mui/icons-material/AddBox';
 import AddIcon from '@mui/icons-material/Add';
 import MobileMain from "../components/mobile/MobileMain";
 import NewAssetMobile from "../components/mobile/NewAssetMobile";
@@ -22,21 +18,14 @@ export default function Mobile() {
     const [register, setRegister] = useState(false)
     const [buttons, setButtons] = useState(true)
     const navigate = useNavigate();
-
-
     const [qrGuid, setQrGuid] = useState<string>()
     const handleQrGuid = (qrGuid: string) => {
         setQrGuid(qrGuid);
     }
-
-
-    const { data, isLoading, isError } = useQuery<AssetResponseDto, Error>(["assets", qrGuid], () => getAssetByGuidFn(qrGuid!), {
+    const { data} = useQuery<AssetResponseDto, Error>(["assets", qrGuid], () => getAssetByGuidFn(qrGuid!), {
         onError: (() => openAlertBar("Cant find asset", false)),
         enabled: !!qrGuid
     })
-
-
-
 
     //AlertComponent handling (if reused, this must be pasted in parent component)
     const [open, setOpen] = useState(false);
@@ -53,7 +42,6 @@ export default function Mobile() {
         }
         setOpen(false);
     };
-
 
     return <>
 

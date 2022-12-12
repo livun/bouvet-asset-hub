@@ -26,12 +26,11 @@ export default function MobileActions(prop: { assetId: number }) {
     const [stopDate, setStopDate] = useState<Date | null>(new Date())
 
     //queries
-    const { isLoading, isSuccess, isError, error, data } = useQuery<AssetResponseDto, Error>(["asset", assetId], () => getAssetByIdFn(assetId))
+    const { isLoading, isSuccess, data } = useQuery<AssetResponseDto, Error>(["asset", assetId], () => getAssetByIdFn(assetId))
 
     const loanQuery = useQuery<LoanResponseDto, Error>(["loan", assetId], () => getLoanByAssetIdFn(assetId), {
         onSuccess: (data: LoanResponseDto) => setLoanId(data.id),
         enabled: !!assetId
-
     })
     //mutations 
     const addLoan = useMutation(() => postLoansFn(loanForm), {
@@ -44,7 +43,6 @@ export default function MobileActions(prop: { assetId: number }) {
             setLoanForm({ ...loanForm, intervalStart: today })
             setOpenAddLoan(false)
             openAlertBar("Loan is added.", true)
-
         }
     });
 
@@ -76,9 +74,7 @@ export default function MobileActions(prop: { assetId: number }) {
             }, 1500)
         }
     });
-
-
-
+    // Dialog logic
     const handleStartDateChange = (newValue: string | null) => {
         if (newValue) {
             setLoanForm({ ...loanForm, intervalStart: newValue })
@@ -89,7 +85,6 @@ export default function MobileActions(prop: { assetId: number }) {
             setLoanForm({ ...loanForm, intervalStop: newValue })
         }
     };
-
     const handleDateChange = (newValue: Date | null) => {
         if (newValue) {
             setStopDate(newValue)
@@ -101,13 +96,11 @@ export default function MobileActions(prop: { assetId: number }) {
         }
         setOpenExtendLoan(false)
     }
-
     const handleHandInLoan = () => {
         if (loanId) {
             deleteLoan.mutate()
             setOpenHandInLoan(false)
         }
-
     }
 
     //AlertComponent handling (if reused, this must be pasted in parent component)
@@ -277,7 +270,6 @@ export default function MobileActions(prop: { assetId: number }) {
             {data.status === Status.Unavailable && !loanQuery.data?.intervalIsLongterm ? <Grid width={250} item flexGrow={1} >
                 <Button fullWidth size="large" variant="outlined" onClick={() => setOpenExtendLoan(true)}>Extend loan</Button>
             </Grid> : <></>}
-
         </Grid>
             : <></>}
         <Dialog open={openAddLoan} onClose={() => setOpenAddLoan(false)}>
@@ -336,7 +328,6 @@ export default function MobileActions(prop: { assetId: number }) {
             <DialogTitle>Update status</DialogTitle>
             <DialogContent>
                 <Stack spacing={3} paddingTop={2} width={250} component="form" autoComplete="off">
-
                     <TextField
                         label="Status"
                         fullWidth
@@ -344,7 +335,6 @@ export default function MobileActions(prop: { assetId: number }) {
                         value={assetForm.status}
                         variant="standard"
                         onChange={(event) => setAssetForm({ status: Status[event.target.value as Status] })}
-
                     >
                         <MenuItem value={Status.Registered}>{Status.Registered}</MenuItem>
                         <MenuItem value={Status.Available}>{Status.Available}</MenuItem>
@@ -389,10 +379,7 @@ export default function MobileActions(prop: { assetId: number }) {
                 </DialogActions>
             </Dialog>
         </>
-            : <></>}
-
+        : <></>}
         <AlertBar open={open} handleClose={handleClose} message={alertBarMsg} success={success} />
-
-
     </>
 }

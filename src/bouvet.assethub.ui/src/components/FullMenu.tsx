@@ -4,7 +4,6 @@ import CssBaseline from '@mui/material/CssBaseline';
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import List from '@mui/material/List';
-import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -18,7 +17,6 @@ import { capitalizeAndSplit } from '../utils/regex';
 import CloseIcon from '@mui/icons-material/Close';
 
 const drawerWidth = 240;
-
 const pages = ['Assets', 'Loans', 'LoanHistory']
 const other = ['Categories']
 const actions = ["Mobile"]
@@ -43,7 +41,6 @@ const AppBar = styled(MuiAppBar, {
 		}),
 	}),
 }));
-
 
 export default function FullMenu(prop: { open: boolean, handleOpen: () => void }) {
 	const theme = useTheme();
@@ -114,7 +111,6 @@ export default function FullMenu(prop: { open: boolean, handleOpen: () => void }
 					))}
 				</List>
 				<Divider />
-
 				<List>
 					{actions.map((action, index) => (
 						<Link key={index} to={`/${action.toLocaleLowerCase()}`} style={{ color: 'inherit', textDecoration: 'none' }}>
@@ -128,7 +124,6 @@ export default function FullMenu(prop: { open: boolean, handleOpen: () => void }
 					))}
 				</List>
 			</Drawer>
-
 		</>
 	);
 }

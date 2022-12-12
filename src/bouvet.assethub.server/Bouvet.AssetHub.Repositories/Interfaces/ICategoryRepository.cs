@@ -9,9 +9,6 @@ namespace Bouvet.AssetHub.Repositories.Interfaces
         Task<Option<CategoryEntity>> Update(CategoryEntity entity);        
         Task<Option<List<CategoryEntity>>> GetAll();
         Task<Option<CategoryEntity>> Get(int Id);
-
         Task<Option<CategoryEntity>> Delete(int Id);
-        
-        
     }
 }

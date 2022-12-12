@@ -8,9 +8,7 @@ export default function NotFound(props: {message : String}) {
                     <WarningAmberIcon sx={{fontSize: "100px"}} />
                     <Typography variant="h4">404 - Not Found</Typography>
                     <Typography variant="subtitle1">{props.message}</Typography>
-                    
                 </Box>
-                
             </Box>   
     );
 }

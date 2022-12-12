@@ -15,9 +15,7 @@ namespace Bouvet.AssetHub.API.Controllers
         public LoanHistory(IMediator mediator)
         {
             _mediator = mediator;
-         
         }
-
         // GET /loanhistory
         [HttpGet]
         public async Task<ActionResult<List<LoanHistoryResponseDto>>> GetLoansAsync()
@@ -26,5 +24,4 @@ namespace Bouvet.AssetHub.API.Controllers
             return new ActionResultHelper<List<LoanHistoryResponseDto>>().OkOrNotFound(result, "Currently loan history table is empty.");
         }
     }
-
 }

@@ -18,13 +18,11 @@ namespace Bouvet.AssetHub.Handlers
         {
             _repository = repository;
             _mapper = mapper;
-
         }
 
-        public async Task<Option<AssetResponseDto>> Handle(GetAssetByQuery request, CancellationToken cancellationToken)
+        public async Task<Option<AssetResponseDto>> Handle(GetAssetByQuery query, CancellationToken cancellationToken)
         {
-            var predicate = request.Id == null ? AssetPredicates.ByGuid((Guid)request.Guid!) : AssetPredicates.ById((int)request.Id!);
-
+            var predicate = query.Id == null ? AssetPredicates.ByGuid((Guid)query.Guid!) : AssetPredicates.ById((int)query.Id!);
             var result = await _repository.Get(predicate);
             if (result.IsSome)
             {
@@ -32,7 +30,6 @@ namespace Bouvet.AssetHub.Handlers
                 return dto;
             }
             return Option<AssetResponseDto>.None;
-
         }
     }
 }

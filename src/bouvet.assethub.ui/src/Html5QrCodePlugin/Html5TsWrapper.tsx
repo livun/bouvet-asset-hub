@@ -1,6 +1,4 @@
 import Html5QrcodePlugin from "./Html5QrcodePlugin.jsx";
-
-import { useState } from "react";
 import {
 	Html5QrcodeResult,
 	QrcodeSuccessCallback

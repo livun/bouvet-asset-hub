@@ -1,7 +1,6 @@
 import { CategoryResponseDto, CreateCategoryDto, UpdateCategoryDto } from "../_generated/api-types";
 import { deleteItem, get, postItem, putItem, regularHeaders } from "./genericAxios";
 
-
 export const getCategoriesFn = async () => {
   return await get<CategoryResponseDto[]>(`/categories`)
 };

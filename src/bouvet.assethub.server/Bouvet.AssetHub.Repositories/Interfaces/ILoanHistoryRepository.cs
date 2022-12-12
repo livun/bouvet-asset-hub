@@ -7,6 +7,5 @@ namespace Bouvet.AssetHub.Repositories.Interfaces
     {
         Task<Option<List<LoanHistoryEntity>>> GetAll();
         Task<Option<LoanHistoryEntity>> Add(LoanHistoryEntity entity);
-
     }
 }

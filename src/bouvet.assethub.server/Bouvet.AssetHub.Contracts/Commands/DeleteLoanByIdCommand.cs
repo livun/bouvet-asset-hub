@@ -5,5 +5,4 @@ using MediatR;
 namespace Bouvet.AssetHub.Contracts.Commands
 {
     public record DeleteLoanByIdCommand(int Id) : IRequest<Option<LoanResponseDto>>;
-
 }

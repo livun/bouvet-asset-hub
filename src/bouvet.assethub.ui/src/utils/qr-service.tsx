@@ -41,7 +41,5 @@ export default function QRService() {
                 {/* <a href={qr} download="qrcode.png">Download</a> */}
             </>}
             </Box>
-
         </Stack></>
-
 }

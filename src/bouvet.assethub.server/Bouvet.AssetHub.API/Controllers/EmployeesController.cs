@@ -14,10 +14,8 @@ namespace Bouvet.AssetHub.API.Controllers
 
         public EmployeesController(IMediator mediator)
         {
-            _mediator = mediator;
-         
+            _mediator = mediator;    
         }
-
         //GET /employees/1/loans
         [Route("{number}/loans")]
         [HttpGet]
@@ -25,14 +23,6 @@ namespace Bouvet.AssetHub.API.Controllers
         {
             var result = await _mediator.Send(new GetLoansByEmployeeNumberQuery(number));
             return new ActionResultHelper<List<LoanResponseDto>>().OkOrNotFound(result, $"No loans on employee number: {number}!");
-
-
         }
-
-
-
-
     }
- 
-
 }

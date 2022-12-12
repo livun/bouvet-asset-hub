@@ -20,21 +20,19 @@ namespace Bouvet.AssetHub.Handlers
             _repository = repository;
             _loanRepository = loanRepository;
             _mapper = mapper;
-
         }
 
-        public async Task<Option<List<AssetResponseDto>>> Handle(UpdateAssetsByIdCommand request, CancellationToken cancellationToken)
+        public async Task<Option<List<AssetResponseDto>>> Handle(UpdateAssetsByIdCommand command, CancellationToken cancellationToken)
         {
             var updatedAssets = new List<AssetResponseDto>();
-            foreach (var id in request.Ids)
+            foreach (var id in command.Ids)
             {
                 var loan = await _loanRepository.Get(LoanPredicates.ByAssetId(id));
                 if (loan.IsSome)
                 {
                     continue;
                 }
-                var asset = await _repository.UpdateAssetStatus(id, (Domain.Models.Status)request.Status);
-
+                var asset = await _repository.UpdateAssetStatus(id, (Domain.Models.Status)command.Status);
                 if (asset.IsSome)
                 {
                     var dto = _mapper.Map<AssetEntity, AssetResponseDto>(asset.First());
@@ -43,7 +41,6 @@ namespace Bouvet.AssetHub.Handlers
             }
             if (updatedAssets.Any()) return updatedAssets;
             return Option<List<AssetResponseDto>>.None;
-
         }
     }
 }

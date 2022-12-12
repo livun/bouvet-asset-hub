@@ -35,22 +35,6 @@ namespace Bouvet.AssetHub.Data
                    new CategoryEntity { Id = 8, Name = "Mouse" },
                    new CategoryEntity { Id = 9, Name = "Headset" }
                );
-            //modelBuilder.Entity<EmployeeEntity>
-            //    (emp =>
-            //        {
-            //            emp.HasData(new EmployeeEntity { Id = 1 });
-            //            emp.OwnsOne(e => e.EmployeeNumber).HasData(new { EmployeeEntityId = 1, Value = 1234 });
-            //        }
-            //    );
-            //modelBuilder.Entity<EmployeeEntity>
-            //    (emp =>
-            //    {
-            //        emp.HasData(new EmployeeEntity { Id = 2 });
-            //        emp.OwnsOne(e => e.EmployeeNumber).HasData(new { EmployeeEntityId = 2, Value = 5678 });
-            //    }
-            //    );
-
-
             modelBuilder.Entity<AssetEntity>
                 (   asset =>
                     {
@@ -83,20 +67,7 @@ namespace Bouvet.AssetHub.Data
                    asset.OwnsOne(a => a.QrIdentifier).HasData(new { AssetEntityId = 4, Value = Guid.NewGuid() });
                }
                );
-            //modelBuilder.Entity<LoanEntity>
-            //   (loan =>
-            //   {
-            //       loan.HasData(new LoanEntity { Id = 1, AssetId = 4, Borrower = { Id = 1 } });
-            //       loan.OwnsOne(l => l.Interval).HasData(new { IsLongterm = false, Start = DateTime.Today, Stop = DateTime.Today.AddDays(300) });
-            //       loan.OwnsOne(l => l.Bsd).HasData(new {LoanEntityId = 1, Reference = "RK3456" });
-            //   }
-            //   );
-
-
-
-
             base.OnModelCreating(modelBuilder);
         }
-
     }
 }

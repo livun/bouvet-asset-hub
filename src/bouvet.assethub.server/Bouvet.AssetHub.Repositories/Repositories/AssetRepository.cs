@@ -54,14 +54,11 @@ namespace Bouvet.AssetHub.Repositories
                 await _context.SaveChangesAsync();
                 return entity;
             }
-
             return Option<AssetEntity>.None;
-
         }
 
         public async Task<Option<AssetEntity>> UpdateAssetStatus(int id, Status status)
         {
-            // have to implement restrictions on update
             var asset = _context.Assets
                 .Include(a => a.Category)
                 .Where(a => a.Id == id)
@@ -75,8 +72,6 @@ namespace Bouvet.AssetHub.Repositories
             return Option<AssetEntity>.None;
         }
 
-
-
         public async Task<Option<AssetEntity>> Get(Expression<Func<AssetEntity, bool>> predicate)
         {
             return await _context.Assets
@@ -84,7 +79,6 @@ namespace Bouvet.AssetHub.Repositories
                 .AsQueryable()
                 .Where(predicate)
                 .FirstOrDefaultAsync();
-
         }
       
         public async Task<Option<List<AssetEntity>>> GetAll()
@@ -95,8 +89,6 @@ namespace Bouvet.AssetHub.Repositories
             return assets.Any() ? assets : null;
         }
 
-
-
         public async Task<Option<List<AssetEntity>>> GetByCategory(int categoryId)
         {
             var assets = await _context.Assets
@@ -105,8 +97,6 @@ namespace Bouvet.AssetHub.Repositories
                 .ToListAsync();
             return assets.Any() ? assets : null;
         }
-
-
 
         public async Task<Option<AssetEntity>> Delete(int id)
         {
@@ -122,8 +112,6 @@ namespace Bouvet.AssetHub.Repositories
                 return asset;
             }
             return Option<AssetEntity>.None;
-
-
         }
     }
 }

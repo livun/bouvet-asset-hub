@@ -15,14 +15,11 @@ namespace Bouvet.AssetHub.API.Controllers
         private readonly IMediator _mediator;
         private readonly ILogger<AssetsController> _logger;
 
-
         public AssetsController(IMediator mediator, ILogger<AssetsController> logger, IMapper mapper)
         {
             _mediator = mediator;
             _logger = logger;
-  
         }
-
         // GET /assets
         [HttpGet]
         public async Task<ActionResult<List<AssetResponseDto>>> GetAssetsAsync()
@@ -37,7 +34,6 @@ namespace Bouvet.AssetHub.API.Controllers
         {
             var result = await _mediator.Send(new CreateAssetCommand(dto.SerialNumber, dto.CategoryId, dto.QrIdentifier));
             return new ActionResultHelper<AssetResponseDto>().OkOrBadRequest(result, "Could not add asset!");
-
         }
         // PUT /assets
         [HttpPut]
@@ -46,7 +42,6 @@ namespace Bouvet.AssetHub.API.Controllers
             var result = await _mediator.Send(new UpdateAssetsByIdCommand(dto.Ids, dto.Status));
             return new ActionResultHelper<List<AssetResponseDto>>().OkOrNotFound(result, "Cannot update assets!");
         }
-
         // GET /assets/1
         [Route("{id:int}")]
         [HttpGet]
@@ -54,9 +49,7 @@ namespace Bouvet.AssetHub.API.Controllers
         {
             var result = await _mediator.Send(new GetAssetByQuery(id, null));
             return new ActionResultHelper<AssetResponseDto>().OkOrNotFound(result, "Asset does not exist!");
-
         }
-
         // GET /assets/1
         [Route("{guid}")]
         [HttpGet]
@@ -64,9 +57,7 @@ namespace Bouvet.AssetHub.API.Controllers
         {
             var result = await _mediator.Send(new GetAssetByQuery(null, guid));
             return new ActionResultHelper<AssetResponseDto>().OkOrNotFound(result, "Asset does not exist!");
-
         }
-
         // PUT /assets/1
         [Route("{id}")]
         [HttpPut]
@@ -74,7 +65,6 @@ namespace Bouvet.AssetHub.API.Controllers
         {
             var result = await _mediator.Send(new UpdateAssetCommand(id, dto.Status, dto.CategoryId));
             return new ActionResultHelper<AssetResponseDto>().OkOrNotFound(result, "Cannot update asset!");
-
         }
         // DELETE /assets/1
         [Route("{id}")]
@@ -83,8 +73,6 @@ namespace Bouvet.AssetHub.API.Controllers
         {
             var result = await _mediator.Send(new DeleteAssetCommand(id));
             return new ActionResultHelper<AssetResponseDto>().OkOrBadRequest(result, "Asset cannot be deleted!");
-
-
         }
         // GET /assets/1/loans
         [Route("{id}/loans")]
@@ -95,11 +83,5 @@ namespace Bouvet.AssetHub.API.Controllers
             return new ActionResultHelper<LoanResponseDto>().OkOrNotFound(result, $"There is no loan on asset with id {id}");
 
         }
-
-
-
-
     }
-
-
 }

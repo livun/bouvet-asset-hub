@@ -16,7 +16,6 @@ import { IAssetActions, ILoanActions } from '../utils/interfaces';
 import { v4 as uuidv4 } from 'uuid';
 import { AssetResponseDto, CategoryResponseDto, CreateAssetDto, CreateCategoryDto, CreateLoanDto, LoanResponseDto, Status } from '../_generated/api-types';
 
-
 export default function AddItemsFAB() {
     const navigate = useNavigate()
     const today = new Date().toISOString()
@@ -85,10 +84,21 @@ export default function AddItemsFAB() {
         }
     });
 
+    // Dialog logic
     const handleAddAsset = () => {
         setAssetForm({ ...assetForm, qrIdentifier: uuidv4() })
         addAsset.mutate()
     }
+    const handleStartDateChange = (newValue: string | null) => {
+        if (newValue) {
+            setLoanForm({ ...loanForm, intervalStart: newValue })
+        }
+    };
+    const handleStopDateChange = (newValue: string | null) => {
+        if (newValue) {
+            setLoanForm({ ...loanForm, intervalStop: newValue })
+        }
+    };
 
     //AlertComponent handling (if reused, this must be pasted in parent component)
     const [open, setOpen] = useState(false);
@@ -105,17 +115,6 @@ export default function AddItemsFAB() {
         }
         setOpen(false);
     };
-    const handleStartDateChange = (newValue: string | null) => {
-        if (newValue) {
-            setLoanForm({ ...loanForm, intervalStart: newValue })
-        }
-    };
-    const handleStopDateChange = (newValue: string | null) => {
-        if (newValue) {
-            setLoanForm({ ...loanForm, intervalStop: newValue })
-        }
-    };
-
     return <>
         <SpeedDial
             ariaLabel="SpeedDial basic example"

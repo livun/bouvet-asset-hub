@@ -21,7 +21,7 @@ services:
             context: ./bouvet.assethub.ui
         ports:
             - 3000:3000
-        stdin_open: true
+        # stdin_open: true
 
 
     bouvet.assethub.api:

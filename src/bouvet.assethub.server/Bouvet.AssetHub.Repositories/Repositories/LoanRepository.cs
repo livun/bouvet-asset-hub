@@ -19,7 +19,6 @@ namespace Bouvet.AssetHub.API.Domain.Loan.Repositories
         {
             _context = context;
             _logger = logger;
-
         }
 
         public async Task<Option<LoanEntity>> Add(LoanEntity loan)
@@ -57,7 +56,6 @@ namespace Bouvet.AssetHub.API.Domain.Loan.Repositories
             {
                 await _context.SaveChangesAsync();
                 return loan;
-
             }
             catch (UniqueConstraintException ex)
             {
@@ -81,7 +79,6 @@ namespace Bouvet.AssetHub.API.Domain.Loan.Repositories
                 return entity;
             }
             return Option<LoanEntity>.None;
-
         }
 
         public async Task<Option<List<LoanEntity>>> GetAll()
@@ -108,7 +105,6 @@ namespace Bouvet.AssetHub.API.Domain.Loan.Repositories
                 .AsQueryable()
                 .Where(predicate)
                 .FirstOrDefaultAsync();
-
         }
 
         public async Task<Option<LoanEntity>> Delete(int id)
@@ -125,8 +121,6 @@ namespace Bouvet.AssetHub.API.Domain.Loan.Repositories
                 return entity;
             }
             return Option<LoanEntity>.None;
-
-
         }
     }
 }

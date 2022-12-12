@@ -17,20 +17,17 @@ namespace Bouvet.AssetHub.Handlers
         {
             _repository = repository;
             _mapper = mapper;
-
         }
 
-        public async Task<Option<CategoryResponseDto>> Handle(CreateCategoryCommand request, CancellationToken cancellationToken)
+        public async Task<Option<CategoryResponseDto>> Handle(CreateCategoryCommand command, CancellationToken cancellationToken)
         {
-
-            var categoryEntity = _mapper.Map<CreateCategoryCommand, CategoryEntity>(request);
+            var categoryEntity = _mapper.Map<CreateCategoryCommand, CategoryEntity>(command);
             var result = await _repository.Add(categoryEntity);
             if (result.IsSome)
             {
                 return _mapper.Map<CategoryEntity, CategoryResponseDto>(result.First());
             }
             return Option<CategoryResponseDto>.None;
-
         }
     }
 }

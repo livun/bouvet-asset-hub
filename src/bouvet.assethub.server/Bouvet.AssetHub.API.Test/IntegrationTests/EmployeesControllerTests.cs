@@ -15,7 +15,6 @@ namespace Bouvet.AssetHub.API.Tests
 
         public EmployeesControllerTests(CustomWebApplicationFactory factory, ITestOutputHelper output)
         {
-
             _factory = factory;
             _httpClient = factory.CreateClient(new WebApplicationFactoryClientOptions
             {
@@ -23,20 +22,17 @@ namespace Bouvet.AssetHub.API.Tests
             });
             _output = output;
         }
-
         [Fact]
         public async Task GetLoansByEmployeeNumber_Ok_200()
         {
             // Act
             var result = await _httpClient.GetAsync($"api/employees/3456/loans");
             var json = await result.Content.ReadAsStringAsync();
-            var assets = JsonSerializer.Deserialize<List<LoanResponseDto>>(json);
-                       
+            var assets = JsonSerializer.Deserialize<List<LoanResponseDto>>(json);              
 
             // Assert
             result.StatusCode.ShouldBe(HttpStatusCode.OK);
             assets.ShouldNotBeEmpty();
-
         }
         [Fact]
         public async Task GetLoansByEmployeeNumber_NotFound_404()
@@ -46,8 +42,6 @@ namespace Bouvet.AssetHub.API.Tests
            
             // Assert
             result.StatusCode.ShouldBe(HttpStatusCode.NotFound);
-
         }
-
     }
 }

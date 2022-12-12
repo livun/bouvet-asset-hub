@@ -18,20 +18,16 @@ namespace Bouvet.AssetHub.Handlers
         {
             _repository = repository;
             _mapper = mapper;
-
         }
-
-        public async Task<Option<AssetResponseDto>> Handle(CreateAssetCommand request, CancellationToken cancellationToken)
+        public async Task<Option<AssetResponseDto>> Handle(CreateAssetCommand command, CancellationToken cancellationToken)
         {
-
-            var asset = await _repository.Get(AssetPredicates.BySerialNumber(request.SerialNumberValue));
-            if (asset.IsNone || request.SerialNumberValue == "")
+            var asset = await _repository.Get(AssetPredicates.BySerialNumber(command.SerialNumberValue));
+            if (asset.IsNone || command.SerialNumberValue == "")
             {
-                var assetEntity = _mapper.Map<CreateAssetCommand, AssetEntity>(request);
+                var assetEntity = _mapper.Map<CreateAssetCommand, AssetEntity>(command);
                 return _mapper.Map<AssetEntity, AssetResponseDto>((await _repository.Add(assetEntity)).First());
             }
             return Option<AssetResponseDto>.None;
-
         }
     }
 }

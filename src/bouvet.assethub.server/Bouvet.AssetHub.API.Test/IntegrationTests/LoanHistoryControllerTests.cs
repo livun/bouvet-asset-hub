@@ -16,7 +16,6 @@ namespace Bouvet.AssetHub.API.Tests
 
         public LoanHistoryControllerTests(CustomWebApplicationFactory factory, ITestOutputHelper output)
         {
-
             _factory = factory;
             _httpClient = factory.CreateClient(new WebApplicationFactoryClientOptions
             {
@@ -24,7 +23,6 @@ namespace Bouvet.AssetHub.API.Tests
             });
             _output = output;
         }
-
         [Fact]
         public async Task GetLoanHistory_Ok_200()
         {
@@ -46,12 +44,6 @@ namespace Bouvet.AssetHub.API.Tests
             // Assert
             result.StatusCode.ShouldBe(HttpStatusCode.OK);
             loans.ShouldNotBeEmpty();
-
         }
-
-
-
-
-
     }
 }

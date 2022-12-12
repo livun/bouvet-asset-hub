@@ -9,5 +9,4 @@ export default new QueryClient({
 			staleTime: 5 * 1000,
 		},
 	},
-
 })

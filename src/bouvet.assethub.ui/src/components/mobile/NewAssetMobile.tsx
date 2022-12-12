@@ -1,8 +1,6 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, MenuItem, Stack, TextField } from "@mui/material";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
-
-
 import { v4 as uuidv4 } from 'uuid';
 import { useNavigate } from "react-router-dom";
 import { getCategoriesFn } from "../../api/categoriesApi";
@@ -12,7 +10,6 @@ import queryClient from "../../config/queryClient";
 import Html5TsWrapper from "../../Html5QrCodePlugin/Html5TsWrapper";
 import AlertBar from "../AlertBar";
 
-
 export default function NewAssetMobile() {
     const [decode, setDecode] = useState(true)
     const [decodedText, setDecodedText] = useState("")
@@ -21,12 +18,10 @@ export default function NewAssetMobile() {
     const [openAddAsset, setOpenAddAsset] = useState(false);
     const navigate = useNavigate();
 
-
-    //queries
+    // Queries
     const categoriesQuery = useQuery<CategoryResponseDto[], Error>(["categories"], getCategoriesFn)
 
-
-    //Mutations
+    // Mutations
     const addAsset = useMutation(() => postAssetsFn(assetForm), {
         onError: () => {
             openAlertBar("Cannot add asset.", false)
@@ -47,28 +42,20 @@ export default function NewAssetMobile() {
             
         }
     });
-    
+    // Dialog logic
     const handleDecodedText = (text: string) => {
         setDecodedText(text)
         setAssetForm({ ...assetForm, serialNumber: text })
-
-
-
     }
-
     const handleAddAsset = () => {
         setAssetForm({ ...assetForm, qrIdentifier: uuidv4() })
         addAsset.mutate()
     }
-
     useEffect(() =>{
         if (decodedText !== ""){
             setOpenDialog(true)
-
         }
-
     }, [decodedText])
-
 
     //AlertComponent handling (if reused, this must be pasted in parent component)
     const [open, setOpen] = useState(false);
@@ -133,4 +120,3 @@ export default function NewAssetMobile() {
 
     </>
 }
-

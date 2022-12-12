@@ -15,6 +15,7 @@ export default function TableToolbar(props: TableToolbarProps) {
     const pathname = location.pathname
     const [newStatus, setNewStatus] = useState<Status>()
 
+    // Mutations
     const updateAssets = useMutation((dto: UpdateAssetsByIdDto) => putAssetsFn(dto), {
         onError: () => {
             openAlertBar("Cannot update status, asset is Unavailable.", false)
